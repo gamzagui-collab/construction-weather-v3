@@ -232,6 +232,7 @@ async function handleSearch() {
         key: "custom",
         source: "coordinate"
       };
+
       regionSearch.value = currentLocation.name;
       setRegionResultSingle(currentLocation);
     }
@@ -246,11 +247,20 @@ async function handleSearch() {
         key: defaultRegion.key,
         source: "local"
       };
+
+      regionSearch.value = currentLocation.name;
+      setRegionResultSingle(currentLocation);
     }
 
+    // 현재 조회 지역명을 검색창과 배너에 계속 표시
+    regionSearch.value = currentLocation.name;
+    renderLocationInfo(currentLocation);
+
+    // 지도와 Windy 위치 이동
     moveMapTo(currentLocation.lat, currentLocation.lon);
     updateWindyMap(currentLocation.lat, currentLocation.lon);
 
+    // Worker 통합 예보 조회
     const forecast = await fetchForecastFromWorker(currentLocation);
 
     currentRows = forecast.rows || [];
@@ -286,24 +296,36 @@ function initMap() {
   selectMarker = L.marker([defaultRegion.lat, defaultRegion.lon]).addTo(selectMap);
 
   selectMap.on("click", async (event) => {
-    const lat = Number(event.latlng.lat.toFixed(6));
-    const lon = Number(event.latlng.lng.toFixed(6));
+  const lat = Number(event.latlng.lat.toFixed(6));
+  const lon = Number(event.latlng.lng.toFixed(6));
 
-    currentLocation = {
-      name: "지도 선택 좌표",
-      lat,
-      lon,
-      key: "map",
-      source: "map"
-    };
+  let placeName = "지도 선택 좌표";
 
-    customCoord.value = `${lat},${lon}`;
-    regionSearch.value = currentLocation.name;
-    setRegionResultSingle(currentLocation);
+  try {
+    const reverse = await reverseGeocodeByWorker(lat, lon);
+    if (reverse.ok && reverse.name) {
+      placeName = reverse.name;
+    }
+  } catch (error) {
+    console.warn("역지오코딩 실패:", error);
+  }
 
-    moveMapTo(lat, lon);
-    updateWindyMap(lat, lon);
-  });
+  currentLocation = {
+    name: placeName,
+    lat,
+    lon,
+    key: "map",
+    source: "map"
+  };
+
+  customCoord.value = `${lat},${lon}`;
+  regionSearch.value = placeName;
+  setRegionResultSingle(currentLocation);
+
+  moveMapTo(lat, lon);
+  updateWindyMap(lat, lon);
+  renderLocationInfo(currentLocation);
+});
 
   updateWindyMap(defaultRegion.lat, defaultRegion.lon);
 }

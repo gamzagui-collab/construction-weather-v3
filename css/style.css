@@ -504,4 +504,125 @@ flex-wrap:wrap;
 
 }
 
+.location-banner {
+  background: linear-gradient(135deg, #2563eb, #0f172a);
+  color: white;
+  border-radius: 16px;
+  padding: 22px 26px;
+  margin-bottom: 22px;
+  box-shadow: var(--shadow);
+}
+
+.location-label {
+  display: block;
+  font-size: 13px;
+  opacity: 0.8;
+  margin-bottom: 6px;
+}
+
+.location-banner strong {
+  display: block;
+  font-size: 28px;
+  letter-spacing: -0.5px;
+}
+
+.location-banner small {
+  display: block;
+  margin-top: 6px;
+  opacity: 0.85;
+}
+
+.risk-guide {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0 14px;
+  align-items: center;
+}
+
+.risk-guide span {
+  font-weight: bold;
+  color: var(--sub);
+  margin-right: 4px;
+}
+
+.risk-guide b {
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+}
+
+.guide-green { background: #dcfce7; color: #166534; }
+.guide-yellow { background: #fef9c3; color: #854d0e; }
+.guide-orange { background: #ffedd5; color: #9a3412; }
+.guide-red { background: #fee2e2; color: #991b1b; }
+
+.rain-empty {
+  background: transparent;
+  color: #9ca3af;
+  font-weight: bold;
+}
+
+.rain-zero {
+  background: transparent !important;
+  color: var(--text) !important;
+}
+
+.rain-lv1 {
+  background: #eef9ff;
+  color: #111827 !important;
+}
+
+.rain-lv2 {
+  background: #d6f0ff;
+  color: #111827 !important;
+}
+
+.rain-lv3 {
+  background: #aee7ff;
+  color: #111827 !important;
+}
+
+.rain-lv4 {
+  background: #7dd3fc;
+  color: #111827 !important;
+}
+
+.rain-lv5 {
+  background: #38bdf8;
+  color: #111827 !important;
+}
+
+.rain-lv6 {
+  background: #0284c7;
+  color: #ffffff !important;
+}
+
+.rain-lv7 {
+  background: #075985;
+  color: #ffffff !important;
+}
+
+body.dark .rain-lv1,
+body.dark .rain-lv2,
+body.dark .rain-lv3,
+body.dark .rain-lv4,
+body.dark .rain-lv5 {
+  color: #111827 !important;
+}
+
+body.dark .rain-zero {
+  color: var(--text) !important;
+}
+
+body.dark .risk-green,
+body.dark .risk-yellow,
+body.dark .risk-orange,
+body.dark .risk-red,
+body.dark .agreement-high,
+body.dark .agreement-mid,
+body.dark .agreement-low {
+  color: #111827 !important;
+}
+
 }

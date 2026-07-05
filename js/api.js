@@ -107,3 +107,21 @@ async function resolveRegion(keyword, coordInput) {
 
   return normalizeGeocodeResult(geo.results[0]);
 }
+
+async function reverseGeocodeByWorker(lat, lon) {
+  const url =
+    `${WORKER_BASE_URL}/reverse` +
+    `?lat=${encodeURIComponent(lat)}` +
+    `&lon=${encodeURIComponent(lon)}`;
+
+  const response = await fetch(url, {
+    method: "GET",
+    cache: "no-store"
+  });
+
+  if (!response.ok) {
+    throw new Error(`위치명 조회 실패: ${response.status}`);
+  }
+
+  return await response.json();
+}

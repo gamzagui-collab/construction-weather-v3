@@ -15,9 +15,7 @@ function formatAvg(value) {
 }
 
 function getRainCellClass(value) {
-  if (typeof value !== "number" || Number.isNaN(value)) {
-    return "rain-empty";
-  }
+  if (typeof value !== "number" || Number.isNaN(value)) return "rain-empty";
 
   if (value === 0) return "rain-zero";
   if (value <= 1) return "rain-lv1";
@@ -28,6 +26,14 @@ function getRainCellClass(value) {
   if (value <= 16) return "rain-lv6";
 
   return "rain-lv7";
+}
+
+function renderLocationInfo(location) {
+  document.getElementById("currentLocationName").textContent =
+    location?.name || "선택 위치";
+
+  document.getElementById("currentLocationCoord").textContent =
+    `${Number(location.lat).toFixed(6)}, ${Number(location.lon).toFixed(6)}`;
 }
 
 function getDateRowSpanMap(rows) {

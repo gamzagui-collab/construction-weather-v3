@@ -27,6 +27,8 @@ export default {
     try {
       if (url.pathname === "/forecast") return await handleForecast(request, env);
       if (url.pathname === "/geocode") return await handleGeocode(request);
+      if (url.pathname === "/reverse") return await handleReverse(request);
+
       if (url.pathname === "/health") {
         return jsonResponse(request, {
           ok: true,
@@ -38,7 +40,7 @@ export default {
       return jsonResponse(request, {
         ok: false,
         message: "지원하지 않는 경로입니다.",
-        available: ["/forecast", "/geocode", "/health"],
+        available: ["/forecast", "/geocode", "/reverse", "/health"],
         brand: BRAND
       }, 404);
     } catch (error) {
@@ -565,4 +567,67 @@ async function handleGeocode(request) {
   }));
 
   return jsonResponse(request, data, 200, GEOCODE_CACHE_SECONDS);
+}
+async function handleReverse(request) {
+  const url = new URL(request.url);
+
+  const lat = Number(url.searchParams.get("lat"));
+  const lon = Number(url.searchParams.get("lon"));
+
+  if (!Number.isFinite(lat) || !Number.isFinite(lon)) {
+    return jsonResponse(request, {
+      ok: false,
+      message: "lat, lon 값이 필요합니다."
+    }, 400);
+  }
+
+  const target =
+    `https://nominatim.openstreetmap.org/reverse` +
+    `?lat=${encodeURIComponent(lat)}` +
+    `&lon=${encodeURIComponent(lon)}` +
+    `&format=jsonv2` +
+    `&accept-language=ko`;
+
+  const response = await fetch(target, {
+    headers: {
+      "User-Agent": "GAMZAGUI Construction Weather v3.0"
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error(`역지오코딩 실패: ${response.status}`);
+  }
+
+  const json = await response.json();
+  const address = json.address || {};
+
+  const name =
+    address.city ||
+    address.county ||
+    address.town ||
+    address.village ||
+    address.suburb ||
+    address.neighbourhood ||
+    json.display_name ||
+    "지도 선택 좌표";
+
+  const detail =
+    [
+      address.state,
+      address.county,
+      address.city,
+      address.town,
+      address.village,
+      address.suburb
+    ]
+      .filter(Boolean)
+      .filter((v, i, arr) => arr.indexOf(v) === i)
+      .join(" ");
+
+  return jsonResponse(request, {
+    ok: true,
+    name: detail || name,
+    lat,
+    lon
+  });
 }
