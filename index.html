@@ -3,27 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>GAMZAGUI Construction Weather v3.0</title>
-
+  <title>GAMZAGUI Construction Weather v3.1</title>
   <link rel="stylesheet" href="./css/style.css" />
-
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  />
-
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
-
 <body>
   <header class="top-header">
     <div>
       <h1>건설현장 강수 예보</h1>
       <p>콘크리트 타설 및 현장 작업 판단용</p>
     </div>
-
     <div class="header-actions">
       <span id="currentTime">현재 시각: -</span>
       <button id="darkModeBtn">다크모드</button>
@@ -35,65 +26,33 @@
     <section class="card search-card">
       <div class="form-group">
         <label for="regionSearch">지역 검색</label>
-        <input
-          id="regionSearch"
-          type="text"
-          placeholder="예: 김제시, 백산면, 봉동읍, 군산 옥서면"
-        />
+        <input id="regionSearch" type="text" placeholder="예: 김제시, 백산면, 봉동읍, 군산 옥서면" />
       </div>
-
       <div class="form-group">
         <label for="regionResult">검색 결과</label>
-        <select id="regionResult">
-          <option value="">검색 후 선택</option>
-        </select>
+        <select id="regionResult"><option value="">검색 후 선택</option></select>
       </div>
-
       <div class="form-group">
         <label for="customCoord">직접 좌표</label>
-        <input
-          id="customCoord"
-          type="text"
-          placeholder="예: 35.8036,126.8809"
-        />
+        <input id="customCoord" type="text" placeholder="예: 35.8036,126.8809" />
       </div>
-
       <button id="searchBtn" class="primary-btn">예보 조회</button>
     </section>
 
-    <section class="summary-grid">
-      <div class="summary-card">
-        <span>비 시작</span>
-        <strong id="rainStart">-</strong>
-      </div>
-
-      <div class="summary-card">
-        <span>비 종료</span>
-        <strong id="rainEnd">-</strong>
-      </div>
-
-      <div class="summary-card">
-        <span>누적 강수량</span>
-        <strong id="totalRain">-</strong>
-      </div>
-
-      <div class="summary-card">
-        <span>작업 가능 시간</span>
-        <strong id="workableHours">-</strong>
-      </div>
-
-      <div class="summary-card">
-        <span>예보 일치도</span>
-        <strong id="agreementSummary">-</strong>
+    <section class="location-banner">
+      <div>
+        <span class="location-label">현재 조회 지역</span>
+        <strong id="currentLocationName">전북 김제시</strong>
+        <small id="currentLocationCoord">35.803600, 126.880900</small>
       </div>
     </section>
 
-    <section class="location-banner">
-     <div>
-        <span class="location-label">현재 조회 지역</span>
-        <strong id="currentLocationName">전북 김제시</strong>
-        <small id="currentLocationCoord">35.8036, 126.8809</small>
-      </div>
+    <section class="summary-grid">
+      <div class="summary-card"><span>비 시작</span><strong id="rainStart">-</strong></div>
+      <div class="summary-card"><span>비 종료</span><strong id="rainEnd">-</strong></div>
+      <div class="summary-card"><span>누적 강수량</span><strong id="totalRain">-</strong></div>
+      <div class="summary-card"><span>작업 가능 시간</span><strong id="workableHours">-</strong></div>
+      <div class="summary-card"><span>예보 일치도</span><strong id="agreementSummary">-</strong></div>
     </section>
 
     <section class="card recommendation-card">
@@ -109,20 +68,17 @@
         </div>
         <div id="selectMap" class="map-box"></div>
       </section>
-
       <section class="card">
         <div class="section-title">
           <h2>Windy 강수 지도</h2>
           <p>비구름과 강수 흐름 확인용입니다.</p>
         </div>
-        <iframe id="windyFrame" class="windy-frame" loading="lazy"></iframe>
+        <iframe id="windyFrame" class="windy-frame" loading="lazy" title="Windy 강수 지도"></iframe>
       </section>
     </section>
 
     <section class="card">
-      <div class="section-title">
-        <h2>모델별 강수량 그래프</h2>
-      </div>
+      <div class="section-title"><h2>모델별 강수량 그래프</h2></div>
       <canvas id="rainChart"></canvas>
     </section>
 
@@ -134,7 +90,6 @@
           <button id="printBtn" class="sub-btn">PDF 출력</button>
         </div>
       </div>
-
       <div class="risk-guide">
         <span>위험도 기준</span>
         <b class="guide-green">0~1mm 작업 가능</b>
@@ -142,7 +97,6 @@
         <b class="guide-orange">5~10mm 타설 주의</b>
         <b class="guide-red">10mm 이상 타설 금지</b>
       </div>
-
       <div class="table-wrap">
         <table>
           <thead>
@@ -150,8 +104,6 @@
               <th>날짜</th>
               <th>시간</th>
               <th>KMA<br><small>1~3일 mm<br>4~7일 강수확률</small></th>
-              <small>한국기상청 단기예보<br>1~3일 mm</small>
-              </th>
               <th>ECMWF<br><small>유럽중기예보센터</small></th>
               <th>GFS<br><small>미국 전지구 모델</small></th>
               <th>JMA<br><small>일본기상청</small></th>
@@ -160,7 +112,6 @@
               <th>일치도</th>
             </tr>
           </thead>
-
           <tbody id="forecastTableBody"></tbody>
         </table>
       </div>
@@ -170,7 +121,7 @@
   <footer class="brand-footer">
     <strong>GAMZAGUI</strong>
     <span>Construction Weather</span>
-    <em>v3.0.0</em>
+    <em>v3.1.0</em>
   </footer>
 
   <script src="./js/regions.js"></script>
