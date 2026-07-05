@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>GAMZAGUI Construction Weather v3.0</title>
+
+  <link rel="stylesheet" href="./css/style.css" />
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+
+<body>
+  <header class="top-header">
+    <div>
+      <h1>건설현장 강수 예보</h1>
+      <p>콘크리트 타설 및 현장 작업 판단용</p>
+    </div>
+
+    <div class="header-actions">
+      <span id="currentTime">현재 시각: -</span>
+      <button id="darkModeBtn">다크모드</button>
+      <button id="shareBtn">공유 링크</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="card search-card">
+      <div class="form-group">
+        <label for="regionSearch">지역 검색</label>
+        <input
+          id="regionSearch"
+          type="text"
+          placeholder="예: 김제시, 백산면, 봉동읍, 군산 옥서면"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="regionResult">검색 결과</label>
+        <select id="regionResult">
+          <option value="">검색 후 선택</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="customCoord">직접 좌표</label>
+        <input
+          id="customCoord"
+          type="text"
+          placeholder="예: 35.8036,126.8809"
+        />
+      </div>
+
+      <button id="searchBtn" class="primary-btn">예보 조회</button>
+    </section>
+
+    <section class="summary-grid">
+      <div class="summary-card">
+        <span>비 시작</span>
+        <strong id="rainStart">-</strong>
+      </div>
+
+      <div class="summary-card">
+        <span>비 종료</span>
+        <strong id="rainEnd">-</strong>
+      </div>
+
+      <div class="summary-card">
+        <span>누적 강수량</span>
+        <strong id="totalRain">-</strong>
+      </div>
+
+      <div class="summary-card">
+        <span>작업 가능 시간</span>
+        <strong id="workableHours">-</strong>
+      </div>
+
+      <div class="summary-card">
+        <span>예보 일치도</span>
+        <strong id="agreementSummary">-</strong>
+      </div>
+    </section>
+
+    <section class="card recommendation-card">
+      <h2>현장 판단 요약</h2>
+      <p id="recommendationText">예보를 조회하면 자동 판단 결과가 표시됩니다.</p>
+    </section>
+
+    <section class="map-grid">
+      <section class="card">
+        <div class="section-title">
+          <h2>좌표 선택 지도</h2>
+          <p>지도를 클릭하면 해당 좌표로 예보를 조회할 수 있습니다.</p>
+        </div>
+        <div id="selectMap" class="map-box"></div>
+      </section>
+
+      <section class="card">
+        <div class="section-title">
+          <h2>Windy 강수 지도</h2>
+          <p>비구름과 강수 흐름 확인용입니다.</p>
+        </div>
+        <iframe id="windyFrame" class="windy-frame" loading="lazy"></iframe>
+      </section>
+    </section>
+
+    <section class="card">
+      <div class="section-title">
+        <h2>모델별 강수량 그래프</h2>
+      </div>
+      <canvas id="rainChart"></canvas>
+    </section>
+
+    <section class="card">
+      <div class="section-title table-actions">
+        <h2>3시간 단위 강수 예보</h2>
+        <div>
+          <button id="csvBtn" class="sub-btn">CSV 다운로드</button>
+          <button id="printBtn" class="sub-btn">PDF 출력</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>날짜</th>
+              <th>시간</th>
+              <th>KMA<br><small>한국기상청</small></th>
+              <th>ECMWF<br><small>유럽중기예보센터</small></th>
+              <th>GFS<br><small>미국 전지구 모델</small></th>
+              <th>JMA<br><small>일본기상청</small></th>
+              <th>평균</th>
+              <th>위험도</th>
+              <th>일치도</th>
+            </tr>
+          </thead>
+
+          <tbody id="forecastTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="brand-footer">
+    <strong>GAMZAGUI</strong>
+    <span>Construction Weather</span>
+    <em>v3.0.0</em>
+  </footer>
+
+  <script src="./js/regions.js"></script>
+  <script src="./js/api.js"></script>
+  <script src="./js/ui.js"></script>
+  <script src="./js/app.js"></script>
+</body>
+</html>
