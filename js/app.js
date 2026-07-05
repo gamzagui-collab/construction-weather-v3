@@ -32,8 +32,54 @@ function initRegionSelect(){ REGION_LIST.forEach(region=>{ const option=document
 function applySharedParams(){ const p=new URLSearchParams(window.location.search); const lat=p.get("lat"), lon=p.get("lon"), name=p.get("name"), region=p.get("region"); if(lat&&lon){ currentLocation={name:name||"공유 좌표",lat:Number(lat),lon:Number(lon),key:"shared",source:"shared"}; customCoord.value=`${currentLocation.lat},${currentLocation.lon}`; regionSearch.value=currentLocation.name; setRegionResultSingle(currentLocation); renderLocationInfo(currentLocation); return; } if(region&&REGION_MAP[region]){ const r=REGION_MAP[region]; currentLocation={name:r.name,lat:r.lat,lon:r.lon,key:r.key,source:"local"}; regionSearch.value=r.name; setRegionResultSingle(currentLocation); renderLocationInfo(currentLocation); } }
 function setRegionResultSingle(location){ regionResult.innerHTML=""; const option=document.createElement("option"); option.value=JSON.stringify(location); option.textContent=location.name; regionResult.appendChild(option); regionResult.value=option.value; }
 function setRegionResultList(list){ regionResult.innerHTML=""; list.forEach(item=>{ const option=document.createElement("option"); option.value=JSON.stringify(item); option.textContent=item.name; regionResult.appendChild(option); }); if(list.length){ regionResult.selectedIndex=0; currentLocation=list[0]; } }
-function handleRegionInput(){ clearTimeout(debounceTimer); debounceTimer=setTimeout(async()=>{ const keyword=regionSearch.value.trim(); if(!keyword) return; const local=getRegionFromLocalKeyword(keyword); if(local){ setRegionResultList([local]); return; } try{ const geo=await searchRegionByWorker(keyword); if(geo.ok&&geo.results.length) setRegionResultList(geo.results.map(normalizeGeocodeResult)); }catch(error){ console.warn("지역 검색 실패:",error); } },500); }
-function handleRegionSelect(){ if(!regionResult.value) return; try{ currentLocation=JSON.parse(regionResult.value); regionSearch.value=currentLocation.name; customCoord.value=""; moveMapTo(currentLocation.lat,currentLocation.lon); updateWindyMap(currentLocation.lat,currentLocation.lon); renderLocationInfo(currentLocation); }catch(error){ console.warn("지역 선택 파싱 실패:",error); } }
+function handleRegionInput() {
+  // 지역명을 직접 입력하기 시작하면 이전 지도 좌표/직접좌표는 해제
+  customCoord.value = "";
+
+  clearTimeout(debounceTimer);
+
+  debounceTimer = setTimeout(async () => {
+    const keyword = regionSearch.value.trim();
+
+    if (!keyword) return;
+
+    const local = getRegionFromLocalKeyword(keyword);
+
+    if (local) {
+      setRegionResultList([local]);
+      return;
+    }
+
+    try {
+      const geo = await searchRegionByWorker(keyword);
+
+      if (geo.ok && geo.results.length) {
+        const normalized = geo.results.map(normalizeGeocodeResult);
+        setRegionResultList(normalized);
+      }
+    } catch (error) {
+      console.warn("지역 검색 실패:", error);
+    }
+  }, 500);
+}
+function handleRegionSelect() {
+  if (!regionResult.value) return;
+
+  try {
+    currentLocation = JSON.parse(regionResult.value);
+
+    // 검색 결과를 선택하면 직접좌표는 해제
+    customCoord.value = "";
+
+    regionSearch.value = currentLocation.name;
+
+    moveMapTo(currentLocation.lat, currentLocation.lon);
+    updateWindyMap(currentLocation.lat, currentLocation.lon);
+    renderLocationInfo(currentLocation);
+  } catch (error) {
+    console.warn("지역 선택 파싱 실패:", error);
+  }
+}
 async function handleSearch(){ searchBtn.disabled=true; searchBtn.textContent="조회 중..."; try{ const coord=parseCoordInput(customCoord.value); if(coord){ currentLocation={...coord,key:"custom",source:"coordinate"}; regionSearch.value=currentLocation.name; setRegionResultSingle(currentLocation); } if(!currentLocation){ const d=REGION_MAP[DEFAULT_REGION_KEY]; currentLocation={name:d.name,lat:d.lat,lon:d.lon,key:d.key,source:"local"}; regionSearch.value=currentLocation.name; setRegionResultSingle(currentLocation); } regionSearch.value=currentLocation.name; renderLocationInfo(currentLocation); moveMapTo(currentLocation.lat,currentLocation.lon); updateWindyMap(currentLocation.lat,currentLocation.lon); const forecast=await fetchForecastFromWorker(currentLocation); currentRows=forecast.rows||[]; renderSummary(forecast.summary||{}); renderTable(currentRows); renderChart(currentRows); renderBrandInfo(forecast.brand, forecast.meta); console.log("API 상태:", forecast.status); }catch(error){ console.error("예보 조회 실패:", error); alert(error.message||"예보 조회에 실패했습니다."); }finally{ searchBtn.disabled=false; searchBtn.textContent="예보 조회"; } }
 function initMap(){ const d=REGION_MAP[DEFAULT_REGION_KEY]; selectMap=L.map("selectMap").setView([d.lat,d.lon],10); L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:18,attribution:"&copy; OpenStreetMap"}).addTo(selectMap); selectMarker=L.marker([d.lat,d.lon]).addTo(selectMap); selectMap.on("click", async(event)=>{ const lat=Number(event.latlng.lat.toFixed(6)); const lon=Number(event.latlng.lng.toFixed(6)); let placeName="지도 선택 좌표"; try{ const reverse=await reverseGeocodeByWorker(lat,lon); if(reverse.ok&&reverse.name) placeName=reverse.name; }catch(error){ console.warn("역지오코딩 실패:", error); } currentLocation={name:placeName,lat,lon,key:"map",source:"map"}; customCoord.value=`${lat},${lon}`; regionSearch.value=placeName; setRegionResultSingle(currentLocation); moveMapTo(lat,lon); updateWindyMap(lat,lon); renderLocationInfo(currentLocation); }); updateWindyMap(d.lat,d.lon); }
 function moveMapTo(lat,lon){ if(!selectMap||!selectMarker) return; selectMap.setView([lat,lon],10); selectMarker.setLatLng([lat,lon]); }
