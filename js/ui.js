@@ -16,7 +16,104 @@ function renderLocationInfo(location){ document.getElementById("currentLocationN
 function renderSummary(summary){ document.getElementById("rainStart").textContent=summary.rainStart||"-"; document.getElementById("rainEnd").textContent=summary.rainEnd||"-"; document.getElementById("totalRain").textContent=summary.totalRain||"-"; document.getElementById("workableHours").textContent=summary.workableHours||"-"; document.getElementById("agreementSummary").textContent=summary.agreementSummary||"-"; document.getElementById("recommendationText").textContent=summary.recommendation||"예보 판단 자료가 부족합니다."; }
 function renderTable(rows){ const tableBody=document.getElementById("forecastTableBody"); tableBody.innerHTML=""; const dateRowSpanMap=getDateRowSpanMap(rows); const renderedDates=new Set(); rows.forEach(row=>{ const tr=document.createElement("tr"); let dateCell=""; if(!renderedDates.has(row.date)){ dateCell=`<td rowspan="${dateRowSpanMap[row.date]}" class="date-cell">${row.date}<br><small>(${row.weekday})</small></td>`; renderedDates.add(row.date); } tr.innerHTML=`${dateCell}<td>${row.hour}</td><td class="${getRainCellClass(row.kma)}">${formatRain(row.kma)}</td><td class="${getRainCellClass(row.ecmwf)}">${formatRain(row.ecmwf)}</td><td class="${getRainCellClass(row.gfs)}">${formatRain(row.gfs)}</td><td class="${getRainCellClass(row.jma)}">${formatRain(row.jma)}</td><td class="${getRainCellClass(row.avg)}">${formatAvg(row.avg)}</td><td><span class="risk-badge risk-${row.riskCode}">${row.riskLabel}</span></td><td><span class="risk-badge agreement-${row.agreementCode}">${row.agreementLabel} ${row.agreementStars}</span></td>`; tableBody.appendChild(tr); }); }
 let rainChart=null;
-function renderChart(rows){ const ctx=document.getElementById("rainChart"); const labels=rows.map(row=>`${row.date} ${row.hour}`); const asNumber=v=> typeof v==="number" ? v : null; const data={ labels, datasets:[ {label:"KMA 한국기상청", data:rows.map(row=>asNumber(row.kma))}, {label:"ECMWF 유럽중기예보센터", data:rows.map(row=>row.ecmwf)}, {label:"GFS 미국 전지구 모델", data:rows.map(row=>row.gfs)}, {label:"JMA 일본기상청", data:rows.map(row=>row.jma)}, {label:"평균값", data:rows.map(row=>row.avg), borderWidth:3} ]}; if(rainChart) rainChart.destroy(); rainChart=new Chart(ctx,{ type:"line", data, options:{ responsive:true, spanGaps:false, interaction:{mode:"index", intersect:false}, plugins:{ legend:{position:"top"}, tooltip:{ callbacks:{ label:(context)=> context.raw===null ? `${context.dataset.label}: 정보없음` : `${context.dataset.label}: ${context.raw} mm` } } }, scales:{ x:{ticks:{maxRotation:60,minRotation:60}}, y:{beginAtZero:true,title:{display:true,text:"강수량 mm"}} } } }); }
+function renderChart(rows) {
+  const ctx = document.getElementById("rainChart");
+
+  const labels = rows.map((row) => `${row.date} ${row.hour}`);
+
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: "KMA 한국기상청",
+        data: rows.map((row) =>
+          typeof row.kma === "number" ? row.kma : null
+        ),
+        tension: 0.35
+      },
+      {
+        label: "ECMWF 유럽중기예보센터",
+        data: rows.map((row) =>
+          typeof row.ecmwf === "number" ? row.ecmwf : null
+        ),
+        tension: 0.35
+      },
+      {
+        label: "GFS 미국 전지구모델",
+        data: rows.map((row) =>
+          typeof row.gfs === "number" ? row.gfs : null
+        ),
+        tension: 0.35
+      },
+      {
+        label: "JMA 일본기상청",
+        data: rows.map((row) =>
+          typeof row.jma === "number" ? row.jma : null
+        ),
+        tension: 0.35
+      },
+      {
+        label: "평균값",
+        data: rows.map((row) =>
+          typeof row.avg === "number" ? row.avg : null
+        ),
+        tension: 0.35,
+        borderWidth: 3
+      }
+    ]
+  };
+
+  if (rainChart) {
+    rainChart.destroy();
+  }
+
+  rainChart = new Chart(ctx, {
+    type: "line",
+    data,
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      spanGaps: false,
+      interaction: {
+        mode: "index",
+        intersect: false
+      },
+      plugins: {
+        legend: {
+          position: "top"
+        },
+        tooltip: {
+          callbacks: {
+            label(context) {
+              if (context.raw === null) {
+                return `${context.dataset.label}: 정보없음`;
+              }
+
+              return `${context.dataset.label}: ${context.raw} mm`;
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: {
+            autoSkip: true,
+            maxTicksLimit: 32,
+            maxRotation: 60,
+            minRotation: 60
+          }
+        },
+        y: {
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: "강수량 (mm)"
+          }
+        }
+      }
+    }
+  });
+}
 function renderBrandInfo(brand, meta){ const footer=document.querySelector(".brand-footer"); if(!footer) return; const name=brand?.name||"GAMZAGUI"; const title=brand?.title||"Construction Weather"; const version=brand?.version||meta?.version||"v3.1.0"; const cached=meta?.cached?"Cached":"Live"; footer.innerHTML=`<strong>${name}</strong><span>${title}</span><em>${version} · ${cached}</em>`; }
 function updateWindyMap(lat, lon){ const f=document.getElementById("windyFrame"); if(!f) return; f.src=`https://embed.windy.com/embed2.html?lat=${encodeURIComponent(lat)}&lon=${encodeURIComponent(lon)}&detailLat=${encodeURIComponent(lat)}&detailLon=${encodeURIComponent(lon)}&width=650&height=500&zoom=8&level=surface&overlay=rain&product=ecmwf&menu=&message=true&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=m%2Fs&metricTemp=%C2%B0C&radarRange=-1`; }
 function downloadCsv(rows){ if(!rows.length){ alert("다운로드할 데이터가 없습니다."); return; } const val=v=> typeof v === "object" && v !== null ? `${v.value}%(${v.region})` : (v ?? "정보없음"); const header=["날짜","요일","시간","KMA","ECMWF","GFS","JMA","평균값","위험도","예보일치도"]; const body=rows.map(row=>[row.date,row.weekday,row.hour,val(row.kma),val(row.ecmwf),val(row.gfs),val(row.jma),row.avg??"-",row.riskLabel,`${row.agreementLabel} ${row.agreementStars}`]); const csv=[header,...body].map(line=>line.join(",")).join("\n"); const blob=new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8;"}); const url=URL.createObjectURL(blob); const a=document.createElement("a"); a.href=url; a.download="gamzagui_construction_weather.csv"; a.click(); URL.revokeObjectURL(url); }
