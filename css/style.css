@@ -48,3 +48,115 @@ body.dark .rain-lv1, body.dark .rain-lv2, body.dark .rain-lv3, body.dark .rain-l
 @media(max-width:1100px){ .search-card{ grid-template-columns:1fr; } .summary-grid{ grid-template-columns:1fr 1fr; } .map-grid{ grid-template-columns:1fr; } .top-header{ flex-direction:column; align-items:flex-start; gap:15px; } }
 @media(max-width:700px){ .layout{ padding:14px; width:100%; } .summary-grid{ grid-template-columns:1fr; } .location-banner strong{ font-size:22px; } }
 @media print{ .search-card,.header-actions button,.table-actions button,.map-grid{ display:none; } body{ background:white; } .card,.summary-card,.location-banner{ box-shadow:none; border:1px solid #ccc; } }
+@media (max-width: 768px) {
+  .layout {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .top-header {
+    position: static;
+    padding: 14px;
+  }
+
+  .top-header h1 {
+    font-size: 22px;
+  }
+
+  .header-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  #currentTime {
+    grid-column: 1 / -1;
+    font-size: 13px;
+  }
+
+  .card,
+  .summary-card,
+  .location-banner {
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+
+  .search-card,
+  .summary-grid,
+  .map-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px;
+  }
+
+  .summary-card {
+    text-align: left;
+  }
+
+  .summary-card strong {
+    font-size: 18px;
+  }
+
+  .location-banner strong {
+    font-size: 21px;
+  }
+
+  .map-box,
+  .windy-frame {
+    height: 320px;
+  }
+
+  .section-title {
+    display: block;
+  }
+
+  .section-title h2 {
+    font-size: 18px;
+  }
+
+  .section-title p {
+    font-size: 13px;
+  }
+
+  .table-actions {
+    display: block;
+  }
+
+  .table-actions div {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .sub-btn {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    min-width: 980px;
+    font-size: 13px;
+  }
+
+  th,
+  td {
+    padding: 7px 6px;
+    white-space: nowrap;
+  }
+
+  .risk-guide {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .brand-footer {
+    padding: 18px;
+    font-size: 13px;
+  }
+}
