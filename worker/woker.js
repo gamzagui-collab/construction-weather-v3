@@ -104,21 +104,23 @@ async function handleForecast(request, env) {
 
   const slots = generateTimeSlots();
 
-  const [kma, ecmwf, gfs, jma] = await Promise.all([
-    safeSource("kma", "KMA", "한국기상청", () => fetchKma(env, lat, lon, slots)),
-    safeSource("ecmwf", "ECMWF", "유럽중기예보센터", () => fetchOpenMeteo(lat, lon, "ecmwf_ifs025")),
-    safeSource("gfs", "GFS", "미국 전지구 예보모델", () => fetchOpenMeteo(lat, lon, "gfs_global")),
-    safeSource("jma", "JMA", "일본기상청", () => fetchOpenMeteo(lat, lon, "jma_gsm"))
-  ]);
+const [kma, kmaMid, ecmwf, gfs, jma] = await Promise.all([
+  safeSource("kma", "KMA", "한국기상청 단기예보", () => fetchKma(env, lat, lon, slots)),
+  safeSource("kmaMid", "KMA 중기", "한국기상청 중기예보", () => fetchKmaMidForecast(env, lat, lon, name, slots)),
+  safeSource("ecmwf", "ECMWF", "유럽중기예보센터", () => fetchOpenMeteo(lat, lon, "ecmwf_ifs025")),
+  safeSource("gfs", "GFS", "미국 전지구 예보모델", () => fetchOpenMeteo(lat, lon, "gfs_global")),
+  safeSource("jma", "JMA", "일본기상청", () => fetchOpenMeteo(lat, lon, "jma_gsm"))
+]);
 
-  const kmaMap = kma.ok ? kma.data : {};
-  const ecmwfMap = ecmwf.ok ? rowsToMap(aggregateTo3Hours(ecmwf.data)) : {};
-  const gfsMap = gfs.ok ? rowsToMap(aggregateTo3Hours(gfs.data)) : {};
-  const jmaMap = jma.ok ? rowsToMap(aggregateTo3Hours(jma.data)) : {};
+const kmaMap = kma.ok ? kma.data : {};
+const kmaMidMap = kmaMid.ok ? kmaMid.data : {};
+const ecmwfMap = ecmwf.ok ? rowsToMap(aggregateTo3Hours(ecmwf.data)) : {};
+const gfsMap = gfs.ok ? rowsToMap(aggregateTo3Hours(gfs.data)) : {};
+const jmaMap = jma.ok ? rowsToMap(aggregateTo3Hours(jma.data)) : {};
 
   const rows = slots.map((slot) => calculateRow({
     ...slot,
-    kma: kmaMap[slot.time] ?? null,
+    kma: kmaMap[slot.time] ?? kmaMidMap[slot.time] ?? null,
     ecmwf: ecmwfMap[slot.time] ?? null,
     gfs: gfsMap[slot.time] ?? null,
     jma: jmaMap[slot.time] ?? null
@@ -135,10 +137,11 @@ async function handleForecast(request, env) {
       location: { name, lat, lon }
     },
     status: {
-      kma: sourceStatus(kma),
-      ecmwf: sourceStatus(ecmwf),
-      gfs: sourceStatus(gfs),
-      jma: sourceStatus(jma)
+     kma: sourceStatus(kma),
+     kmaMid: sourceStatus(kmaMid),
+     ecmwf: sourceStatus(ecmwf),
+     gfs: sourceStatus(gfs),
+     jma: sourceStatus(jma)
     },
     summary: calculateSummary(rows),
     rows
@@ -630,4 +633,158 @@ async function handleReverse(request) {
     lat,
     lon
   });
+}
+async function fetchKmaMidForecast(env, lat, lon, name, slots) {
+  if (!env.KMA_API_KEY) {
+    throw new Error("KMA_API_KEY Secret이 없습니다.");
+  }
+
+  const reg = getKmaMidLandRegion(name, lat, lon);
+  const tmFc = getKmaMidBaseTime();
+
+  const target =
+    `https://apis.data.go.kr/1360000/MidFcstInfoService/getMidLandFcst` +
+    `?serviceKey=${env.KMA_API_KEY}` +
+    `&pageNo=1` +
+    `&numOfRows=10` +
+    `&dataType=JSON` +
+    `&regId=${reg.regId}` +
+    `&tmFc=${tmFc}`;
+
+  const response = await fetch(target);
+
+  if (!response.ok) {
+    throw new Error(`KMA 중기예보 HTTP ${response.status}`);
+  }
+
+  const json = await response.json();
+
+  const code = json?.response?.header?.resultCode;
+  const msg = json?.response?.header?.resultMsg;
+
+  if (code !== "00") {
+    throw new Error(`KMA 중기예보 오류: ${code} / ${msg}`);
+  }
+
+  const item = json?.response?.body?.items?.item?.[0];
+
+  if (!item) {
+    throw new Error("KMA 중기예보 데이터 없음");
+  }
+
+  const today = getKstDateOnly(new Date());
+  const result = {};
+
+  slots.forEach((slot) => {
+    const slotDate = parseKstDateOnly(slot.date);
+    const dayDiff = Math.round((slotDate - today) / 86400000);
+
+    if (dayDiff < 4 || dayDiff > 7) {
+      return;
+    }
+
+    const hour = Number(slot.hour.slice(0, 2));
+    const ampm = hour < 12 ? "Am" : "Pm";
+    const key = `rnSt${dayDiff}${ampm}`;
+    const probability = Number(item[key]);
+
+    if (Number.isFinite(probability)) {
+      result[slot.time] = {
+        type: "probability",
+        value: probability,
+        unit: "%",
+        source: "KMA 중기예보",
+        region: reg.label
+      };
+    }
+  });
+
+  return result;
+}
+
+function getKmaMidBaseTime() {
+  const now = new Date(Date.now() + 9 * 3600000);
+
+  let yyyy = now.getUTCFullYear();
+  let mm = String(now.getUTCMonth() + 1).padStart(2, "0");
+  let dd = String(now.getUTCDate()).padStart(2, "0");
+
+  let hour = now.getUTCHours();
+  let baseHour = "1800";
+
+  if (hour >= 8 && hour < 20) {
+    baseHour = "0600";
+  } else if (hour < 8) {
+    now.setUTCDate(now.getUTCDate() - 1);
+    yyyy = now.getUTCFullYear();
+    mm = String(now.getUTCMonth() + 1).padStart(2, "0");
+    dd = String(now.getUTCDate()).padStart(2, "0");
+    baseHour = "1800";
+  }
+
+  return `${yyyy}${mm}${dd}${baseHour}`;
+}
+
+function getKmaMidLandRegion(name, lat, lon) {
+  const text = String(name || "");
+
+  if (text.includes("서울") || text.includes("인천") || text.includes("경기")) {
+    return { regId: "11B00000", label: "수도권" };
+  }
+
+  if (text.includes("강원")) {
+    if (lon >= 128.2) return { regId: "11D20000", label: "강원영동" };
+    return { regId: "11D10000", label: "강원영서" };
+  }
+
+  if (text.includes("충북")) return { regId: "11C10000", label: "충북권" };
+
+  if (text.includes("충남") || text.includes("대전") || text.includes("세종")) {
+    return { regId: "11C20000", label: "충남권" };
+  }
+
+  if (
+    text.includes("전북") ||
+    text.includes("김제") ||
+    text.includes("전주") ||
+    text.includes("익산") ||
+    text.includes("군산") ||
+    text.includes("정읍") ||
+    text.includes("완주")
+  ) {
+    return { regId: "11F10000", label: "전북권" };
+  }
+
+  if (text.includes("전남") || text.includes("광주")) {
+    return { regId: "11F20000", label: "전남권" };
+  }
+
+  if (text.includes("경북") || text.includes("대구")) {
+    return { regId: "11H10000", label: "경북권" };
+  }
+
+  if (text.includes("경남") || text.includes("부산") || text.includes("울산")) {
+    return { regId: "11H20000", label: "경남권" };
+  }
+
+  if (text.includes("제주")) return { regId: "11G00000", label: "제주권" };
+
+  if (lat >= 37.0 && lon <= 127.8) return { regId: "11B00000", label: "수도권" };
+  if (lat >= 36.0 && lon <= 127.7) return { regId: "11C20000", label: "충남권" };
+  if (lat >= 35.3 && lat < 36.2 && lon < 127.7) return { regId: "11F10000", label: "전북권" };
+  if (lat < 35.3 && lon < 127.8) return { regId: "11F20000", label: "전남권" };
+  if (lon >= 128.0 && lat >= 35.5) return { regId: "11H10000", label: "경북권" };
+  if (lon >= 128.0 && lat < 35.5) return { regId: "11H20000", label: "경남권" };
+
+  return { regId: "11F10000", label: "전북권" };
+}
+
+function getKstDateOnly(date) {
+  const kst = new Date(date.getTime() + 9 * 3600000);
+  return new Date(Date.UTC(kst.getUTCFullYear(), kst.getUTCMonth(), kst.getUTCDate()));
+}
+
+function parseKstDateOnly(dateText) {
+  const [y, m, d] = dateText.split("-").map(Number);
+  return new Date(Date.UTC(y, m - 1, d));
 }

@@ -625,4 +625,51 @@ body.dark .agreement-low {
   color: #111827 !important;
 }
 
+.probability-value {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.probability-value small {
+  font-size: 11px;
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+.prob-lv1 {
+  background: #f8fafc;
+  color: #111827 !important;
+}
+
+.prob-lv2 {
+  background: #ecfccb;
+  color: #111827 !important;
+}
+
+.prob-lv3 {
+  background: #fef9c3;
+  color: #111827 !important;
+}
+
+.prob-lv4 {
+  background: #fed7aa;
+  color: #111827 !important;
+}
+
+.prob-lv5 {
+  background: #fecaca;
+  color: #111827 !important;
+}
+
+body.dark .prob-lv1,
+body.dark .prob-lv2,
+body.dark .prob-lv3,
+body.dark .prob-lv4,
+body.dark .prob-lv5 {
+  color: #111827 !important;
+}
+
 }

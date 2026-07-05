@@ -1,4 +1,13 @@
 function formatRain(value) {
+  if (typeof value === "object" && value !== null && value.type === "probability") {
+    return `
+      <span class="probability-value">
+        ${value.value}%
+        <small>중기 · ${value.region}</small>
+      </span>
+    `;
+  }
+
   if (typeof value !== "number" || Number.isNaN(value)) {
     return `<span class="no-data">정보없음</span>`;
   }
@@ -15,6 +24,14 @@ function formatAvg(value) {
 }
 
 function getRainCellClass(value) {
+  if (typeof value === "object" && value !== null && value.type === "probability") {
+    if (value.value <= 20) return "prob-lv1";
+    if (value.value <= 40) return "prob-lv2";
+    if (value.value <= 60) return "prob-lv3";
+    if (value.value <= 80) return "prob-lv4";
+    return "prob-lv5";
+  }
+
   if (typeof value !== "number" || Number.isNaN(value)) return "rain-empty";
 
   if (value === 0) return "rain-zero";
