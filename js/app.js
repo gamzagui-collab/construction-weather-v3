@@ -129,3 +129,235 @@ function initMap(){
 function moveMapTo(lat,lon){ if(!selectMap||!selectMarker) return; selectMap.setView([lat,lon],10); selectMarker.setLatLng([lat,lon]); }
 function copyShareLink(){ if(!currentLocation) return alert("공유할 위치가 없습니다."); const url=new URL(window.location.href); url.search=""; if(currentLocation.source==="local"&&currentLocation.key){ url.searchParams.set("region",currentLocation.key); } else { url.searchParams.set("lat",currentLocation.lat); url.searchParams.set("lon",currentLocation.lon); url.searchParams.set("name",currentLocation.name); } navigator.clipboard.writeText(url.toString()).then(()=>alert("공유 링크가 복사되었습니다.")).catch(()=>prompt("아래 링크를 복사하세요.",url.toString())); }
 document.addEventListener("DOMContentLoaded", init);
+
+/* =========================================================
+   v4.6 Field Guide DB integration
+   - 공종 DB 검색
+   - 자주 찾는 공종 상단 표시
+   - 선택 공종 localStorage 저장
+   ========================================================= */
+var FIELD_WORK_DB = null;
+var FIELD_WORK_ITEMS = [];
+var FIELD_WORK_DETAILS = {};
+var FIELD_SELECTED_WORK_IDS = new Set();
+var FIELD_LAST_SEARCH_IDS = [];
+
+async function initFieldGuideInputs(){
+  restoreGuideSelections();
+  await loadFieldWorkDb();
+  initWorkDbSelector();
+
+  document.querySelectorAll(".guide-role").forEach((el)=>{
+    el.addEventListener("change",()=>{
+      saveGuideSelections();
+      renderFieldGuide(currentRows,currentSafetyRows);
+    });
+  });
+
+  const selectRoles = document.getElementById("selectAllRolesBtn");
+  const clearRoles = document.getElementById("clearRolesBtn");
+  if (selectRoles) selectRoles.addEventListener("click", () => setGuideGroupChecked(".guide-role", true));
+  if (clearRoles) clearRoles.addEventListener("click", () => setGuideGroupChecked(".guide-role", false));
+
+  const copyBtn=document.getElementById("copyTbmBtn");
+  if(copyBtn){
+    copyBtn.addEventListener("click",()=>{
+      const text=document.getElementById("tbmText")?.textContent || "";
+      navigator.clipboard.writeText(text).then(()=>alert("TBM 문구가 복사되었습니다.")).catch(()=>prompt("아래 문구를 복사하세요.", text));
+    });
+  }
+
+  renderFieldGuide(currentRows,currentSafetyRows);
+}
+
+function setGuideGroupChecked(selector, checked) {
+  document.querySelectorAll(selector).forEach((el) => { el.checked = checked; });
+  saveGuideSelections();
+  renderFieldGuide(currentRows, currentSafetyRows);
+}
+
+function saveGuideSelections(){
+  const roles=[...document.querySelectorAll(".guide-role:checked")].map((el)=>el.value);
+  localStorage.setItem("guideRoles", JSON.stringify(roles));
+  localStorage.setItem("guideWorkIds", JSON.stringify([...FIELD_SELECTED_WORK_IDS]));
+}
+
+function restoreGuideSelections(){
+  const roles=JSON.parse(localStorage.getItem("guideRoles")||"[]");
+  const ids=JSON.parse(localStorage.getItem("guideWorkIds")||"[]");
+  document.querySelectorAll(".guide-role").forEach((el)=>{ el.checked=roles.includes(el.value); });
+  FIELD_SELECTED_WORK_IDS = new Set(ids);
+}
+
+async function loadFieldWorkDb(){
+  if (FIELD_WORK_DB) return FIELD_WORK_DB;
+  try{
+    const response = await fetch("data/work_db.json", { cache:"no-store" });
+    if(!response.ok) throw new Error(`공종 DB 로드 실패: ${response.status}`);
+    FIELD_WORK_DB = await response.json();
+    FIELD_WORK_ITEMS = FIELD_WORK_DB.work_items || [];
+    FIELD_WORK_DETAILS = FIELD_WORK_DB.work_item_details || {};
+  }catch(error){
+    console.warn("공종 DB 로드 실패:", error);
+    FIELD_WORK_DB = { work_items:[], work_item_details:{} };
+    FIELD_WORK_ITEMS = [];
+    FIELD_WORK_DETAILS = {};
+  }
+  return FIELD_WORK_DB;
+}
+
+function initWorkDbSelector(){
+  renderFavoriteWorkItems();
+  renderSelectedWorkItems();
+  renderWorkSearchResults(FIELD_WORK_ITEMS.slice(0, 12));
+
+  const input = document.getElementById("workSearchInput");
+  const clearBtn = document.getElementById("clearSelectedWorksBtn");
+  const addVisibleBtn = document.getElementById("addVisibleWorksBtn");
+
+  if(input){
+    input.addEventListener("input",()=>{
+      const result = searchWorkItems(input.value).slice(0, 30);
+      renderWorkSearchResults(result);
+    });
+  }
+
+  if(clearBtn){
+    clearBtn.addEventListener("click",()=>{
+      FIELD_SELECTED_WORK_IDS.clear();
+      saveGuideSelections();
+      renderSelectedWorkItems();
+      renderFieldGuide(currentRows,currentSafetyRows);
+    });
+  }
+
+  if(addVisibleBtn){
+    addVisibleBtn.addEventListener("click",()=>{
+      FIELD_LAST_SEARCH_IDS.forEach((id)=>addWorkItem(id, false));
+      saveGuideSelections();
+      renderSelectedWorkItems();
+      renderFavoriteWorkItems();
+      renderFieldGuide(currentRows,currentSafetyRows);
+    });
+  }
+}
+
+function searchWorkItems(keyword){
+  const q = String(keyword || "").trim().toLowerCase();
+  if(!q) return FIELD_WORK_ITEMS.slice(0, 12);
+  const tokens = q.split(/\s+/).filter(Boolean);
+  return FIELD_WORK_ITEMS
+    .map((item)=>({ item, score: scoreWorkItem(item, tokens) }))
+    .filter((x)=>x.score > 0)
+    .sort((a,b)=>b.score-a.score || Number(a.item.공정순서||999)-Number(b.item.공정순서||999))
+    .map((x)=>x.item);
+}
+
+function scoreWorkItem(item, tokens){
+  const text = `${item.대공종||""} ${item.중공종||""} ${item.세부작업||""} ${item.검색키워드||""}`.toLowerCase();
+  let score = 0;
+  tokens.forEach((t)=>{
+    if((item.세부작업||"").toLowerCase().includes(t)) score += 5;
+    if((item.중공종||"").toLowerCase().includes(t)) score += 3;
+    if((item.대공종||"").toLowerCase().includes(t)) score += 2;
+    if(text.includes(t)) score += 1;
+  });
+  return score;
+}
+
+function workDisplayName(item){
+  if(!item) return "알 수 없는 공종";
+  return item.세부작업 || item.작업명 || item.작업ID || "알 수 없는 공종";
+}
+
+function workPathText(item){
+  if(!item) return "";
+  return [item.대공종, item.중공종, item.주요시기].filter(Boolean).join(" · ");
+}
+
+function renderWorkSearchResults(items){
+  const el = document.getElementById("workSearchResults");
+  if(!el) return;
+  FIELD_LAST_SEARCH_IDS = items.map((item)=>item.작업ID).filter(Boolean);
+  if(!items.length){
+    el.innerHTML = `<p class="guide-empty">검색 결과가 없습니다.</p>`;
+    return;
+  }
+  el.innerHTML = items.map((item)=>`
+    <div class="work-result-card">
+      <strong>${workDisplayName(item)}</strong>
+      <span>${workPathText(item)}</span>
+      <small>기본위험도: ${item.기본위험도 || "-"}</small>
+      <button type="button" class="mini-btn" onclick="addWorkItem('${item.작업ID}')">추가</button>
+    </div>
+  `).join("");
+}
+
+function getFrequentWorkIds(){
+  const counts = JSON.parse(localStorage.getItem("guideWorkUseCounts") || "{}");
+  const sorted = Object.entries(counts).sort((a,b)=>b[1]-a[1]).map(([id])=>id);
+  const defaults = FIELD_WORK_ITEMS
+    .filter((item)=>/콘크리트|철근|거푸집|방수|굴착|크레인|양중|천공|분진|하역|덤프/.test(`${item.세부작업} ${item.검색키워드}`))
+    .map((item)=>item.작업ID);
+  return [...new Set([...sorted, ...defaults])].slice(0, 12);
+}
+
+function renderFavoriteWorkItems(){
+  const el = document.getElementById("favoriteWorkItems");
+  if(!el) return;
+  const ids = getFrequentWorkIds();
+  if(!ids.length){
+    el.innerHTML = `<p class="guide-empty">공종 DB를 불러오는 중입니다.</p>`;
+    return;
+  }
+  el.innerHTML = ids.map((id)=>{
+    const item = FIELD_WORK_ITEMS.find((x)=>x.작업ID===id);
+    if(!item) return "";
+    return `<button type="button" class="work-chip" onclick="addWorkItem('${id}')">${workDisplayName(item)}</button>`;
+  }).join("");
+}
+
+function addWorkItem(id, rerender=true){
+  if(!id) return;
+  FIELD_SELECTED_WORK_IDS.add(id);
+  const counts = JSON.parse(localStorage.getItem("guideWorkUseCounts") || "{}");
+  counts[id] = (counts[id] || 0) + 1;
+  localStorage.setItem("guideWorkUseCounts", JSON.stringify(counts));
+  saveGuideSelections();
+  if(rerender){
+    renderSelectedWorkItems();
+    renderFavoriteWorkItems();
+    renderFieldGuide(currentRows,currentSafetyRows);
+  }
+}
+
+function removeWorkItem(id){
+  FIELD_SELECTED_WORK_IDS.delete(id);
+  saveGuideSelections();
+  renderSelectedWorkItems();
+  renderFieldGuide(currentRows,currentSafetyRows);
+}
+
+function renderSelectedWorkItems(){
+  const el = document.getElementById("selectedWorkItems");
+  if(!el) return;
+  const ids = [...FIELD_SELECTED_WORK_IDS];
+  if(!ids.length){
+    el.innerHTML = `<p class="guide-empty">오늘 공종을 검색하거나 자주 찾는 공종에서 추가하세요.</p>`;
+    return;
+  }
+  el.innerHTML = ids.map((id)=>{
+    const item = FIELD_WORK_ITEMS.find((x)=>x.작업ID===id) || FIELD_WORK_DETAILS[id]?.work_item;
+    return `<span class="selected-work-item">${workDisplayName(item)} <button type="button" onclick="removeWorkItem('${id}')">×</button></span>`;
+  }).join("");
+}
+
+function getSelectedGuideWorkIds(){
+  return [...FIELD_SELECTED_WORK_IDS];
+}
+
+function getSelectedGuideWorkDetails(){
+  return getSelectedGuideWorkIds()
+    .map((id)=>FIELD_WORK_DETAILS[id])
+    .filter(Boolean);
+}

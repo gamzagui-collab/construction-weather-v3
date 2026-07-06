@@ -991,3 +991,157 @@ function buildTbmText(roles, processes, focus) {
 
 function roleName(key){ return ({safety:"안전관리자",construction:"공사관리자",quality:"품질관리자",equipment:"장비담당자",siteManager:"현장소장"})[key] || key; }
 function processName(key){ return ({concrete:"콘크리트 타설",rebar:"철근",formwork:"거푸집",earthwork:"토공",waterproof:"방수",plaster:"미장",lifting:"양중",highwork:"고소작업",exterior:"외부마감",paving:"포장",landscape:"조경", forkliftUnload:"지게차 하역작업", excavation:"굴착작업", dumpTransport:"덤프 운반작업", pileDrilling:"파일 천공작업", craneWork:"크레인작업", grindingDust:"견출·면갈이 분진작업"})[key] || key; }
+
+/* =========================================================
+   v4.6 Field Guide DB rendering
+   ========================================================= */
+function renderFieldGuide(rainRows, safetyRows) {
+  const summaryEl = document.getElementById("guideRiskSummary");
+  const roleEl = document.getElementById("roleChecklist");
+  const processEl = document.getElementById("processChecklist");
+  const tbmEl = document.getElementById("tbmText");
+  const planEl = document.getElementById("guideWorkPlan");
+  const briefingEl = document.getElementById("guideSafetyBriefing");
+  if (!summaryEl || !roleEl || !processEl || !tbmEl) return;
+
+  const roles = [...document.querySelectorAll(".guide-role:checked")].map((el) => el.value);
+  const workDetails = typeof getSelectedGuideWorkDetails === "function" ? getSelectedGuideWorkDetails() : [];
+  const workIds = typeof getSelectedGuideWorkIds === "function" ? getSelectedGuideWorkIds() : [];
+  const legacyProcesses = [...document.querySelectorAll(".guide-process:checked")].map((el) => el.value);
+  const focus = buildGuideFocus(rainRows, safetyRows);
+
+  if (!rainRows?.length && !safetyRows?.length) {
+    summaryEl.innerHTML = `<div class="guide-risk-card"><strong>자료 부족</strong><span>예보 조회 후 오늘의 가이드가 생성됩니다.</span></div>`;
+    roleEl.innerHTML = `<p class="guide-empty">역할을 선택하세요.</p>`;
+    processEl.innerHTML = `<p class="guide-empty">공종 DB를 불러온 뒤 오늘 공종을 선택하세요.</p>`;
+    if (planEl) planEl.innerHTML = `<p class="guide-empty">예보 조회 후 07~17시 작업판단이 표시됩니다.</p>`;
+    if (briefingEl) briefingEl.innerHTML = `<p class="guide-empty">예보 조회 후 건설안전 브리핑이 표시됩니다.</p>`;
+    tbmEl.textContent = "예보를 조회하고 역할·공종을 선택하면 TBM 문구가 자동 생성됩니다.";
+    return;
+  }
+
+  summaryEl.innerHTML = renderGuideRiskCards(focus);
+  roleEl.innerHTML = buildRoleChecklist(roles, focus).map(renderGuideSection).join("") || `<p class="guide-empty">역할을 선택하면 해야 할 일이 표시됩니다.</p>`;
+
+  if (workDetails.length) {
+    processEl.innerHTML = buildDbProcessChecklist(workDetails, roles, focus).map(renderGuideSection).join("");
+  } else {
+    processEl.innerHTML = buildProcessChecklist(legacyProcesses, focus).map(renderGuideSection).join("") || `<p class="guide-empty">공종을 검색해 추가하면 DB 기반 안전·시공·품질·장비 체크리스트가 표시됩니다.</p>`;
+  }
+
+  const selectedLabels = workDetails.length ? workDetails.map((d)=>dbWorkTitle(d)) : legacyProcesses.map(processName);
+  if (planEl) planEl.innerHTML = renderWorkPlan(buildWorkPlan(selectedLabels, focus, true));
+  if (briefingEl) briefingEl.innerHTML = renderSafetyBriefing(focus);
+  tbmEl.textContent = buildTbmText(roles, selectedLabels, focus, true);
+}
+
+function dbWorkTitle(detail){
+  const item = detail?.work_item || {};
+  return item.세부작업 || item.작업명 || item.작업ID || "선택 공종";
+}
+
+function dbWorkPath(detail){
+  const item = detail?.work_item || {};
+  return [item.대공종, item.중공종, item.주요시기].filter(Boolean).join(" · ");
+}
+
+function dbTake(rows, count){
+  return (rows || []).slice(0, count);
+}
+
+function buildDbProcessChecklist(workDetails, roles, focus) {
+  const sections = [];
+  const roleSet = new Set(roles || []);
+  const showAll = !roles || !roles.length;
+  const hot = focus.riskySafetyRange !== "없음";
+  const rain = focus.rainRange !== "없음";
+  const wind = focus.windRange !== "없음";
+
+  workDetails.forEach((detail) => {
+    const title = dbWorkTitle(detail);
+    const path = dbWorkPath(detail);
+    const items = [];
+
+    if (hot) items.push(`${focus.riskySafetyRange} 온열·한랭 건강관리 강화: 수분·휴식·작업자 상태 확인`);
+    if (rain) items.push(`${focus.rainRange} 강수 영향 확인: 보양·배수·미끄럼·품질저하 방지`);
+    if (wind) items.push(`${focus.windRange} 풍속 상승 주의: 자재 날림·양중·고소작업 기준 확인`);
+
+    dbTake(detail.risks, 4).forEach((r)=>{
+      items.push(`[위험요소/${r.위험도 || "-"}] ${r.위험요소 || "위험요소"} · ${r.상황설명 || r.사고유형 || "현장 확인"}`);
+    });
+
+    if (showAll || roleSet.has("safety") || roleSet.has("siteManager")) {
+      dbTake(detail.safety_controls, 4).forEach((s)=>{
+        items.push(`[안전/${s.단계 || ""}] ${s["공사/안전이 해야할 일"] || "안전조치 확인"} · 증빙: ${s["기록/증빙"] || "사진/일지"}`);
+      });
+    }
+
+    if (showAll || roleSet.has("construction") || roleSet.has("siteManager")) {
+      dbTake(detail.construction_controls, 3).forEach((c)=>{
+        items.push(`[시공/${c.단계 || ""}] ${c["공사가 해야할 일"] || "시공관리 확인"} · ${c.확인포인트 || "확인포인트 점검"}`);
+      });
+    }
+
+    if (showAll || roleSet.has("quality")) {
+      dbTake(detail.quality_controls, 3).forEach((q)=>{
+        items.push(`[품질] ${q.관리항목 || "품질항목"} · ${q["관리기준/확인내용"] || "기준 확인"} · ${q.검사시점 || "검사시점 확인"}`);
+      });
+    }
+
+    if (showAll || roleSet.has("equipment") || roleSet.has("safety")) {
+      dbTake(detail.equipment_materials, 3).forEach((e)=>{
+        items.push(`[장비/PPE] ${e["장비/자재/PPE"] || "장비·자재·PPE"} · ${e.관리포인트 || "작업 전 확인"}`);
+      });
+    }
+
+    dbTake(detail.checklists, 4).forEach((c)=>{
+      items.push(`[체크] ${c.체크문항 || "체크문항"} · 증빙: ${c.증빙 || "사진/일지"}`);
+    });
+
+    sections.push({
+      title: `${title}${path ? ` <small class="db-source-note">${path}</small>` : ""}`,
+      items: [...new Set(items)].slice(0, 18)
+    });
+  });
+
+  return sections;
+}
+
+function buildWorkPlan(processesOrLabels, focus, labelsAlready=false) {
+  const selected = (processesOrLabels || []);
+  const names = labelsAlready ? selected : selected.map(processName);
+  const hasRain = focus.rainRange !== "없음";
+  const hasHeat = focus.riskySafetyRange !== "없음";
+  const hasWind = focus.windRange !== "없음";
+  const defaultNames = ["철근·거푸집", "콘크리트 타설", "실내·준비작업", "보양·정리"];
+  const workNames = names.length ? names : defaultNames;
+
+  const score = (label) => {
+    let s = 5;
+    if (hasHeat && /옥외|철근|콘크리트|토공|굴착|하역|덤프|천공|크레인|고소|분진|견출|면갈이/.test(label)) s -= 1;
+    if (hasRain && /콘크리트|방수|외부|토공|굴착|포장|조경/.test(label)) s -= 1;
+    if (hasWind && /양중|크레인|고소|외부|거푸집|하역|천공/.test(label)) s -= 1;
+    return Math.max(2, s);
+  };
+
+  const early = workNames.slice(0, 2).join(" · ") || "옥외 주요공정";
+  const mid = hasHeat ? "그늘·실내·준비작업" : (workNames[2] || workNames[0] || "주요 공정");
+  const late = hasRain || hasWind ? "보양·정리·점검작업" : (workNames[3] || "외부마감·정리");
+
+  return [
+    { time:"07~10", work: early, stars:"★★★★★", note:"기온 상승 전 옥외 고강도 작업 우선 배치" },
+    { time:"10~13", work: workNames[0] || "주요 공정", stars:"★★★★☆", note:"수분·휴식 병행, 강수·풍속 재확인" },
+    { time:"13~16", work: mid, stars: hasHeat ? "★★☆☆☆" : "★★★★☆", note: hasHeat ? "폭염 집중관리, 옥외 고강도 작업 축소" : "작업 지속 가능, 관리감독 순회" },
+    { time:"16~17", work: late, stars: hasRain ? "★★★☆☆" : "★★★★☆", note:"마감 전 보양·장비·현장정리 상태 확인" }
+  ].map((item)=>({ ...item, score: score(item.work) }));
+}
+
+function buildTbmText(roles, processesOrLabels, focus, labelsAlready=false) {
+  const roleText = roles.length ? roles.map(roleName).join(", ") : "전체 관리자";
+  const procText = processesOrLabels.length ? (labelsAlready ? processesOrLabels : processesOrLabels.map(processName)).join(", ") : "주요 공종";
+  const hotLine = focus.riskySafetyRange !== "없음" ? `${focus.riskySafetyRange}에는 체감온도 상승으로 작업자 건강상태를 집중 확인하십시오.` : "온도 위험은 낮지만 기본 수분관리는 유지하십시오.";
+  const rainLine = focus.rainRange !== "없음" ? `${focus.rainRange}에는 강수 영향이 예상되므로 타설·방수·외부작업은 작업 전 재확인하십시오.` : "강수 위험은 낮지만 최신 예보를 확인하십시오.";
+  const windLine = focus.windRange !== "없음" ? `${focus.windRange}에는 풍속 상승 가능성이 있어 양중·고소작업 안전조치를 확인하십시오.` : "풍속 특이사항은 낮습니다.";
+  return `오늘 TBM 전달사항
+작업시간 기준: 07:00~17:00\n\n대상 역할: ${roleText}\n오늘 공종: ${procText}\n\n${hotLine}\n${rainLine}\n${windLine}\n\n선택 공종은 DB 기반 위험요소·안전관리·시공관리·품질관리·장비/PPE 체크리스트를 확인하십시오.\n작업자는 이상 증상이 있으면 즉시 보고하고, 관리자는 위험 시간대 순회점검과 증빙기록을 남기십시오.`;
+}

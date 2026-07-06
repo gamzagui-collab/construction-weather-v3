@@ -353,28 +353,32 @@
 
         <section class="card">
           <div class="section-title">
-            <h2>오늘 공정 선택</h2>
-            <p>오늘 예정된 공정을 체크하면 날씨 조건에 맞는 주의사항이 생성됩니다.</p>
+            <h2>오늘 공종 선택</h2>
+            <p>공종 DB에서 검색해 선택합니다. 자주 쓰는 공종은 상단에 자동 표시됩니다.</p>
           </div>
-          <div class="guide-bulk-actions"><button type="button" id="selectAllProcessesBtn" class="mini-btn">공정 전체 선택</button><button type="button" id="clearProcessesBtn" class="mini-btn">공정 전체 해제</button></div>
-          <div class="check-grid guide-process-grid">
-            <label><input type="checkbox" class="guide-process" value="concrete"> 콘크리트 타설</label>
-            <label><input type="checkbox" class="guide-process" value="rebar"> 철근 조립</label>
-            <label><input type="checkbox" class="guide-process" value="formwork"> 거푸집 설치</label>
-            <label><input type="checkbox" class="guide-process" value="earthwork"> 토공</label>
-            <label><input type="checkbox" class="guide-process" value="waterproof"> 방수</label>
-            <label><input type="checkbox" class="guide-process" value="plaster"> 미장</label>
-            <label><input type="checkbox" class="guide-process" value="lifting"> 양중작업</label>
-            <label><input type="checkbox" class="guide-process" value="highwork"> 고소작업</label>
-            <label><input type="checkbox" class="guide-process" value="exterior"> 외부마감</label>
-            <label><input type="checkbox" class="guide-process" value="paving"> 포장</label>
-            <label><input type="checkbox" class="guide-process" value="landscape"> 조경</label>
-            <label><input type="checkbox" class="guide-process" value="forkliftUnload"> 지게차 하역작업</label>
-            <label><input type="checkbox" class="guide-process" value="excavation"> 굴착작업</label>
-            <label><input type="checkbox" class="guide-process" value="dumpTransport"> 덤프 운반작업</label>
-            <label><input type="checkbox" class="guide-process" value="pileDrilling"> 파일 천공작업</label>
-            <label><input type="checkbox" class="guide-process" value="craneWork"> 크레인작업</label>
-            <label><input type="checkbox" class="guide-process" value="grindingDust"> 견출·면갈이 분진작업</label>
+
+          <div class="work-db-search">
+            <label for="workSearchInput">공종 검색</label>
+            <div class="work-search-row">
+              <input id="workSearchInput" type="search" placeholder="예: 콘크리트, 철근, 방수, 크레인, 천공, 견출, 분진">
+              <button type="button" id="addVisibleWorksBtn" class="mini-btn">검색결과 추가</button>
+              <button type="button" id="clearSelectedWorksBtn" class="mini-btn">선택 해제</button>
+            </div>
+          </div>
+
+          <div class="work-db-block">
+            <h3>자주 찾는 공종</h3>
+            <div id="favoriteWorkItems" class="work-chip-row"></div>
+          </div>
+
+          <div class="work-db-block">
+            <h3>검색 결과</h3>
+            <div id="workSearchResults" class="work-result-list"></div>
+          </div>
+
+          <div class="work-db-block selected-work-block">
+            <h3>오늘 선택한 공종</h3>
+            <div id="selectedWorkItems" class="selected-work-list"></div>
           </div>
         </section>
       </section>
