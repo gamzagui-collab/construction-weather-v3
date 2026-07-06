@@ -1,4 +1,5 @@
 let currentRows = [];
+let currentSafetyRows = [];
 let currentLocation = null;
 let selectMap = null;
 let selectMarker = null;
@@ -12,7 +13,7 @@ const printBtn = document.getElementById("printBtn");
 const darkModeBtn = document.getElementById("darkModeBtn");
 const shareBtn = document.getElementById("shareBtn");
 function init() {
-  initDarkMode(); initClock(); initRegionSelect(); initMap(); applySharedParams();
+  initDarkMode(); initClock(); initRegionSelect(); initTabs(); initMap(); applySharedParams();
   regionSearch.addEventListener("input", handleRegionInput);
   regionResult.addEventListener("change", handleRegionSelect);
   searchBtn.addEventListener("click", handleSearch);
@@ -23,6 +24,16 @@ function init() {
   handleSearch();
 }
 function initClock(){ updateCurrentTime(); setInterval(updateCurrentTime,1000); }
+function initTabs(){
+  document.querySelectorAll(".tab-btn").forEach((btn)=>{
+    btn.addEventListener("click",()=>{
+      const target=btn.dataset.tab;
+      document.querySelectorAll(".tab-btn").forEach((b)=>b.classList.toggle("active",b===btn));
+      document.querySelectorAll(".tab-panel").forEach((panel)=>panel.classList.toggle("active",panel.id===target));
+      if(target==="rainPanel" && rainChart) setTimeout(()=>rainChart.resize(),50);
+    });
+  });
+}
 function updateCurrentTime(){ const el=document.getElementById("currentTime"); if(el) el.textContent=`현재 시각: ${new Date().toLocaleString("ko-KR")}`; }
 function initDarkMode(){ const saved=localStorage.getItem("darkMode"); document.body.classList.toggle("dark", saved==="on"); darkModeBtn.textContent=saved==="on"?"라이트모드":"다크모드"; }
 function toggleDarkMode(){ const isDark=!document.body.classList.contains("dark"); document.body.classList.toggle("dark",isDark); localStorage.setItem("darkMode",isDark?"on":"off"); darkModeBtn.textContent=isDark?"라이트모드":"다크모드"; }
@@ -53,8 +64,8 @@ async function handleSearch(){
     if(coord){ currentLocation={...coord,key:"custom",source:"coordinate"}; regionSearch.value=currentLocation.name; setRegionResultSingle(currentLocation); }
     if(!currentLocation){ const d=REGION_MAP[DEFAULT_REGION_KEY]; currentLocation={name:d.name,lat:d.lat,lon:d.lon,key:d.key,source:"local"}; regionSearch.value=currentLocation.name; setRegionResultSingle(currentLocation); }
     regionSearch.value=currentLocation.name; renderLocationInfo(currentLocation); moveMapTo(currentLocation.lat,currentLocation.lon); updateWindyMap(currentLocation.lat,currentLocation.lon);
-    const forecast=await fetchForecastFromWorker(currentLocation); currentRows=forecast.rows||[];
-    renderSummary(forecast.summary||{}); renderTable(currentRows); renderChart(currentRows); renderBrandInfo(forecast.brand,forecast.meta);
+    const forecast=await fetchForecastFromWorker(currentLocation); currentRows=forecast.rows||[]; currentSafetyRows=forecast.safetyRows||[];
+    renderSummary(forecast.summary||{}); renderTable(currentRows); renderChart(currentRows); renderSafetySummary(forecast.safetySummary||{}); renderSafetyTable(currentSafetyRows); renderBrandInfo(forecast.brand,forecast.meta);
     console.log("API 상태:", forecast.status);
   }catch(e){ console.error("예보 조회 실패:",e); alert(e.message||"예보 조회에 실패했습니다."); }
   finally{ searchBtn.disabled=false; searchBtn.textContent="예보 조회"; }
