@@ -361,3 +361,248 @@ function getSelectedGuideWorkDetails(){
     .map((id)=>FIELD_WORK_DETAILS[id])
     .filter(Boolean);
 }
+
+/* =========================================================
+   v4.7 Work Accordion Selector Override
+   - DB 전체 공종을 대공종별 접기/펼치기로 표시
+   - 검색 시 관련 공종만 표시하고 해당 대분류 자동 펼침
+   - 자주 찾는 공종 상단 유지
+   ========================================================= */
+var FIELD_OPEN_WORK_GROUPS = new Set();
+var FIELD_CURRENT_WORK_FILTER = "";
+
+function initWorkDbSelector(){
+  renderFavoriteWorkItems();
+  renderSelectedWorkItems();
+  renderWorkCategoryAccordion("");
+  renderWorkSearchResults(FIELD_WORK_ITEMS.slice(0, 20));
+
+  const input = document.getElementById("workSearchInput");
+  const clearBtn = document.getElementById("clearSelectedWorksBtn");
+  const addVisibleBtn = document.getElementById("addVisibleWorksBtn");
+  const expandBtn = document.getElementById("expandWorkGroupsBtn");
+  const collapseBtn = document.getElementById("collapseWorkGroupsBtn");
+
+  if(input){
+    input.addEventListener("input",()=>{
+      FIELD_CURRENT_WORK_FILTER = input.value || "";
+      const result = searchWorkItems(FIELD_CURRENT_WORK_FILTER).slice(0, 80);
+      renderWorkSearchResults(result);
+      renderWorkCategoryAccordion(FIELD_CURRENT_WORK_FILTER);
+    });
+  }
+
+  if(clearBtn){
+    clearBtn.addEventListener("click",()=>{
+      FIELD_SELECTED_WORK_IDS.clear();
+      saveGuideSelections();
+      renderSelectedWorkItems();
+      renderFavoriteWorkItems();
+      renderWorkCategoryAccordion(FIELD_CURRENT_WORK_FILTER);
+      renderFieldGuide(currentRows,currentSafetyRows);
+    });
+  }
+
+  if(addVisibleBtn){
+    addVisibleBtn.addEventListener("click",()=>{
+      FIELD_LAST_SEARCH_IDS.forEach((id)=>addWorkItem(id, false));
+      saveGuideSelections();
+      renderSelectedWorkItems();
+      renderFavoriteWorkItems();
+      renderWorkCategoryAccordion(FIELD_CURRENT_WORK_FILTER);
+      renderFieldGuide(currentRows,currentSafetyRows);
+    });
+  }
+
+  if(expandBtn){
+    expandBtn.addEventListener("click",()=>{
+      getGroupedWorkItems(FIELD_CURRENT_WORK_FILTER).forEach((group)=>FIELD_OPEN_WORK_GROUPS.add(group.name));
+      renderWorkCategoryAccordion(FIELD_CURRENT_WORK_FILTER);
+    });
+  }
+
+  if(collapseBtn){
+    collapseBtn.addEventListener("click",()=>{
+      FIELD_OPEN_WORK_GROUPS.clear();
+      renderWorkCategoryAccordion(FIELD_CURRENT_WORK_FILTER);
+    });
+  }
+}
+
+function searchWorkItems(keyword){
+  const q = String(keyword || "").trim().toLowerCase();
+  if(!q) return FIELD_WORK_ITEMS.slice(0, 80);
+  const tokens = q.split(/\s+/).filter(Boolean);
+  return FIELD_WORK_ITEMS
+    .map((item)=>({ item, score: scoreWorkItem(item, tokens) }))
+    .filter((x)=>x.score > 0)
+    .sort((a,b)=>b.score-a.score || Number(a.item.공정순서||999)-Number(b.item.공정순서||999))
+    .map((x)=>x.item);
+}
+
+function getGroupedWorkItems(keyword=""){
+  const items = keyword && keyword.trim() ? searchWorkItems(keyword) : FIELD_WORK_ITEMS.slice();
+  const map = new Map();
+  items.forEach((item)=>{
+    const group = item.대공종 || "기타공종";
+    if(!map.has(group)) map.set(group, []);
+    map.get(group).push(item);
+  });
+  return [...map.entries()]
+    .map(([name, list])=>({
+      name,
+      list: list.sort((a,b)=>Number(a.공정순서||999)-Number(b.공정순서||999))
+    }))
+    .sort((a,b)=>groupOrderScore(a.name)-groupOrderScore(b.name) || a.name.localeCompare(b.name, "ko"));
+}
+
+function groupOrderScore(name){
+  const order = ["가설공사","토공사","지정 및 기초공사","철근콘크리트공사","철골공사","조적공사","방수공사","미장공사","타일공사","석공사","금속공사","창호공사","유리공사","도장공사","수장공사","지붕 및 홈통공사","외장공사","조경공사","부대토목공사","기계설비공사","전기공사","장비작업","해체공사","기타공종"];
+  const idx = order.findIndex((v)=>String(name||"").includes(v) || v.includes(String(name||"")));
+  return idx >= 0 ? idx : 999;
+}
+
+function renderWorkCategoryAccordion(keyword=""){
+  const el = document.getElementById("workCategoryAccordion");
+  if(!el) return;
+
+  const groups = getGroupedWorkItems(keyword);
+  if(!groups.length){
+    el.innerHTML = `<div class="work-empty-line">표시할 공종이 없습니다. 검색어를 다시 입력하세요.</div>`;
+    return;
+  }
+
+  // 검색 중에는 검색 결과가 있는 그룹을 자동으로 펼침
+  if(keyword && keyword.trim()){
+    groups.forEach((group)=>FIELD_OPEN_WORK_GROUPS.add(group.name));
+  } else if(FIELD_OPEN_WORK_GROUPS.size === 0 && groups.length){
+    // 처음 로드 시 주요 첫 그룹 2개만 펼침
+    groups.slice(0, 2).forEach((group)=>FIELD_OPEN_WORK_GROUPS.add(group.name));
+  }
+
+  el.innerHTML = groups.map((group)=>{
+    const selectedCount = group.list.filter((item)=>FIELD_SELECTED_WORK_IDS.has(item.작업ID)).length;
+    const open = FIELD_OPEN_WORK_GROUPS.has(group.name);
+    return `
+      <section class="work-group ${open ? "open" : ""}" data-group="${escapeHtml(group.name)}">
+        <button type="button" class="work-group-header" onclick="toggleWorkCategory('${encodeAttr(group.name)}')">
+          <span class="work-group-title">
+            <strong>${escapeHtml(group.name)}</strong>
+            <span class="work-group-count">${group.list.length}개 · 선택 ${selectedCount}개</span>
+          </span>
+          <span class="work-group-toggle">${open ? "접기 ▲" : "펼치기 ▼"}</span>
+        </button>
+        <div class="work-group-body">
+          <div class="work-group-toolbar">
+            <button type="button" class="mini-btn" onclick="selectWorkGroup('${encodeAttr(group.name)}', true)">이 대분류 전체 선택</button>
+            <button type="button" class="mini-btn" onclick="selectWorkGroup('${encodeAttr(group.name)}', false)">이 대분류 해제</button>
+          </div>
+          <div class="work-check-grid">
+            ${group.list.map(renderWorkCheckCard).join("")}
+          </div>
+        </div>
+      </section>
+    `;
+  }).join("");
+}
+
+function renderWorkCheckCard(item){
+  const id = item.작업ID;
+  const checked = FIELD_SELECTED_WORK_IDS.has(id);
+  return `
+    <label class="work-check-card ${checked ? "checked" : ""}">
+      <input type="checkbox" ${checked ? "checked" : ""} onchange="setWorkItemChecked('${encodeAttr(id)}', this.checked)">
+      <span>
+        <strong>${escapeHtml(workDisplayName(item))}</strong>
+        <small>${escapeHtml([item.중공종, item.주요시기, item.기본위험도 ? `위험도 ${item.기본위험도}` : ""].filter(Boolean).join(" · "))}</small>
+      </span>
+    </label>
+  `;
+}
+
+function toggleWorkCategory(groupName){
+  const name = decodeAttr(groupName);
+  if(FIELD_OPEN_WORK_GROUPS.has(name)) FIELD_OPEN_WORK_GROUPS.delete(name);
+  else FIELD_OPEN_WORK_GROUPS.add(name);
+  renderWorkCategoryAccordion(FIELD_CURRENT_WORK_FILTER);
+}
+
+function selectWorkGroup(groupName, checked){
+  const name = decodeAttr(groupName);
+  const groups = getGroupedWorkItems(FIELD_CURRENT_WORK_FILTER);
+  const group = groups.find((g)=>g.name === name);
+  if(!group) return;
+  group.list.forEach((item)=>{
+    if(checked) FIELD_SELECTED_WORK_IDS.add(item.작업ID);
+    else FIELD_SELECTED_WORK_IDS.delete(item.작업ID);
+  });
+  saveGuideSelections();
+  renderSelectedWorkItems();
+  renderFavoriteWorkItems();
+  renderWorkCategoryAccordion(FIELD_CURRENT_WORK_FILTER);
+  renderFieldGuide(currentRows,currentSafetyRows);
+}
+
+function setWorkItemChecked(id, checked){
+  const workId = decodeAttr(id);
+  if(checked) addWorkItem(workId, false);
+  else FIELD_SELECTED_WORK_IDS.delete(workId);
+  saveGuideSelections();
+  renderSelectedWorkItems();
+  renderFavoriteWorkItems();
+  renderWorkCategoryAccordion(FIELD_CURRENT_WORK_FILTER);
+  renderFieldGuide(currentRows,currentSafetyRows);
+}
+
+function addWorkItem(id, rerender=true){
+  if(!id) return;
+  FIELD_SELECTED_WORK_IDS.add(id);
+  const counts = JSON.parse(localStorage.getItem("guideWorkUseCounts") || "{}");
+  counts[id] = (counts[id] || 0) + 1;
+  localStorage.setItem("guideWorkUseCounts", JSON.stringify(counts));
+  saveGuideSelections();
+  if(rerender){
+    renderSelectedWorkItems();
+    renderFavoriteWorkItems();
+    renderWorkCategoryAccordion(FIELD_CURRENT_WORK_FILTER);
+    renderFieldGuide(currentRows,currentSafetyRows);
+  }
+}
+
+function removeWorkItem(id){
+  FIELD_SELECTED_WORK_IDS.delete(id);
+  saveGuideSelections();
+  renderSelectedWorkItems();
+  renderFavoriteWorkItems();
+  renderWorkCategoryAccordion(FIELD_CURRENT_WORK_FILTER);
+  renderFieldGuide(currentRows,currentSafetyRows);
+}
+
+function renderWorkSearchResults(items){
+  const el = document.getElementById("workSearchResults");
+  if(!el) return;
+  FIELD_LAST_SEARCH_IDS = items.map((item)=>item.작업ID).filter(Boolean);
+  if(!items.length){
+    el.innerHTML = `<p class="guide-empty">검색 결과가 없습니다.</p>`;
+    return;
+  }
+  el.innerHTML = items.slice(0, 24).map((item)=>`
+    <div class="work-result-card">
+      <strong>${escapeHtml(workDisplayName(item))}</strong>
+      <span>${escapeHtml(workPathText(item))}</span>
+      <small>기본위험도: ${escapeHtml(item.기본위험도 || "-")}</small>
+      <button type="button" class="mini-btn" onclick="addWorkItem('${encodeAttr(item.작업ID)}')">추가</button>
+    </div>
+  `).join("");
+}
+
+function escapeHtml(value){
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+function encodeAttr(value){ return encodeURIComponent(String(value ?? "")); }
+function decodeAttr(value){ return decodeURIComponent(String(value ?? "")); }
