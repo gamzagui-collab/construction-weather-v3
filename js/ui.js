@@ -1195,3 +1195,102 @@ function buildTbmText(roles, processesOrLabels, focus, labelsAlready=false) {
   return `오늘 TBM 전달사항
 작업시간 기준: 07:00~17:00\n\n대상 역할: ${roleText}\n오늘 공종: ${procText}\n\n${hotLine}\n${rainLine}\n${windLine}\n\n선택 공종은 DB 기반 위험요소·안전관리·시공관리·품질관리·장비/PPE 체크리스트를 확인하십시오.\n작업자는 이상 증상이 있으면 즉시 보고하고, 관리자는 위험 시간대 순회점검과 증빙기록을 남기십시오.`;
 }
+
+
+/* =========================================================
+   v6.0 Stable Plus overrides: department guide + concrete-aware advice
+   ========================================================= */
+function renderGuideRiskCards(focus) {
+  const temp = focus.maxApparent;
+  const rain = focus.maxRain;
+  const wind = focus.maxWind;
+  const hotText = focus.riskySafetyRange !== "없음" ? focus.riskySafetyRange : "낮음";
+  const rainText = focus.rainRange !== "없음" ? focus.rainRange : "낮음";
+  const windText = focus.windRange !== "없음" ? focus.windRange : "낮음";
+  return `
+    <div class="guide-risk-card guide-risk-hot">
+      <span>오늘 집중관리</span>
+      <strong>${hotText}</strong>
+      <small>${temp ? "체감온도 최고 "+formatNumber(temp.apparentTemperature,1)+"℃ · "+temp.hour : "체감온도 위험 낮음"}</small>
+    </div>
+    <div class="guide-risk-card guide-risk-rain">
+      <span>강수</span>
+      <strong>${rainText}</strong>
+      <small>${rain ? "최대 "+formatNumber(rain.avg,1)+" mm/hr · "+rain.hour : "강수 위험 낮음"}</small>
+    </div>
+    <div class="guide-risk-card guide-risk-wind">
+      <span>풍속</span>
+      <strong>${windText}</strong>
+      <small>${wind ? "최대 "+formatNumber(wind.windSpeed,1)+" m/s · "+wind.hour : "풍속 위험 낮음"}</small>
+    </div>
+    <div class="guide-risk-card guide-risk-stop">
+      <span>관리자 주의요망</span>
+      <strong>${focus.stopRange !== "없음" ? focus.stopRange : hotText}</strong>
+      <small>07~17시 기준 집중순회 시간</small>
+    </div>
+    <div class="guide-risk-card dept-card">
+      <span>부서별 포인트</span>
+      <strong>공통·안전·공사</strong>
+      <small>기상위험에 따라 하단 체크리스트 자동 분류</small>
+    </div>`;
+}
+
+function buildRoleChecklist(roles, focus) {
+  const selected = roles && roles.length ? roles : ["safety","construction","quality","equipment","siteManager"];
+  const rain = focus.rainRange !== "없음";
+  const wind = focus.windRange !== "없음";
+  const hot = focus.riskySafetyRange !== "없음";
+  const blocks = [];
+  if (selected.includes("siteManager")) blocks.push({ title:"현장소장 · 공통 관리", items:[
+    `${hot ? focus.riskySafetyRange+" 온열·한랭 집중관리" : "기본 건강관리"}를 TBM에서 공지`,
+    `${rain ? focus.rainRange+" 강수 대비" : "강수 위험 낮음"} · 외부공정·타설·방수 일정 재확인`,
+    `${wind ? focus.windRange+" 풍속상승 주의" : "풍속 특이사항 낮음"} · 양중/고소작업 중지기준 공유`,
+    "공정 간섭, 협력업체 대기시간, 작업중지 판단권자 지정"
+  ]});
+  if (selected.includes("safety")) blocks.push({ title:"안전관리자", items:[
+    hot ? `${focus.riskySafetyRange} 작업자 체온·수분·휴식상태 순회 확인` : "작업 전 건강상태·PPE 기본 확인",
+    "냉수·식염포도당·그늘막·휴게시설·구급함 상태 확인",
+    wind ? "강풍 시간대 자재 날림, 고소·양중 작업 통제상태 확인" : "추락·낙하·협착 등 기본위험 순회점검",
+    "이상증상자 보고체계, 응급연락망, 2인1조 작업 필요 여부 확인"
+  ]});
+  if (selected.includes("construction")) blocks.push({ title:"공사관리자", items:[
+    rain ? `${focus.rainRange} 강수 시간대 외부공정·타설·방수 작업계획 조정` : "07~17시 작업순서와 선행공정 완료상태 확인",
+    "옥외 고강도 작업은 기온 상승 전 우선 배치 검토",
+    wind ? "크레인·양중·고소작업은 풍속 기준과 신호수 배치 확인" : "자재 반입, 작업구역, 장비동선 확보",
+    "협력업체별 작업범위·대기시간·마감 전 보양계획 공유"
+  ]});
+  if (selected.includes("quality")) blocks.push({ title:"품질관리자", items:[
+    rain ? "강수 시 콘크리트 타설 승인·추가 공시체·보양계획 검토" : "검측·시험·사진기록 준비",
+    hot ? "고온 시 콘크리트 온도, 양생, 급건조 방지대책 확인" : "시공조건과 자재 보관상태 확인",
+    "감리 검측 전 후속공정 진행 방지, 검측사진 누락 방지",
+    "품질기록: 온도·강수·습도·풍속과 시공상태 함께 기록"
+  ]});
+  if (selected.includes("equipment")) blocks.push({ title:"자재·장비 담당", items:[
+    rain ? "비닐·천막·덮개·양수기·배수자재 사전 확보" : "자재 반입·보관·동선 상태 확인",
+    wind ? "크레인·지게차·덤프·굴착장비 작업반경과 풍속기준 확인" : "장비 일상점검, 후진유도자, 보행자 분리 확인",
+    "와이어·샤클·줄걸이·아웃트리거·경광등·후진경보 점검",
+    "분진작업 시 집진기·방진마스크·보안경·살수장비 준비"
+  ]});
+  return blocks;
+}
+
+function renderGuideSection(section) {
+  if (section.blocks && section.blocks.length) {
+    return `<div class="guide-section"><h3>${section.title}</h3>${section.blocks.map((block)=>`
+      <div class="process-role-block">
+        <h4>${block.heading}</h4>
+        <ul>${[...new Set(block.items || [])].slice(0, 14).map((item)=>`<li><label><input type="checkbox"> ${item}</label></li>`).join("")}</ul>
+      </div>`).join("")}</div>`;
+  }
+  return `<div class="guide-section"><h3>${section.title}</h3><ul>${(section.items || []).map((item)=>`<li><label><input type="checkbox"> ${item}</label></li>`).join("")}</ul></div>`;
+}
+
+function buildTbmText(roles, processesOrLabels, focus, labelsAlready=false) {
+  const roleText = roles && roles.length ? roles.map(roleName).join(", ") : "전체 관리자";
+  const procText = processesOrLabels && processesOrLabels.length ? (labelsAlready ? processesOrLabels : processesOrLabels.map(processName)).join(", ") : "주요 공종";
+  const hotLine = focus.riskySafetyRange !== "없음" ? `체감온도 위험 시간은 ${focus.riskySafetyRange}입니다. 이 시간대에는 수분섭취, 휴식, 작업자 건강상태 확인을 강화하십시오.` : "온도 위험은 낮지만 기본 수분관리와 휴식은 유지하십시오.";
+  const rainLine = focus.rainRange !== "없음" ? `강수 영향 시간은 ${focus.rainRange}입니다. 콘크리트 타설·방수·외부마감은 작업 전 예보와 보양계획을 재확인하십시오.` : "강수 위험은 낮지만 최신 예보를 계속 확인하십시오.";
+  const windLine = focus.windRange !== "없음" ? `풍속 주의 시간은 ${focus.windRange}입니다. 양중·고소·외부작업은 풍속 기준과 신호수 배치를 확인하십시오.` : "풍속 특이사항은 낮습니다.";
+  return `오늘 TBM 전달사항
+작업시간 기준: 07:00~17:00\n\n대상 역할: ${roleText}\n오늘 공종: ${procText}\n\n${hotLine}\n${rainLine}\n${windLine}\n\n콘크리트 타설이 있는 경우 강우 중지기준, 책임기술자·감리 승인, 추가 공시체 제작 여부, 보양재와 배수로 상태를 반드시 확인하십시오.\n작업자는 어지럼증, 두통, 근육경련, 손발 저림 등 이상 증상이 있으면 즉시 보고하고, 관리자는 순회점검과 사진·일지 증빙을 남기십시오.`;
+}

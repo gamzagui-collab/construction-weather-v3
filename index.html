@@ -75,21 +75,21 @@
       </section>
 
       <section class="card recommendation-card">
-        <h2>현장 판단 요약</h2>
+        <h2>🧭 현장 판단 요약</h2>
         <p id="recommendationText">예보를 조회하면 자동 판단 결과가 표시됩니다.</p>
       </section>
 
       <section class="map-grid">
         <section class="card">
           <div class="section-title">
-            <h2>좌표 선택 지도</h2>
+            <h2>🗺 좌표 선택 지도</h2>
             <p>지도를 클릭하면 해당 좌표의 위치명을 확인하고 예보를 조회할 수 있습니다.</p>
           </div>
           <div id="selectMap" class="map-box"></div>
         </section>
         <section class="card">
           <div class="section-title">
-            <h2>Windy 강수 지도</h2>
+            <h2>🌧 Windy 강수 지도</h2>
             <p>비구름과 강수 흐름 확인용입니다.</p>
           </div>
           <iframe id="windyFrame" class="windy-frame" title="Windy weather map" loading="lazy"></iframe>
@@ -97,13 +97,13 @@
       </section>
 
       <section class="card">
-        <div class="section-title"><h2>모델별 강수량 그래프</h2></div>
+        <div class="section-title"><h2>📈 모델별 강수량 그래프</h2></div>
         <div class="chart-scroll"><div class="chart-inner"><canvas id="rainChart"></canvas></div></div>
       </section>
 
       <section class="card">
         <div class="section-title table-actions">
-          <h2>6일 시간별 강수 예보</h2>
+          <h2>☔ 6일 시간별 강수 예보</h2>
           <div>
             <button id="csvBtn" class="sub-btn" type="button">CSV 다운로드</button>
             <button id="printBtn" class="sub-btn" type="button">PDF 출력</button>
@@ -119,6 +119,21 @@
           <b class="guide-red">3 mm/hr 초과<br>❌ 원칙적 금지<br><small>타설 중지</small></b>
           <b class="guide-red">5 mm/hr 이상<br>❌ 절대 금지<br><small>작업 중단</small></b>
           <b class="guide-red">10 mm/hr 이상<br>❌ 집중호우<br><small>타설 불가</small></b>
+        </div>
+
+        <div class="concrete-pour-rule-card">
+          <div class="rule-head">
+            <strong>콘크리트 타설 판단 기준</strong>
+            <span>강수량은 “타설 가능/보양/중지” 판단용으로 보수적으로 적용합니다.</span>
+          </div>
+          <div class="rule-grid">
+            <div><b>0~1 mm/hr</b><p>일반 시공 가능. 표면 보호재와 배수 상태를 사전 확인합니다.</p></div>
+            <div><b>1~2 mm/hr</b><p>조건부 가능. 보양조치와 책임기술자 승인 후 진행합니다.</p></div>
+            <div><b>2~3 mm/hr</b><p>조건부 가능. 추가 공시체 제작, 감리 협의, 표면 우수 유입 방지를 확인합니다.</p></div>
+            <div><b>3 mm/hr 초과</b><p>원칙적으로 타설 중지. 이미 타설 중이면 이어치기 위치와 보양계획을 즉시 검토합니다.</p></div>
+            <div><b>5 mm/hr 이상</b><p>작업 중단 수준. 펌프카·레미콘 대기, 배수로, 양생 및 품질기록을 우선 확인합니다.</p></div>
+            <div><b>10 mm/hr 이상</b><p>집중호우. 타설 불가, 현장 배수·토사유실·자재침수 대응으로 전환합니다.</p></div>
+          </div>
         </div>
 
         <div class="table-wrap">
@@ -151,13 +166,13 @@
       </section>
 
       <section class="card recommendation-card safety-card">
-        <h2>온도·안전관리 요약</h2>
+        <h2>🌡 온도·안전관리 요약</h2>
         <p id="safetyRecommendationText">예보를 조회하면 온도·습도·풍속 기반 안전관리 의견이 표시됩니다.</p>
       </section>
 
       <section class="card health-card">
         <div class="section-title">
-          <h2>건강관리 위험도</h2>
+          <h2>🩺 건강관리 위험도</h2>
           <p>기온·습도·풍속을 종합하여 예상 질환, 체감상황, 중점관리와 응급조치를 제안합니다.</p>
         </div>
 
@@ -202,7 +217,7 @@
 
         <section class="card health-ai-card">
           <div class="section-title">
-            <h2>AI 작업판단</h2>
+            <h2>🤖 AI 작업판단</h2>
             <p>강수·체감온도·습도·풍속을 종합해 오늘 작업 운영 방향을 제안합니다.</p>
           </div>
           <div id="healthAiDecision" class="health-ai-text">예보를 조회하면 작업판단 문구가 표시됩니다.</div>
@@ -211,7 +226,7 @@
 
       <section class="card">
         <div class="section-title">
-          <h2>오늘 위험 작업</h2>
+          <h2>🏗 오늘 위험 작업</h2>
           <p>오늘 06~18시의 환경 위험을 반영하여 공정별 위험도를 참고용으로 표시합니다.</p>
         </div>
         <div id="healthWorkRisk" class="work-risk-grid"></div>
@@ -264,7 +279,7 @@
 
       <section class="card">
         <div class="section-title">
-          <h2>습도 체감 예시</h2>
+          <h2>💧 습도 체감 예시</h2>
           <p>현장 근로자가 바로 이해하기 쉽게 습도 느낌을 생활 표현으로 표시합니다.</p>
         </div>
         <div class="humidity-guide">
@@ -279,7 +294,7 @@
 
       <section class="card">
         <div class="section-title">
-          <h2>오늘 체감온도 그래프</h2>
+          <h2>🔥 오늘 체감온도 그래프</h2>
           <p>오늘 06~18시 기준으로 기온·체감온도를 표시하고 위험수위에는 말풍선 스티커를 표시합니다.</p>
         </div>
         <div class="safety-chart-wrap">
@@ -301,7 +316,7 @@
 
       <section class="card">
         <div class="section-title table-actions">
-          <h2>2일 시간별 온도·안전관리</h2>
+          <h2>🕒 2일 시간별 온도·안전관리</h2>
           <p>오늘과 내일 07~17시 작업시간 중심으로 세부 안전관리 권장사항을 표시합니다.</p>
         </div>
         <div class="table-wrap safety-wrap">
@@ -329,7 +344,7 @@
     <section id="guidePanel" class="tab-panel">
       <section class="card guide-hero-card">
         <div class="section-title">
-          <h2>오늘의 현장 가이드</h2>
+          <h2>🧰 오늘의 현장 가이드</h2>
           <p>역할과 오늘 공정을 선택하면 강수·온도·습도·풍속 데이터를 바탕으로 아침 업무 체크리스트와 TBM 문구를 자동 생성합니다.</p>
         </div>
         <div id="guideRiskSummary" class="guide-risk-grid"></div>
@@ -339,7 +354,7 @@
         <section class="card guide-role-card full-row-card">
           <div class="section-title compact-title">
             <div>
-              <h2>역할 선택</h2>
+              <h2>👷 역할 선택</h2>
               <p>선택한 역할에 따라 오늘 해야 할 안전·공사·품질·장비 관리 항목이 자동 생성됩니다. 선택값은 이 브라우저에 저장됩니다.</p>
             </div>
             <div class="guide-bulk-actions"><button type="button" id="selectAllRolesBtn" class="mini-btn">역할 전체 선택</button><button type="button" id="clearRolesBtn" class="mini-btn">역할 전체 해제</button></div>
@@ -356,7 +371,7 @@
         <section class="card guide-work-card full-row-card">
           <div class="section-title compact-title">
             <div>
-              <h2>오늘 공종 선택</h2>
+              <h2>🧱 오늘 공종 선택</h2>
               <p>공종 DB에서 검색·대분류 접기/펼치기로 선택합니다. 선택한 공종은 상단 고정 영역에 태그로 표시됩니다.</p>
             </div>
             <div class="work-category-actions top-work-actions">
@@ -413,14 +428,14 @@
 
       <section class="guide-output-grid">
         <section class="card guide-list-card">
-          <div class="section-title"><h2>역할별 오늘 할 일</h2></div>
+          <div class="section-title"><h2>👥 역할별 오늘 할 일</h2></div>
           <div id="roleChecklist" class="guide-checklist"></div>
         </section>
 
         <section class="card guide-list-card process-guide-card full-guide-output">
           <div class="section-title table-actions">
             <div>
-              <h2>공정별 주의사항</h2>
+              <h2>🧾 공정별 주의사항</h2>
               <p>선택한 역할에 맞는 안전·공사·품질·장비·체크 항목을 공종별로 정리합니다.</p>
             </div>
             <div class="process-export-actions">
@@ -439,14 +454,14 @@
           <div id="guideWorkPlan" class="guide-checklist"></div>
         </section>
         <section class="card guide-list-card">
-          <div class="section-title"><h2>건설안전 브리핑</h2><p>오늘 주의해야 할 질환·증상·응급조치를 자동 표시합니다.</p></div>
+          <div class="section-title"><h2>🚨 건설안전 브리핑</h2><p>오늘 주의해야 할 질환·증상·응급조치를 자동 표시합니다.</p></div>
           <div id="guideSafetyBriefing" class="guide-checklist"></div>
         </section>
       </section>
 
       <section class="card tbm-card">
         <div class="section-title table-actions">
-          <h2>오늘 TBM 전달문</h2>
+          <h2>📣 오늘 TBM 전달문</h2>
           <div><button id="copyTbmBtn" class="sub-btn" type="button">TBM 문구 복사</button></div>
         </div>
         <pre id="tbmText" class="tbm-text">예보를 조회하고 역할·공정을 선택하면 TBM 문구가 자동 생성됩니다.</pre>
