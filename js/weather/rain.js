@@ -1,0 +1,3 @@
+export function rainClass(v){ if(typeof v!=="number") return ""; if(v===0)return"rain-zero"; if(v<=1)return"rain-low"; if(v<=3)return"rain-mid"; if(v<=5)return"rain-high"; return"rain-danger"; }
+export function riskFromRain(v){ if(typeof v!=="number")return{code:"none",label:"-"}; if(v===0)return{code:"green",label:"가능"}; if(v<=1)return{code:"green",label:"가능(주의)"}; if(v<=2)return{code:"yellow",label:"조건부"}; if(v<=3)return{code:"orange",label:"조건부"}; return{code:"red",label:"금지"}; }
+export function formatRainValue(v){ if(typeof v==="object"&&v?.type==="probability") return `${v.value}%`; if(typeof v!=="number") return "-"; return `${v.toFixed(1)}`; }

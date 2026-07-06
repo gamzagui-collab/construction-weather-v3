@@ -1,0 +1,1 @@
+export function downloadCsv(filename, rows){ const csv=rows.map(r=>r.map(v=>`"${String(v).replaceAll('"','""')}"`).join(',')).join('\n'); const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv'})); a.download=filename; a.click(); URL.revokeObjectURL(a.href); }
