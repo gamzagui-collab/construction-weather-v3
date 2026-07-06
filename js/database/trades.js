@@ -1,8 +1,7 @@
-export const TRADE_GROUPS = [
-  {category:"가설·공통", items:["가설울타리","가설전기","비계설치","작업발판","낙하물방지망","안전난간","현장정리","자재양중"]},
-  {category:"토공·기초", items:["터파기","되메우기","흙막이","굴착작업","덤프운반작업","지게차하역작업","파일천공작업","기초콘크리트"]},
-  {category:"철근콘크리트", items:["철근가공","철근조립","거푸집설치","동바리설치","콘크리트타설","콘크리트양생","견출","면갈이","슬라브작업","벽체작업"]},
-  {category:"철골·금속", items:["철골반입","철골세우기","볼트체결","용접작업","크레인작업","고소작업","데크플레이트"]},
-  {category:"방수·마감", items:["방수작업","미장작업","타일작업","석공사","도장작업","외부마감","조적공사","창호설치"]},
-  {category:"설비·전기", items:["배관작업","덕트작업","전기배관","케이블포설","장비반입","기계실작업"]}
+import { TRADE_GROUPS, WORK_ITEMS, searchWorkItems, getWorkDetailByName, getWorkItemByName } from './workItems.js';
+
+export { TRADE_GROUPS, WORK_ITEMS, searchWorkItems, getWorkDetailByName, getWorkItemByName };
+
+export const FAVORITE_TRADES = [
+  '콘크리트 타설','철근 조립','거푸집 설치','동바리 설치','굴착작업','덤프운반작업','지게차하역작업','파일천공작업','크레인작업','방수작업','미장작업','견출','면갈이','외부마감','고소작업'
 ];

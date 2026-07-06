@@ -52,8 +52,11 @@
       <div class="card"><h3>역할 선택</h3><div id="roleSelector" class="chip-row"></div></div>
       <div class="card"><h3>오늘 공종 선택</h3><input id="tradeSearch" class="wide-input" placeholder="공종 검색" /><div id="selectedTrades" class="selected-tags"></div><div id="tradeAccordion" class="trade-accordion"></div></div>
       <div class="card"><h3>오늘 위험요약</h3><div id="fieldRiskSummary" class="guide-grid"></div></div>
-      <div class="card"><h3>역할별 오늘 할 일</h3><div class="toolbar"><button id="checkAllRoleTasks">전체 체크</button><button id="clearRoleTasks">전체 해제</button><button id="copyGuideBtn">복사</button><button id="printGuideBtn">PDF/인쇄</button></div><div id="roleTasks"></div></div>
-      <div class="card"><h3>공정별 주의사항</h3><div id="tradeTasks"></div></div>
+      <div class="card"><h3>역할별 오늘 할 일</h3><div class="toolbar"><button id="checkAllRoleTasks">역할 전체 체크</button><button id="clearRoleTasks">역할 전체 해제</button><button id="copyGuideBtn">전체 가이드 복사</button><button id="exportGuideCsvBtn">CSV 내보내기</button><button id="printGuideBtn">PDF/인쇄</button></div><div id="roleTasks"></div></div>
+      <div class="card"><h3>AI 작업판단</h3><div id="aiDecisionPanel" class="ai-decision-panel"></div></div>
+      <div class="card report-output-card"><h3>오늘 작업일보</h3><p class="muted">역할·공종·기상 위험을 통합한 출력용 요약입니다.</p><div id="dailyReportPanel"></div></div>
+      <div class="card"><h3>건설안전 브리핑</h3><div id="diseaseBriefing" class="disease-grid"></div></div>
+      <div class="card"><h3>공정별 주의사항</h3><div class="toolbar"><button id="checkAllTradeTasks">공정 전체 체크</button><button id="clearTradeTasks">공정 전체 해제</button></div><div id="tradeTasks"></div></div>
       <div class="card"><h3>TBM 자동 문구</h3><textarea id="tbmText" rows="8"></textarea></div>
     </section>
   </main>

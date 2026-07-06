@@ -1,17 +1,21 @@
-# GUI's Arc v6.0 Phase 1 Modular Refactor
+# GUI's Arc v6.0 Phase 4 Final Integration
 
-실제 모듈 구조를 적용한 1단계 리팩터링본입니다.
+건설현장 날씨·안전·공정 판단을 통합하는 현장 운영 보조 웹앱입니다.
 
-## 구조
-- js/api
-- js/weather
-- js/safety
-- js/fieldguide
-- js/database
-- js/charts
-- js/export
-- js/ai
-- js/ui
+## 구성
+- 강수 예보
+- 온도·안전관리
+- 오늘의 현장가이드
+- 역할/공종 기반 체크리스트
+- AI 작업판단
+- 건설안전 브리핑
+- TBM 자동 문구
+- 오늘 작업일보
 
-## 주의
-Phase 1은 프론트 구조 분리용입니다. Cloudflare Worker는 기존 운영 중인 forecast Worker를 유지해도 됩니다.
+## 배포
+1. 기존 프로젝트에서 `.git`만 남기고 파일 삭제
+2. 이 ZIP의 내용을 복사
+3. `git add .`
+4. `git commit -m "Release GUI's Arc v6.0 Final Integration"`
+5. `git push`
+6. `worker/worker.js`를 Cloudflare Worker에 붙여넣고 Deploy

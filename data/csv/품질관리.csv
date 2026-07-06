@@ -1,0 +1,274 @@
+﻿품질ID,작업ID,관리항목,관리기준/확인내용,검사방법,검사시점,품질이 해야할 일,출처URL
+Q-TEMP-FENCE-001-01,TEMP-FENCE-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-TEMP-FENCE-001-02,TEMP-FENCE-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-TEMP-FENCE-001-03,TEMP-FENCE-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-TEMP-OFFICE-001-01,TEMP-OFFICE-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-TEMP-OFFICE-001-02,TEMP-OFFICE-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-TEMP-OFFICE-001-03,TEMP-OFFICE-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-TEMP-ELEC-001-01,TEMP-ELEC-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-TEMP-ELEC-001-02,TEMP-ELEC-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-TEMP-ELEC-001-03,TEMP-ELEC-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-TEMP-WATER-001-01,TEMP-WATER-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-TEMP-WATER-001-02,TEMP-WATER-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-TEMP-WATER-001-03,TEMP-WATER-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-TEMP-SCAFF-001-01,TEMP-SCAFF-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-TEMP-SCAFF-001-02,TEMP-SCAFF-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-TEMP-SCAFF-001-03,TEMP-SCAFF-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-TEMP-SCAFF-002-01,TEMP-SCAFF-002,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-TEMP-SCAFF-002-02,TEMP-SCAFF-002,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-TEMP-SCAFF-002-03,TEMP-SCAFF-002,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-TEMP-DECK-001-01,TEMP-DECK-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-TEMP-DECK-001-02,TEMP-DECK-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-TEMP-DECK-001-03,TEMP-DECK-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-TEMP-NET-001-01,TEMP-NET-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-TEMP-NET-001-02,TEMP-NET-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-TEMP-NET-001-03,TEMP-NET-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-EARTH-CLEAR-001-01,EARTH-CLEAR-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-EARTH-CLEAR-001-02,EARTH-CLEAR-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-EARTH-CLEAR-001-03,EARTH-CLEAR-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-EARTH-EXC-001-01,EARTH-EXC-001,굴착레벨,설계고와 일치,레벨측량,굴착 완료,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-EARTH-EXC-001-02,EARTH-EXC-001,지반상태,연약층·용수·붕괴징후 확인,육안/사진,굴착 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-EARTH-EXC-001-03,EARTH-EXC-001,되메우기 다짐,층두께·다짐도 관리,현장밀도시험,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-EARTH-EXC-002-01,EARTH-EXC-002,굴착레벨,설계고와 일치,레벨측량,굴착 완료,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-EARTH-EXC-002-02,EARTH-EXC-002,지반상태,연약층·용수·붕괴징후 확인,육안/사진,굴착 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-EARTH-EXC-002-03,EARTH-EXC-002,되메우기 다짐,층두께·다짐도 관리,현장밀도시험,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-EARTH-ROCK-001-01,EARTH-ROCK-001,굴착레벨,설계고와 일치,레벨측량,굴착 완료,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-EARTH-ROCK-001-02,EARTH-ROCK-001,지반상태,연약층·용수·붕괴징후 확인,육안/사진,굴착 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-EARTH-ROCK-001-03,EARTH-ROCK-001,되메우기 다짐,층두께·다짐도 관리,현장밀도시험,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-EARTH-HAUL-001-01,EARTH-HAUL-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-EARTH-HAUL-001-02,EARTH-HAUL-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-EARTH-HAUL-001-03,EARTH-HAUL-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-EARTH-BACK-001-01,EARTH-BACK-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-EARTH-BACK-001-02,EARTH-BACK-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-EARTH-BACK-001-03,EARTH-BACK-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-EARTH-COMP-001-01,EARTH-COMP-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-EARTH-COMP-001-02,EARTH-COMP-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-EARTH-COMP-001-03,EARTH-COMP-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-PILE-PHC-001-01,PILE-PHC-001,파일 위치,허용오차 이내,측량,시공 전후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-PILE-PHC-001-02,PILE-PHC-001,항타/천공 기록,깊이·관입량·수직도 기록,시공기록지,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-PILE-PHC-001-03,PILE-PHC-001,두부정리,설계레벨 및 보강상태 확인,레벨/육안,컷팅 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-PILE-DRILL-001-01,PILE-DRILL-001,파일 위치,허용오차 이내,측량,시공 전후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-PILE-DRILL-001-02,PILE-DRILL-001,항타/천공 기록,깊이·관입량·수직도 기록,시공기록지,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-PILE-DRILL-001-03,PILE-DRILL-001,두부정리,설계레벨 및 보강상태 확인,레벨/육안,컷팅 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-PILE-DRIVE-001-01,PILE-DRIVE-001,파일 위치,허용오차 이내,측량,시공 전후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-PILE-DRIVE-001-02,PILE-DRIVE-001,항타/천공 기록,깊이·관입량·수직도 기록,시공기록지,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-PILE-DRIVE-001-03,PILE-DRIVE-001,두부정리,설계레벨 및 보강상태 확인,레벨/육안,컷팅 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-PILE-CUT-001-01,PILE-CUT-001,파일 위치,허용오차 이내,측량,시공 전후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-PILE-CUT-001-02,PILE-CUT-001,항타/천공 기록,깊이·관입량·수직도 기록,시공기록지,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-PILE-CUT-001-03,PILE-CUT-001,두부정리,설계레벨 및 보강상태 확인,레벨/육안,컷팅 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-PILE-GROUT-001-01,PILE-GROUT-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-PILE-GROUT-001-02,PILE-GROUT-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-PILE-GROUT-001-03,PILE-GROUT-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-RC-FORM-001-01,RC-FORM-001,거푸집 위치·치수,도면 허용오차 및 수직·수평 확인,줄자/레벨/먹줄,검측 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-FORM-001-02,RC-FORM-001,동바리 설치상태,조립도·수평연결재·침하방지 확인,육안/체크리스트,타설 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-FORM-001-03,RC-FORM-001,박리제 도포,철근 오염 없이 균일 도포,육안,타설 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-FORM-002-01,RC-FORM-002,거푸집 위치·치수,도면 허용오차 및 수직·수평 확인,줄자/레벨/먹줄,검측 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-FORM-002-02,RC-FORM-002,동바리 설치상태,조립도·수평연결재·침하방지 확인,육안/체크리스트,타설 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-FORM-002-03,RC-FORM-002,박리제 도포,철근 오염 없이 균일 도포,육안,타설 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-FORM-003-01,RC-FORM-003,거푸집 위치·치수,도면 허용오차 및 수직·수평 확인,줄자/레벨/먹줄,검측 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-FORM-003-02,RC-FORM-003,동바리 설치상태,조립도·수평연결재·침하방지 확인,육안/체크리스트,타설 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-FORM-003-03,RC-FORM-003,박리제 도포,철근 오염 없이 균일 도포,육안,타설 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-FORM-004-01,RC-FORM-004,거푸집 위치·치수,도면 허용오차 및 수직·수평 확인,줄자/레벨/먹줄,검측 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-FORM-004-02,RC-FORM-004,동바리 설치상태,조립도·수평연결재·침하방지 확인,육안/체크리스트,타설 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-FORM-004-03,RC-FORM-004,박리제 도포,철근 오염 없이 균일 도포,육안,타설 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-REBAR-001-01,RC-REBAR-001,철근 규격·간격,구조도면과 일치,줄자/캘리퍼스,타설 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-REBAR-001-02,RC-REBAR-001,피복두께,도면 및 시방 기준 이상,스페이서/피복측정,타설 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-REBAR-001-03,RC-REBAR-001,이음·정착길이,설계도면 및 KDS/KCS 기준 확인,줄자/육안,타설 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-REBAR-002-01,RC-REBAR-002,철근 규격·간격,구조도면과 일치,줄자/캘리퍼스,타설 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-REBAR-002-02,RC-REBAR-002,피복두께,도면 및 시방 기준 이상,스페이서/피복측정,타설 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-REBAR-002-03,RC-REBAR-002,이음·정착길이,설계도면 및 KDS/KCS 기준 확인,줄자/육안,타설 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-REBAR-003-01,RC-REBAR-003,철근 규격·간격,구조도면과 일치,줄자/캘리퍼스,타설 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-REBAR-003-02,RC-REBAR-003,피복두께,도면 및 시방 기준 이상,스페이서/피복측정,타설 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-REBAR-003-03,RC-REBAR-003,이음·정착길이,설계도면 및 KDS/KCS 기준 확인,줄자/육안,타설 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-REBAR-004-01,RC-REBAR-004,철근 규격·간격,구조도면과 일치,줄자/캘리퍼스,타설 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-REBAR-004-02,RC-REBAR-004,피복두께,도면 및 시방 기준 이상,스페이서/피복측정,타설 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-REBAR-004-03,RC-REBAR-004,이음·정착길이,설계도면 및 KDS/KCS 기준 확인,줄자/육안,타설 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-CONC-001-01,RC-CONC-001,슬럼프·공기량,배합설계 및 현장 기준 범위,시험기구,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-CONC-001-02,RC-CONC-001,타설 연속성,콜드조인트 방지,시공기록,타설 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-CONC-001-03,RC-CONC-001,다짐·마감,재료분리·공극 없음,육안/바이브레이터 관리,타설 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-CONC-002-01,RC-CONC-002,슬럼프·공기량,배합설계 및 현장 기준 범위,시험기구,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-CONC-002-02,RC-CONC-002,타설 연속성,콜드조인트 방지,시공기록,타설 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-CONC-002-03,RC-CONC-002,다짐·마감,재료분리·공극 없음,육안/바이브레이터 관리,타설 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-CONC-003-01,RC-CONC-003,슬럼프·공기량,배합설계 및 현장 기준 범위,시험기구,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-CONC-003-02,RC-CONC-003,타설 연속성,콜드조인트 방지,시공기록,타설 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-CONC-003-03,RC-CONC-003,다짐·마감,재료분리·공극 없음,육안/바이브레이터 관리,타설 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-CURE-001-01,RC-CURE-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-CURE-001-02,RC-CURE-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-CURE-001-03,RC-CURE-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-TEST-001-01,RC-TEST-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-TEST-001-02,RC-TEST-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-RC-TEST-001-03,RC-TEST-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2061%2050%2005%3A2017-10-27
+Q-STEEL-ANCHOR-001-01,STEEL-ANCHOR-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-STEEL-ANCHOR-001-02,STEEL-ANCHOR-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-STEEL-ANCHOR-001-03,STEEL-ANCHOR-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-STEEL-ERECT-001-01,STEEL-ERECT-001,부재규격,제작도·반입검사 일치,성적서/육안,설치 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-STEEL-ERECT-001-02,STEEL-ERECT-001,수직도·볼트체결,허용오차 및 토크 확인,레벨/토크렌치,설치 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-STEEL-ERECT-001-03,STEEL-ERECT-001,용접품질,외관·필요 시 NDT,육안/NDT,용접 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-STEEL-BOLT-001-01,STEEL-BOLT-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-STEEL-BOLT-001-02,STEEL-BOLT-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-STEEL-BOLT-001-03,STEEL-BOLT-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-STEEL-WELD-001-01,STEEL-WELD-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-STEEL-WELD-001-02,STEEL-WELD-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-STEEL-WELD-001-03,STEEL-WELD-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-STEEL-DECK-001-01,STEEL-DECK-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-STEEL-DECK-001-02,STEEL-DECK-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-STEEL-DECK-001-03,STEEL-DECK-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-STEEL-FIRE-001-01,STEEL-FIRE-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-STEEL-FIRE-001-02,STEEL-FIRE-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-STEEL-FIRE-001-03,STEEL-FIRE-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-MASON-BRICK-001-01,MASON-BRICK-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-MASON-BRICK-001-02,MASON-BRICK-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-MASON-BRICK-001-03,MASON-BRICK-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-MASON-BLOCK-001-01,MASON-BLOCK-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-MASON-BLOCK-001-02,MASON-BLOCK-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-MASON-BLOCK-001-03,MASON-BLOCK-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-MASON-LINTEL-001-01,MASON-LINTEL-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-MASON-LINTEL-001-02,MASON-LINTEL-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-MASON-LINTEL-001-03,MASON-LINTEL-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-PLASTER-WALL-001-01,PLASTER-WALL-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-PLASTER-WALL-001-02,PLASTER-WALL-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-PLASTER-WALL-001-03,PLASTER-WALL-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-PLASTER-FLOOR-001-01,PLASTER-FLOOR-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-PLASTER-FLOOR-001-02,PLASTER-FLOOR-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-PLASTER-FLOOR-001-03,PLASTER-FLOOR-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-PLASTER-LEVEL-001-01,PLASTER-LEVEL-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-PLASTER-LEVEL-001-02,PLASTER-LEVEL-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-PLASTER-LEVEL-001-03,PLASTER-LEVEL-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-WATER-URE-001-01,WATER-URE-001,바탕면 상태,건조·청소·균열보수 완료,함수율/육안,시공 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-WATER-URE-001-02,WATER-URE-001,도막두께·겹침,시방 기준 두께·겹침 확보,두께측정/줄자,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-WATER-URE-001-03,WATER-URE-001,담수·누수 확인,누수 없음,담수시험/육안,양생 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-WATER-SHEET-001-01,WATER-SHEET-001,바탕면 상태,건조·청소·균열보수 완료,함수율/육안,시공 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-WATER-SHEET-001-02,WATER-SHEET-001,도막두께·겹침,시방 기준 두께·겹침 확보,두께측정/줄자,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-WATER-SHEET-001-03,WATER-SHEET-001,담수·누수 확인,누수 없음,담수시험/육안,양생 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-WATER-JOINT-001-01,WATER-JOINT-001,바탕면 상태,건조·청소·균열보수 완료,함수율/육안,시공 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-WATER-JOINT-001-02,WATER-JOINT-001,도막두께·겹침,시방 기준 두께·겹침 확보,두께측정/줄자,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-WATER-JOINT-001-03,WATER-JOINT-001,담수·누수 확인,누수 없음,담수시험/육안,양생 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-INSUL-XPS-001-01,INSUL-XPS-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-INSUL-XPS-001-02,INSUL-XPS-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-INSUL-XPS-001-03,INSUL-XPS-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-INSUL-WOOL-001-01,INSUL-WOOL-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-INSUL-WOOL-001-02,INSUL-WOOL-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-INSUL-WOOL-001-03,INSUL-WOOL-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-WINDOW-AL-001-01,WINDOW-AL-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-WINDOW-AL-001-02,WINDOW-AL-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-WINDOW-AL-001-03,WINDOW-AL-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-WINDOW-GLASS-001-01,WINDOW-GLASS-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-WINDOW-GLASS-001-02,WINDOW-GLASS-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-WINDOW-GLASS-001-03,WINDOW-GLASS-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-WINDOW-DOOR-001-01,WINDOW-DOOR-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-WINDOW-DOOR-001-02,WINDOW-DOOR-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-WINDOW-DOOR-001-03,WINDOW-DOOR-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-METAL-RAIL-001-01,METAL-RAIL-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-METAL-RAIL-001-02,METAL-RAIL-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-METAL-RAIL-001-03,METAL-RAIL-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-METAL-CEIL-001-01,METAL-CEIL-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-METAL-CEIL-001-02,METAL-CEIL-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-METAL-CEIL-001-03,METAL-CEIL-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-METAL-LOUVER-001-01,METAL-LOUVER-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-METAL-LOUVER-001-02,METAL-LOUVER-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-METAL-LOUVER-001-03,METAL-LOUVER-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-ROOF-SHEET-001-01,ROOF-SHEET-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-ROOF-SHEET-001-02,ROOF-SHEET-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-ROOF-SHEET-001-03,ROOF-SHEET-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-ROOF-DRAIN-001-01,ROOF-DRAIN-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-ROOF-DRAIN-001-02,ROOF-DRAIN-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-ROOF-DRAIN-001-03,ROOF-DRAIN-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-STONE-EXT-001-01,STONE-EXT-001,바탕면 평활도,들뜸·오염 없음,육안/타진,시공 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-STONE-EXT-001-02,STONE-EXT-001,줄눈·수평,도면 줄눈폭 및 수평 유지,줄자/레벨,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-STONE-EXT-001-03,STONE-EXT-001,부착상태,들뜸·균열 없음,타진/육안,양생 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-STONE-FLOOR-001-01,STONE-FLOOR-001,바탕면 평활도,들뜸·오염 없음,육안/타진,시공 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-STONE-FLOOR-001-02,STONE-FLOOR-001,줄눈·수평,도면 줄눈폭 및 수평 유지,줄자/레벨,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-STONE-FLOOR-001-03,STONE-FLOOR-001,부착상태,들뜸·균열 없음,타진/육안,양생 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-TILE-WALL-001-01,TILE-WALL-001,바탕면 평활도,들뜸·오염 없음,육안/타진,시공 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-TILE-WALL-001-02,TILE-WALL-001,줄눈·수평,도면 줄눈폭 및 수평 유지,줄자/레벨,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-TILE-WALL-001-03,TILE-WALL-001,부착상태,들뜸·균열 없음,타진/육안,양생 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-TILE-FLOOR-001-01,TILE-FLOOR-001,바탕면 평활도,들뜸·오염 없음,육안/타진,시공 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-TILE-FLOOR-001-02,TILE-FLOOR-001,줄눈·수평,도면 줄눈폭 및 수평 유지,줄자/레벨,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-TILE-FLOOR-001-03,TILE-FLOOR-001,부착상태,들뜸·균열 없음,타진/육안,양생 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-TILE-GROUT-001-01,TILE-GROUT-001,바탕면 평활도,들뜸·오염 없음,육안/타진,시공 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-TILE-GROUT-001-02,TILE-GROUT-001,줄눈·수평,도면 줄눈폭 및 수평 유지,줄자/레벨,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-TILE-GROUT-001-03,TILE-GROUT-001,부착상태,들뜸·균열 없음,타진/육안,양생 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-PAINT-WATER-001-01,PAINT-WATER-001,바탕면 처리,퍼티·연마·프라이머 완료,육안,도장 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-PAINT-WATER-001-02,PAINT-WATER-001,도막상태,흐름·핀홀·박리 없음,육안,도장 중/후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-PAINT-WATER-001-03,PAINT-WATER-001,색상·광택,승인견본과 일치,견본대조,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-PAINT-EPOXY-001-01,PAINT-EPOXY-001,바탕면 처리,퍼티·연마·프라이머 완료,육안,도장 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-PAINT-EPOXY-001-02,PAINT-EPOXY-001,도막상태,흐름·핀홀·박리 없음,육안,도장 중/후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-PAINT-EPOXY-001-03,PAINT-EPOXY-001,색상·광택,승인견본과 일치,견본대조,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-PAINT-ANTIRUST-001-01,PAINT-ANTIRUST-001,바탕면 처리,퍼티·연마·프라이머 완료,육안,도장 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-PAINT-ANTIRUST-001-02,PAINT-ANTIRUST-001,도막상태,흐름·핀홀·박리 없음,육안,도장 중/후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-PAINT-ANTIRUST-001-03,PAINT-ANTIRUST-001,색상·광택,승인견본과 일치,견본대조,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/viewer/KCS%2041%2000%2000%3A2022-10-11
+Q-INTERIOR-BOARD-001-01,INTERIOR-BOARD-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-INTERIOR-BOARD-001-02,INTERIOR-BOARD-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-INTERIOR-BOARD-001-03,INTERIOR-BOARD-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-INTERIOR-CEIL-001-01,INTERIOR-CEIL-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-INTERIOR-CEIL-001-02,INTERIOR-CEIL-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-INTERIOR-CEIL-001-03,INTERIOR-CEIL-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-INTERIOR-FIN-001-01,INTERIOR-FIN-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-INTERIOR-FIN-001-02,INTERIOR-FIN-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-INTERIOR-FIN-001-03,INTERIOR-FIN-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-MECH-PIPE-001-01,MECH-PIPE-001,배관재 규격,승인자재·도면 일치,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-MECH-PIPE-001-02,MECH-PIPE-001,구배·지지간격,도면 및 시방 기준,레벨/줄자,설치 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-MECH-PIPE-001-03,MECH-PIPE-001,수압·누수시험,시험압력·시간 기록,압력계,보온 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-MECH-DRAIN-001-01,MECH-DRAIN-001,배관재 규격,승인자재·도면 일치,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-MECH-DRAIN-001-02,MECH-DRAIN-001,구배·지지간격,도면 및 시방 기준,레벨/줄자,설치 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-MECH-DRAIN-001-03,MECH-DRAIN-001,수압·누수시험,시험압력·시간 기록,압력계,보온 전,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-MECH-DUCT-001-01,MECH-DUCT-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-MECH-DUCT-001-02,MECH-DUCT-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-MECH-DUCT-001-03,MECH-DUCT-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-MECH-EQUIP-001-01,MECH-EQUIP-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-MECH-EQUIP-001-02,MECH-EQUIP-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-MECH-EQUIP-001-03,MECH-EQUIP-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-MECH-TEST-001-01,MECH-TEST-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-MECH-TEST-001-02,MECH-TEST-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-MECH-TEST-001-03,MECH-TEST-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-ELEC-CONDUIT-001-01,ELEC-CONDUIT-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-ELEC-CONDUIT-001-02,ELEC-CONDUIT-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-ELEC-CONDUIT-001-03,ELEC-CONDUIT-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-ELEC-WIRE-001-01,ELEC-WIRE-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-ELEC-WIRE-001-02,ELEC-WIRE-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-ELEC-WIRE-001-03,ELEC-WIRE-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-ELEC-PANEL-001-01,ELEC-PANEL-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-ELEC-PANEL-001-02,ELEC-PANEL-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-ELEC-PANEL-001-03,ELEC-PANEL-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-ELEC-LIGHT-001-01,ELEC-LIGHT-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-ELEC-LIGHT-001-02,ELEC-LIGHT-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-ELEC-LIGHT-001-03,ELEC-LIGHT-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-ELEC-GROUND-001-01,ELEC-GROUND-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-ELEC-GROUND-001-02,ELEC-GROUND-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-ELEC-GROUND-001-03,ELEC-GROUND-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-FIRE-SPR-001-01,FIRE-SPR-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-FIRE-SPR-001-02,FIRE-SPR-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-FIRE-SPR-001-03,FIRE-SPR-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-FIRE-HYDRANT-001-01,FIRE-HYDRANT-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-FIRE-HYDRANT-001-02,FIRE-HYDRANT-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-FIRE-HYDRANT-001-03,FIRE-HYDRANT-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-FIRE-ALARM-001-01,FIRE-ALARM-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-FIRE-ALARM-001-02,FIRE-ALARM-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-FIRE-ALARM-001-03,FIRE-ALARM-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-FIRE-SMOKE-001-01,FIRE-SMOKE-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-FIRE-SMOKE-001-02,FIRE-SMOKE-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-FIRE-SMOKE-001-03,FIRE-SMOKE-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-EXT-PAVE-001-01,EXT-PAVE-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-EXT-PAVE-001-02,EXT-PAVE-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-EXT-PAVE-001-03,EXT-PAVE-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-EXT-BLOCK-001-01,EXT-BLOCK-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-EXT-BLOCK-001-02,EXT-BLOCK-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-EXT-BLOCK-001-03,EXT-BLOCK-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-EXT-MANHOLE-001-01,EXT-MANHOLE-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-EXT-MANHOLE-001-02,EXT-MANHOLE-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-EXT-MANHOLE-001-03,EXT-MANHOLE-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-LAND-PLANT-001-01,LAND-PLANT-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-LAND-PLANT-001-02,LAND-PLANT-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-LAND-PLANT-001-03,LAND-PLANT-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-LAND-FAC-001-01,LAND-FAC-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-LAND-FAC-001-02,LAND-FAC-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-LAND-FAC-001-03,LAND-FAC-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-CLOSE-CLEAN-001-01,CLOSE-CLEAN-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-CLOSE-CLEAN-001-02,CLOSE-CLEAN-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-CLOSE-CLEAN-001-03,CLOSE-CLEAN-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-CLOSE-TEST-001-01,CLOSE-TEST-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-CLOSE-TEST-001-02,CLOSE-TEST-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-CLOSE-TEST-001-03,CLOSE-TEST-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-CLOSE-DOC-001-01,CLOSE-DOC-001,자재 승인상태,승인자재·성적서 확인,자재검수,반입 시,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-CLOSE-DOC-001-02,CLOSE-DOC-001,시공 위치·치수,도면과 일치,줄자/레벨/육안,시공 중,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
+Q-CLOSE-DOC-001-03,CLOSE-DOC-001,마감상태,파손·오염·누락 없음,육안,완료 후,"검측 전 자체점검, 부적합 발견 시 재시공/보수 및 기록",https://www.kcsc.re.kr/standardCode/search?kcsc_cd=%ED%91%9C%EC%A4%80%EC%8B%9C%EB%B0%A9%EC%84%9C&searchType=0
