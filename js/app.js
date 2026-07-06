@@ -79,7 +79,8 @@ function initTabs(){
       document.querySelectorAll(".tab-panel").forEach((panel)=>panel.classList.toggle("active",panel.id===target));
       if(target==="rainPanel" && rainChart) setTimeout(()=>rainChart.resize(),50);
       if(target==="safetyPanel") setTimeout(()=>{ if(safetyChart) safetyChart.resize(); if(typeof safetyTrendChart !== "undefined" && safetyTrendChart) safetyTrendChart.resize(); },50);
-      if(target==="guidePanel") setTimeout(()=>renderFieldGuide(currentRows, currentSafetyRows),50);
+      if(target==="guidePanel") setTimeout(()=>{ renderFieldGuide(currentRows, currentSafetyRows); if(window.GUI_ARC_refreshSplitGuides) window.GUI_ARC_refreshSplitGuides(); },80);
+      if(target==="safetyGuidePanel") setTimeout(()=>{ if(window.GUI_ARC_refreshSplitGuides) window.GUI_ARC_refreshSplitGuides(); },120);
     });
   });
 }

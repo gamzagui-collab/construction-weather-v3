@@ -15,7 +15,7 @@ export function renderAccidentNews(rootId="accidentNewsRoot"){
   root.innerHTML = `
     <div class="ga-section-title">🚨 건설사고 브리핑</div>
     <div class="accident-news-card">
-      <p><b>어제자 사고사례를 뉴스처럼 확인하는 영역</b>입니다. 실제 최신 포스터와 원문은 하단 공식 채널에서 확인하세요.</p>
+      <p><b>어제자 사고사례를 뉴스처럼 확인하는 영역</b>입니다. 실제 최신 포스터와 원문은 산업안전포털 공식 채널에서 확인하세요.</p>
       <div class="accident-news-grid">
         ${posters.map(p => `
           <article class="accident-poster">

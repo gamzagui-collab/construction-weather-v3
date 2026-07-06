@@ -107,7 +107,7 @@ export const ACCIDENT_POSTER_SEED = [
 export const ACCIDENT_SOURCE_LINKS = [
   {
     "name": "고용노동부 중대재해 사이렌",
-    "url": "https://labor.moel.go.kr/sasttc/cmmt/bbs_srn_list.do?seCdVal=B1",
+    "url": "https://portal.kosha.or.kr/archive/imprtnDsstrAlrame/CSADV50000/CSADV50000M01",
     "label": "중대재해 사이렌"
   },
   {

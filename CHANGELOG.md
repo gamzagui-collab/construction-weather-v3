@@ -13,3 +13,10 @@
 - Added site schedule calendar for material/equipment delivery records.
 - Added schedule-driven safety/field task generation.
 - Added accident briefing poster-style news cards and source links.
+
+
+## v6.2 Final
+- Fixed TBM text readability.
+- Moved safety-related guide content into Today Safety Guide.
+- Updated Serious Accident Siren URL to the Industrial Safety Portal.
+- Finalized v6.2 before v6.3 AI assistant work.
