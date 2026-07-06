@@ -319,3 +319,132 @@ body.dark .tbm-card { border-left-color: #93c5fd; }
   .check-grid { grid-template-columns: 1fr; }
   .guide-risk-card strong { font-size: 20px; }
 }
+
+/* v4.3 requested refinements */
+.safety-trend-inner { min-width: 1800px; height: 420px; }
+
+/* 온도/습도/풍속 강도 음영 */
+.env-empty { background: transparent; color: #94a3b8; }
+.temp-cold-high { background: #bfdbfe !important; color: #0f172a !important; font-weight: 800; }
+.temp-cold { background: #dbeafe !important; color: #0f172a !important; font-weight: 800; }
+.temp-normal { background: transparent !important; color: var(--text) !important; }
+.temp-caution { background: #fef9c3 !important; color: #111827 !important; font-weight: 800; }
+.temp-warning { background: #ffedd5 !important; color: #111827 !important; font-weight: 800; }
+.temp-danger { background: #fecaca !important; color: #111827 !important; font-weight: 900; }
+.temp-stop { background: #c084fc !important; color: #ffffff !important; font-weight: 900; }
+.humidity-dry { background: #fef3c7 !important; color: #111827 !important; }
+.humidity-good { background: #dcfce7 !important; color: #111827 !important; }
+.humidity-wet { background: #dbeafe !important; color: #111827 !important; font-weight: 800; }
+.humidity-bad { background: #bae6fd !important; color: #111827 !important; font-weight: 800; }
+.humidity-worst { background: #38bdf8 !important; color: #111827 !important; font-weight: 900; }
+.wind-calm { background: transparent !important; color: var(--text) !important; }
+.wind-normal { background: #dcfce7 !important; color: #111827 !important; }
+.wind-strong { background: #fef9c3 !important; color: #111827 !important; font-weight: 800; }
+.wind-danger { background: #ffedd5 !important; color: #111827 !important; font-weight: 900; }
+.wind-stop { background: #fecaca !important; color: #111827 !important; font-weight: 900; }
+
+/* 현장가이드 작업판단 */
+.guide-extra-grid { margin-top: 20px; }
+.work-plan-list { display: grid; gap: 12px; }
+.work-plan-card {
+  display: grid;
+  grid-template-columns: 72px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: rgba(248,250,252,.85);
+}
+body.dark .work-plan-card { background: #202936; }
+.work-plan-card b { font-size: 18px; color: #2563eb; }
+.work-plan-card strong { font-size: 16px; }
+.work-plan-card span { font-weight: 900; color: #f59e0b; }
+.work-plan-card small { grid-column: 2 / 4; color: var(--sub); line-height: 1.5; }
+.work-plan-card.score-2 { box-shadow: inset 4px 0 0 #ef4444; }
+.work-plan-card.score-3 { box-shadow: inset 4px 0 0 #f59e0b; }
+.work-plan-card.score-4 { box-shadow: inset 4px 0 0 #3b82f6; }
+.work-plan-card.score-5 { box-shadow: inset 4px 0 0 #22c55e; }
+
+/* 건설안전 브리핑 */
+.safety-briefing-card {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 16px;
+  background: rgba(248,250,252,.85);
+}
+body.dark .safety-briefing-card { background: #202936; }
+.briefing-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.briefing-head span {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #e5e7eb;
+  color: #111827;
+  font-weight: 900;
+}
+.briefing-head strong { color: #f59e0b; font-size: 18px; }
+.briefing-feel {
+  line-height: 1.65;
+  font-weight: 700;
+  margin-bottom: 12px;
+  word-break: keep-all;
+}
+.briefing-checks { display: grid; gap: 8px; margin-bottom: 14px; }
+.briefing-checks label { font-weight: 700; }
+.safety-briefing-card ul { padding-left: 18px; display: grid; gap: 8px; line-height: 1.5; }
+
+@media (max-width: 768px) {
+  .safety-trend-inner { min-width: 1900px; height: 360px; }
+  .work-plan-card { grid-template-columns: 64px 1fr; }
+  .work-plan-card span { grid-column: 2; }
+  .work-plan-card small { grid-column: 1 / 3; }
+}
+
+
+/* v4.4 Safety Flow additions */
+.safety-focus-grid { margin-bottom: 20px; }
+.health-focus-card, .health-ai-card { overflow: hidden; }
+.health-focus-box { display: grid; gap: 14px; }
+.focus-time-main {
+  padding: 18px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #fee2e2, #fff7ed);
+  border: 1px solid #fecaca;
+}
+.focus-time-main .focus-label { display:block; font-size: 13px; font-weight: 900; color:#991b1b; margin-bottom:6px; }
+.focus-time-main strong { display:block; font-size: 28px; color:#7f1d1d; letter-spacing:-.5px; }
+.focus-time-main small { display:block; margin-top:6px; color:#7c2d12; font-weight:700; }
+.focus-mini-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:10px; }
+.focus-mini-grid div { border:1px solid var(--border); border-radius:12px; padding:12px; background:var(--card); }
+.focus-mini-grid b { display:block; color:var(--sub); font-size:12px; margin-bottom:6px; }
+.focus-mini-grid span { font-weight:900; }
+.work-risk-grid { display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; }
+.work-risk-card { padding:14px; border-radius:14px; background:var(--card); border:1px solid var(--border); box-shadow:0 6px 16px rgba(0,0,0,.05); display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.work-risk-card span { font-weight:900; }
+.work-risk-card strong { font-size:24px; }
+.work-risk-card small { color:var(--sub); font-weight:800; }
+.work-risk-normal { box-shadow: inset 0 4px 0 #22c55e; }
+.work-risk-caution { box-shadow: inset 0 4px 0 #eab308; }
+.work-risk-danger { box-shadow: inset 0 4px 0 #f97316; }
+.work-risk-stop { box-shadow: inset 0 4px 0 #ef4444; }
+.emergency-grid { display:grid; grid-template-columns: repeat(4, 1fr); gap:14px; }
+.emergency-card { border:1px solid var(--border); border-radius:16px; padding:16px; background:var(--card); box-shadow:0 6px 18px rgba(0,0,0,.05); }
+.emergency-card h3 { margin-bottom:10px; }
+.emergency-card ul { padding-left:18px; line-height:1.7; color:var(--text); }
+.emergency-card.heat { box-shadow: inset 0 4px 0 #f97316; }
+.emergency-card.heatstroke { box-shadow: inset 0 4px 0 #ef4444; }
+.emergency-card.cold { box-shadow: inset 0 4px 0 #2563eb; }
+.emergency-card.frost { box-shadow: inset 0 4px 0 #0ea5e9; }
+.ai-decision-list { padding-left:20px; line-height:1.8; }
+.ai-decision-list li { margin-bottom:8px; }
+@media(max-width: 900px){
+  .focus-mini-grid, .work-risk-grid, .emergency-grid { grid-template-columns:1fr; }
+  .focus-time-main strong { font-size:23px; }
+}

@@ -1,28 +1,18 @@
-# Changelog
+# CHANGELOG
 
-## v3.3 Safety
+## v4.4 Safety Flow
+- 온도·안전관리 탭 흐름을 현재 환경 → 위험도 → 체감상황 → 집중관리 시간 → 건강관리 조치 → 예상 증상 → 위험 작업 → AI 작업판단 → 응급처치 순서로 확장.
+- 관리자 집중관리 시간, 오늘 위험 작업, 질환별 응급처치 카드 추가.
+- GUI's Arc 브랜딩 유지.
 
-- 온도·안전관리 탭 추가
-- Open-Meteo 기온, 체감온도, 습도, 풍속 연동
-- 습도 체감 설명 추가
-- 작업권장 및 안전관리 조치 자동 표시
-- 모바일 표 깨짐 방지를 위해 날짜 rowspan 제거
-- 강수 표와 안전 표를 별도 탭으로 분리
+# CHANGELOG
 
-## v3.2
-
-- 7일 1시간 단위 강수 예보
-- KMA 단기/중기 예보 혼합 표시
-- GUI's Arc 브랜딩 적용
-
-
-## v4.0
-- 강수/온도 탭 날짜별 구분 UI 리팩터링
-- 오늘 체감온도 그래프 추가
-- 위험수위 스티커 표시 추가
-- 모바일 표 스크롤 안정화
-
-
-## v4.1 Health Safety
-- Added construction-site heat/cold health management dashboard.
-- Added perceived condition examples, symptom guidance, and first-aid actions.
+## v4.3 Field Guide Refinement
+- 작업시간 기준을 07:00~17:00으로 조정
+- 강수 예보 표시를 6일 기준으로 조정
+- 오늘 체감온도 그래프를 06:00~18:00으로 고정하고 위험 말풍선 표시 추가
+- 온도·안전관리 표를 오늘+내일 2일, 07~17시 중심으로 축소
+- 기온/체감온도/습도/풍속 셀 강도별 음영 추가
+- 6일 온도·습도·풍속 변화 그래프 추가
+- 중장비 및 분진 공정 체크리스트 추가
+- 오늘 위험요약, AI 작업판단, 건설안전 브리핑 강화

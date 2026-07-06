@@ -95,7 +95,7 @@
 
       <section class="card">
         <div class="section-title table-actions">
-          <h2>7일 시간별 강수 예보</h2>
+          <h2>6일 시간별 강수 예보</h2>
           <div>
             <button id="csvBtn" class="sub-btn" type="button">CSV 다운로드</button>
             <button id="printBtn" class="sub-btn" type="button">PDF 출력</button>
@@ -118,7 +118,7 @@
             <thead>
               <tr>
                 <th>날짜</th><th>시간</th>
-                <th>KMA<br><small>1~3일 mm<br>4~7일 강수확률</small></th>
+                <th>KMA<br><small>1~3일 mm<br>4~6일 강수확률</small></th>
                 <th>ECMWF<br><small>유럽중기예보센터</small></th>
                 <th>GFS<br><small>미국 전지구 모델</small></th>
                 <th>JMA<br><small>일본기상청</small></th>
@@ -183,6 +183,77 @@
         </div>
       </section>
 
+      <section class="guide-output-grid safety-focus-grid">
+        <section class="card health-focus-card">
+          <div class="section-title">
+            <h2>관리자 집중관리 시간</h2>
+            <p>오늘 06~18시 중 온도·습도·풍속 기준으로 가장 주의해야 할 시간을 자동 추출합니다.</p>
+          </div>
+          <div id="healthFocusTime" class="health-focus-box">예보를 조회하면 집중관리 시간이 표시됩니다.</div>
+        </section>
+
+        <section class="card health-ai-card">
+          <div class="section-title">
+            <h2>AI 작업판단</h2>
+            <p>강수·체감온도·습도·풍속을 종합해 오늘 작업 운영 방향을 제안합니다.</p>
+          </div>
+          <div id="healthAiDecision" class="health-ai-text">예보를 조회하면 작업판단 문구가 표시됩니다.</div>
+        </section>
+      </section>
+
+      <section class="card">
+        <div class="section-title">
+          <h2>오늘 위험 작업</h2>
+          <p>오늘 06~18시의 환경 위험을 반영하여 공정별 위험도를 참고용으로 표시합니다.</p>
+        </div>
+        <div id="healthWorkRisk" class="work-risk-grid"></div>
+      </section>
+
+      <section class="card emergency-card-section">
+        <div class="section-title">
+          <h2>질환별 응급처치 카드</h2>
+          <p>위험도가 높을 때 현장에서 바로 확인할 수 있는 기본 응급 대응입니다.</p>
+        </div>
+        <div class="emergency-grid">
+          <article class="emergency-card heat">
+            <h3>🥵 열탈진</h3>
+            <ul>
+              <li>그늘이나 시원한 장소로 이동</li>
+              <li>작업복을 느슨하게 풀기</li>
+              <li>시원한 물을 조금씩 제공</li>
+              <li>증상이 지속되면 의료기관 연락</li>
+            </ul>
+          </article>
+          <article class="emergency-card heatstroke">
+            <h3>🔥 열사병(응급)</h3>
+            <ul>
+              <li>즉시 119 신고</li>
+              <li>얼음·찬물로 적극적으로 체온 낮추기</li>
+              <li>의식이 없으면 음료를 억지로 먹이지 않기</li>
+              <li>관리자가 증상 발생 시간을 기록</li>
+            </ul>
+          </article>
+          <article class="emergency-card cold">
+            <h3>🥶 저체온증</h3>
+            <ul>
+              <li>젖은 옷을 벗기고 보온</li>
+              <li>담요·핫팩으로 중심부 보온</li>
+              <li>의식이 있으면 따뜻한 음료 제공</li>
+              <li>심한 떨림·의식저하 시 의료기관 이송</li>
+            </ul>
+          </article>
+          <article class="emergency-card frost">
+            <h3>🧊 동상</h3>
+            <ul>
+              <li>동상 부위 마찰 금지</li>
+              <li>미지근한 물로 서서히 가온</li>
+              <li>수포를 터뜨리지 않기</li>
+              <li>가능하면 의료기관 진료</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
       <section class="card">
         <div class="section-title">
           <h2>습도 체감 예시</h2>
@@ -201,7 +272,7 @@
       <section class="card">
         <div class="section-title">
           <h2>오늘 체감온도 그래프</h2>
-          <p>오늘 날짜의 기온·체감온도를 표시하고 위험수위에는 스티커를 표시합니다.</p>
+          <p>오늘 06~18시 기준으로 기온·체감온도를 표시하고 위험수위에는 말풍선 스티커를 표시합니다.</p>
         </div>
         <div class="safety-chart-wrap">
           <canvas id="safetyChart"></canvas>
@@ -209,9 +280,21 @@
       </section>
 
       <section class="card">
+        <div class="section-title">
+          <h2>6일 온도·습도·풍속 변화 그래프</h2>
+          <p>장기 흐름은 표 대신 그래프로 확인하고, 고온·저온 위험 시간대는 말풍선으로 강조합니다.</p>
+        </div>
+        <div class="chart-scroll">
+          <div class="chart-inner safety-trend-inner">
+            <canvas id="safetyTrendChart"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
         <div class="section-title table-actions">
-          <h2>7일 시간별 온도·안전관리</h2>
-          <p>체감온도, 습도, 풍속을 기준으로 작업관리 권장사항을 표시합니다.</p>
+          <h2>2일 시간별 온도·안전관리</h2>
+          <p>오늘과 내일 07~17시 작업시간 중심으로 세부 안전관리 권장사항을 표시합니다.</p>
         </div>
         <div class="table-wrap safety-wrap">
           <table class="safety-table">
@@ -276,6 +359,12 @@
             <label><input type="checkbox" class="guide-process" value="exterior"> 외부마감</label>
             <label><input type="checkbox" class="guide-process" value="paving"> 포장</label>
             <label><input type="checkbox" class="guide-process" value="landscape"> 조경</label>
+            <label><input type="checkbox" class="guide-process" value="forkliftUnload"> 지게차 하역작업</label>
+            <label><input type="checkbox" class="guide-process" value="excavation"> 굴착작업</label>
+            <label><input type="checkbox" class="guide-process" value="dumpTransport"> 덤프 운반작업</label>
+            <label><input type="checkbox" class="guide-process" value="pileDrilling"> 파일 천공작업</label>
+            <label><input type="checkbox" class="guide-process" value="craneWork"> 크레인작업</label>
+            <label><input type="checkbox" class="guide-process" value="grindingDust"> 견출·면갈이 분진작업</label>
           </div>
         </section>
       </section>
@@ -289,6 +378,17 @@
         <section class="card guide-list-card">
           <div class="section-title"><h2>공정별 주의사항</h2></div>
           <div id="processChecklist" class="guide-checklist"></div>
+        </section>
+      </section>
+
+      <section class="guide-output-grid guide-extra-grid">
+        <section class="card guide-list-card">
+          <div class="section-title"><h2>STEP6 AI 작업판단</h2><p>작업시간 07~17시 기준으로 오늘의 추천 작업순서를 표시합니다.</p></div>
+          <div id="guideWorkPlan" class="guide-checklist"></div>
+        </section>
+        <section class="card guide-list-card">
+          <div class="section-title"><h2>건설안전 브리핑</h2><p>오늘 주의해야 할 질환·증상·응급조치를 자동 표시합니다.</p></div>
+          <div id="guideSafetyBriefing" class="guide-checklist"></div>
         </section>
       </section>
 
@@ -306,7 +406,7 @@
   <footer class="brand-footer">
     <strong>GUI's Arc</strong>
     <span>Construction Field Guide</span>
-    <em>v4.2 Today Field Guide · Developed for Construction Site Decision Support</em>
+    <em>v4.4 Safety Flow · Developed for Construction Site Decision Support</em>
   </footer>
 
   <script src="./js/regions.js"></script>
