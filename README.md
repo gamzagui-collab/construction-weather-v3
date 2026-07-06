@@ -1,4 +1,4 @@
-# GUI's Weather v3.3 Safety
+# GUI's Weather v4.0 Safety
 
 건설현장 강수 예보와 온도·안전관리 판단을 위한 웹앱입니다.
 
@@ -28,3 +28,16 @@
 ```js
 const WORKER_BASE_URL = "https://weather-proxy.gamzagui.workers.dev";
 ```
+
+
+## v4.1 Health Safety Refactor
+- 날짜별 섹션 구분 행 추가
+- 강수/온도 표 모바일 가로 스크롤 안정화
+- 오늘 체감온도 그래프와 위험수위 스티커 추가
+
+
+## v4.1 Health Safety
+
+- 온열·한랭 건강관리 위험도 카드 추가
+- 체감상황 생활 표현, 예상 질환, 중점관리, 응급 대응 표시
+- 오늘 체감온도 그래프 위험 스티커 유지

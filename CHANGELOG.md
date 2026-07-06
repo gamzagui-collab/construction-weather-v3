@@ -14,3 +14,15 @@
 - 7일 1시간 단위 강수 예보
 - KMA 단기/중기 예보 혼합 표시
 - GUI's Weather 브랜딩 적용
+
+
+## v4.0
+- 강수/온도 탭 날짜별 구분 UI 리팩터링
+- 오늘 체감온도 그래프 추가
+- 위험수위 스티커 표시 추가
+- 모바일 표 스크롤 안정화
+
+
+## v4.1 Health Safety
+- Added construction-site heat/cold health management dashboard.
+- Added perceived condition examples, symptom guidance, and first-aid actions.

@@ -146,6 +146,42 @@
         <p id="safetyRecommendationText">예보를 조회하면 온도·습도·풍속 기반 안전관리 의견이 표시됩니다.</p>
       </section>
 
+      <section class="card health-card">
+        <div class="section-title">
+          <h2>건강관리 위험도</h2>
+          <p>기온·습도·풍속을 종합하여 예상 질환, 체감상황, 중점관리와 응급조치를 제안합니다.</p>
+        </div>
+
+        <div class="health-dashboard">
+          <div class="health-level-card" id="healthLevelCard">
+            <span class="health-kicker">체감위험도</span>
+            <strong id="healthStars">-</strong>
+            <b id="healthLevel">자료 부족</b>
+            <small id="healthEnv">기온 - · 습도 - · 풍속 -</small>
+          </div>
+
+          <div class="health-feel-card">
+            <span class="health-kicker">체감상황</span>
+            <p id="healthFeelText">온도 자료를 조회하면 현장 체감 설명이 표시됩니다.</p>
+          </div>
+        </div>
+
+        <div class="health-management-grid">
+          <div>
+            <h3>중점 관리</h3>
+            <ul id="healthActions" class="health-list"></ul>
+          </div>
+          <div>
+            <h3>예상 질환·증상</h3>
+            <ul id="healthSymptoms" class="health-list"></ul>
+          </div>
+          <div>
+            <h3>응급 대응</h3>
+            <ul id="healthFirstAid" class="health-list"></ul>
+          </div>
+        </div>
+      </section>
+
       <section class="card">
         <div class="section-title">
           <h2>습도 체감 예시</h2>
@@ -157,6 +193,17 @@
           <span>60% 덜 마른 빨래를 입은 느낌</span>
           <span>80% 사우나 입구처럼 답답함</span>
           <span>90% 젖은 옷을 입은 듯한 느낌</span>
+        </div>
+      </section>
+
+
+      <section class="card">
+        <div class="section-title">
+          <h2>오늘 체감온도 그래프</h2>
+          <p>오늘 날짜의 기온·체감온도를 표시하고 위험수위에는 스티커를 표시합니다.</p>
+        </div>
+        <div class="safety-chart-wrap">
+          <canvas id="safetyChart"></canvas>
         </div>
       </section>
 
@@ -190,7 +237,7 @@
   <footer class="brand-footer">
     <strong>GUI's Weather</strong>
     <span>Construction Weather Safety</span>
-    <em>v3.3 Safety · Developed for Construction Site Decision Support</em>
+    <em>v4.0 UI · Developed for Construction Site Decision Support</em>
   </footer>
 
   <script src="./js/regions.js"></script>

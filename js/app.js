@@ -31,6 +31,7 @@ function initTabs(){
       document.querySelectorAll(".tab-btn").forEach((b)=>b.classList.toggle("active",b===btn));
       document.querySelectorAll(".tab-panel").forEach((panel)=>panel.classList.toggle("active",panel.id===target));
       if(target==="rainPanel" && rainChart) setTimeout(()=>rainChart.resize(),50);
+      if(target==="safetyPanel" && safetyChart) setTimeout(()=>safetyChart.resize(),50);
     });
   });
 }
@@ -65,7 +66,7 @@ async function handleSearch(){
     if(!currentLocation){ const d=REGION_MAP[DEFAULT_REGION_KEY]; currentLocation={name:d.name,lat:d.lat,lon:d.lon,key:d.key,source:"local"}; regionSearch.value=currentLocation.name; setRegionResultSingle(currentLocation); }
     regionSearch.value=currentLocation.name; renderLocationInfo(currentLocation); moveMapTo(currentLocation.lat,currentLocation.lon); updateWindyMap(currentLocation.lat,currentLocation.lon);
     const forecast=await fetchForecastFromWorker(currentLocation); currentRows=forecast.rows||[]; currentSafetyRows=forecast.safetyRows||[];
-    renderSummary(forecast.summary||{}); renderTable(currentRows); renderChart(currentRows); renderSafetySummary(forecast.safetySummary||{}); renderSafetyTable(currentSafetyRows); renderBrandInfo(forecast.brand,forecast.meta);
+    renderSummary(forecast.summary||{}); renderTable(currentRows); renderChart(currentRows); renderSafetySummary(forecast.safetySummary||{}); renderSafetyTable(currentSafetyRows); renderSafetyChart(currentSafetyRows); renderHealthManagement(currentSafetyRows); renderBrandInfo(forecast.brand,forecast.meta);
     console.log("API 상태:", forecast.status);
   }catch(e){ console.error("예보 조회 실패:",e); alert(e.message||"예보 조회에 실패했습니다."); }
   finally{ searchBtn.disabled=false; searchBtn.textContent="예보 조회"; }
