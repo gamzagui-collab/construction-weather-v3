@@ -1,17 +1,23 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="GUI's Arc logo">
   <defs>
-    <linearGradient id="g" x1="18" y1="14" x2="110" y2="116" gradientUnits="userSpaceOnUse">
+    <linearGradient id="arc" x1="18" y1="14" x2="110" y2="116" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#38bdf8"/>
-      <stop offset="0.48" stop-color="#2563eb"/>
+      <stop offset="0.46" stop-color="#2563eb"/>
       <stop offset="1" stop-color="#f59e0b"/>
     </linearGradient>
-    <filter id="s" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#0f172a" flood-opacity=".22"/>
+    <linearGradient id="gold" x1="28" y1="96" x2="100" y2="96" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fbbf24"/>
+      <stop offset="1" stop-color="#f97316"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="8" flood-color="#0f172a" flood-opacity=".25"/>
     </filter>
   </defs>
-  <rect x="10" y="10" width="108" height="108" rx="26" fill="#0f172a" filter="url(#s)"/>
-  <path d="M30 94V53l34-22 34 22v41" fill="none" stroke="url(#g)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M43 94V63h42v31" fill="none" stroke="#e0f2fe" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity=".95"/>
-  <path d="M31 94h66" stroke="#f59e0b" stroke-width="8" stroke-linecap="round"/>
-  <path d="M52 75h24M64 63v31" stroke="#93c5fd" stroke-width="5" stroke-linecap="round" opacity=".9"/>
+  <rect x="8" y="8" width="112" height="112" rx="28" fill="#0b1220" filter="url(#shadow)"/>
+  <path d="M29 92V55L64 31l35 24v37" fill="none" stroke="url(#arc)" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M42 92V64h44v28" fill="none" stroke="#e0f2fe" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" opacity=".96"/>
+  <path d="M51 78h26M64 64v28" stroke="#93c5fd" stroke-width="4.5" stroke-linecap="round" opacity=".95"/>
+  <path d="M27 96h74" stroke="url(#gold)" stroke-width="8" stroke-linecap="round"/>
+  <path d="M25 38h12M25 48h7M91 38h12M96 48h7" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" opacity=".65"/>
+  <circle cx="64" cy="31" r="4" fill="#fbbf24"/>
 </svg>

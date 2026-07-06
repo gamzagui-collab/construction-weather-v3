@@ -767,7 +767,7 @@ function renderFieldGuide(rainRows, safetyRows) {
     processEl.innerHTML = `<p class="guide-empty">오늘 공정을 선택하세요.</p>`;
     if (planEl) planEl.innerHTML = `<p class="guide-empty">예보 조회 후 07~17시 작업판단이 표시됩니다.</p>`;
     if (briefingEl) briefingEl.innerHTML = `<p class="guide-empty">예보 조회 후 건설안전 브리핑이 표시됩니다.</p>`;
-    tbmEl.textContent = "예보를 조회하면 TBM 문구가 자동 생성됩니다.";
+    tbmEl.innerHTML = buildTbmHtml([], [], null);
     return;
   }
 
@@ -777,7 +777,7 @@ function renderFieldGuide(rainRows, safetyRows) {
   processEl.innerHTML = buildProcessChecklist(processes, focus).map(renderGuideSection).join("") || `<p class="guide-empty">오늘 공정을 선택하면 공정별 주의사항이 표시됩니다.</p>`;
   if (planEl) planEl.innerHTML = renderWorkPlan(buildWorkPlan(processes, focus));
   if (briefingEl) briefingEl.innerHTML = renderSafetyBriefing(focus);
-  tbmEl.textContent = buildTbmText(roles, processes, focus);
+  tbmEl.innerHTML = buildTbmHtml(roles, processes, focus);
 }
 
 function buildGuideFocus(safetyRows, rainRows) {
@@ -1023,7 +1023,7 @@ function renderFieldGuide(rainRows, safetyRows) {
     processEl.innerHTML = `<p class="guide-empty">공종 DB를 불러온 뒤 오늘 공종을 선택하세요.</p>`;
     if (planEl) planEl.innerHTML = `<p class="guide-empty">예보 조회 후 07~17시 작업판단이 표시됩니다.</p>`;
     if (briefingEl) briefingEl.innerHTML = `<p class="guide-empty">예보 조회 후 건설안전 브리핑이 표시됩니다.</p>`;
-    tbmEl.textContent = "예보를 조회하고 역할·공종을 선택하면 TBM 문구가 자동 생성됩니다.";
+    tbmEl.innerHTML = buildTbmHtml([], [], null);
     return;
   }
 
@@ -1039,7 +1039,7 @@ function renderFieldGuide(rainRows, safetyRows) {
   const selectedLabels = workDetails.length ? workDetails.map((d)=>dbWorkTitle(d)) : legacyProcesses.map(processName);
   if (planEl) planEl.innerHTML = renderWorkPlan(buildWorkPlan(selectedLabels, focus, true));
   if (briefingEl) briefingEl.innerHTML = renderSafetyBriefing(focus);
-  tbmEl.textContent = buildTbmText(roles, selectedLabels, focus, true);
+  tbmEl.innerHTML = buildTbmHtml(roles, selectedLabels, focus, true);
 }
 
 function dbWorkTitle(detail){
@@ -1318,4 +1318,81 @@ function decorateRiskText(text) {
   value = value.replace(/(추락|낙하|협착|감전|붕괴|전도|질식|화재|폭염|열탈진|강풍|타설 중지|집중호우)/g, '<span class="risk-text-high">$1</span>');
   value = value.replace(/(보양|승인|공시체|감리|검측|품질|배수|덮개)/g, '<span class="risk-text-mid">$1</span>');
   return value;
+}
+
+
+/* =========================================================
+   v6.0.1 Final: TBM card HTML generator
+   - 글자색 오류 방지
+   - 아이콘 + 체크박스 형식 자동 생성
+   - 복사버튼은 textContent를 읽으므로 그대로 동작
+   ========================================================= */
+function buildTbmHtml(roles=[], processesOrLabels=[], focus=null, labelsAlready=false) {
+  if (!focus) {
+    return `<div class="tbm-card-html tbm-empty">
+      <div class="tbm-header-line"><span>📣</span><strong>오늘 TBM 전달문</strong></div>
+      <p>예보를 조회하고 역할·공종을 선택하면 TBM 문구가 자동 생성됩니다.</p>
+    </div>`;
+  }
+
+  const roleText = roles && roles.length ? roles.map(roleName).join(", ") : "전체 관리자";
+  const procLabels = processesOrLabels && processesOrLabels.length
+    ? (labelsAlready ? processesOrLabels : processesOrLabels.map(processName))
+    : ["주요 공종"];
+
+  const hotItems = focus.riskySafetyRange !== "없음"
+    ? [
+        `${focus.riskySafetyRange} 체감온도 상승 시간대 작업자 건강상태 집중 확인`,
+        "냉수·식염포도당·그늘 휴게시설·체온계 준비", 
+        "어지럼증·두통·근육경련 호소자 즉시 보고"
+      ]
+    : ["온도 위험은 낮지만 기본 수분관리와 휴식 유지"];
+
+  const rainItems = focus.rainRange !== "없음"
+    ? [
+        `${focus.rainRange} 강수 영향 시간대 외부작업·타설·방수 재확인`,
+        "자재 덮개·보양재·비닐·천막 준비", 
+        "배수로·집수정·양수기 작동상태 확인"
+      ]
+    : ["강수 위험은 낮지만 최신 예보 확인"];
+
+  const windItems = focus.windRange !== "없음"
+    ? [
+        `${focus.windRange} 풍속 주의 시간대 양중·고소·외부작업 기준 확인`,
+        "신호수 배치, 줄걸이·와이어·아웃트리거 확인", 
+        "자재 날림·낙하 위험부 결속상태 확인"
+      ]
+    : ["풍속 특이사항은 낮음"];
+
+  const processText = procLabels.slice(0, 10).join(" · ") + (procLabels.length > 10 ? " 외" : "");
+  const hasConcrete = procLabels.some((x) => /콘크리트|타설|레미콘|슬래브|벽체/.test(String(x)));
+  const concreteItems = hasConcrete ? [
+    "콘크리트 타설 시 강우 중지기준 공유",
+    "책임기술자·감리 승인, 추가 공시체 제작 여부 확인",
+    "타설 전 보양재·배수로·표면 우수 유입 방지 대책 확인"
+  ] : ["선택 공종별 위험요소·품질·시공 체크리스트 확인"];
+
+  const section = (icon, title, items, cls="") => `
+    <div class="tbm-section ${cls}">
+      <h3><span>${icon}</span>${title}</h3>
+      <ul>${items.map((x)=>`<li><label><input type="checkbox"> ${decorateRiskText(x)}</label></li>`).join("")}</ul>
+    </div>`;
+
+  return `<div class="tbm-card-html">
+    <div class="tbm-header-line">
+      <span>📣</span>
+      <div><strong>오늘 TBM 전달문</strong><small>작업시간 기준 07:00~17:00 · ${focus.date || "오늘"}</small></div>
+    </div>
+    <div class="tbm-meta-grid">
+      <div><b>대상 역할</b><p>${roleText}</p></div>
+      <div><b>오늘 공종</b><p>${processText}</p></div>
+    </div>
+    <div class="tbm-sections">
+      ${section("🌡", "온도·건강관리", hotItems, focus.riskySafetyRange !== "없음" ? "tbm-warn" : "")}
+      ${section("🌧", "강수·보양관리", rainItems, focus.rainRange !== "없음" ? "tbm-danger" : "")}
+      ${section("💨", "풍속·장비관리", windItems, focus.windRange !== "없음" ? "tbm-warn" : "")}
+      ${section("🏗", "공정·품질관리", concreteItems, hasConcrete ? "tbm-danger" : "")}
+    </div>
+    <div class="tbm-footer-note">관리자는 위험 시간대 순회점검과 사진·일지 증빙을 남기고, 작업자는 이상 증상이 있으면 즉시 보고하십시오.</div>
+  </div>`;
 }
