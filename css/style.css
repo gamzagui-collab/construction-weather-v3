@@ -448,3 +448,92 @@ body.dark .safety-briefing-card { background: #202936; }
   .focus-mini-grid, .work-risk-grid, .emergency-grid { grid-template-columns:1fr; }
   .focus-time-main strong { font-size:23px; }
 }
+
+
+/* v4.5 requested fixes */
+.global-safety-bar {
+  position: sticky;
+  top: 76px;
+  z-index: 998;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(120px, 1fr));
+  gap: 8px;
+  padding: 8px 22px;
+  background: rgba(15, 23, 42, .94);
+  color: #fff;
+  box-shadow: 0 8px 22px rgba(0,0,0,.16);
+  backdrop-filter: blur(8px);
+}
+.gsb-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 34px;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 999px;
+  background: rgba(255,255,255,.08);
+}
+.gsb-item b { font-size: 12px; opacity: .78; }
+.gsb-item strong { font-size: 15px; font-weight: 900; }
+.gsb-risk { background: rgba(37, 99, 235, .36); }
+body.dark .global-safety-bar { background: rgba(2, 6, 23, .96); }
+
+.strong-hour, .time-cell {
+  font-size: 16px !important;
+  font-weight: 950 !important;
+  color: #0f172a;
+  letter-spacing: -0.2px;
+}
+body.dark .strong-hour, body.dark .time-cell { color: #f8fafc; }
+
+.safety-chart-wrap {
+  min-height: 420px !important;
+  height: 420px !important;
+  overflow: visible !important;
+  padding-top: 4px;
+}
+#safetyChart { display: block !important; min-height: 400px !important; }
+.safety-trend-inner { min-width: 1900px !important; height: 440px !important; }
+
+.guide-bulk-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.mini-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 8px 12px;
+  background: #e0f2fe;
+  color: #075985;
+  font-weight: 900;
+  cursor: pointer;
+}
+body.dark .mini-btn { background: #164e63; color: #e0f2fe; }
+
+.wind-cell.wind-calm, .wind-cell.wind-normal { background: #ecfccb !important; color: #111827 !important; }
+.wind-cell.wind-strong { background: #bef264 !important; color: #111827 !important; }
+.wind-cell.wind-danger { background: #84cc16 !important; color: #111827 !important; }
+.wind-cell.wind-stop { background: #4d7c0f !important; color: #fff !important; }
+.humidity-cell.humidity-dry { background: #f5f3ff !important; color: #111827 !important; }
+.humidity-cell.humidity-good { background: #ede9fe !important; color: #111827 !important; }
+.humidity-cell.humidity-wet { background: #ddd6fe !important; color: #111827 !important; }
+.humidity-cell.humidity-bad { background: #c4b5fd !important; color: #111827 !important; }
+.humidity-cell.humidity-worst { background: #7c3aed !important; color: #fff !important; }
+
+@media(max-width:768px){
+  .global-safety-bar {
+    top: 0;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 8px 10px;
+    gap: 6px;
+  }
+  .gsb-item { min-height: 30px; }
+  .gsb-item b { font-size: 11px; }
+  .gsb-item strong { font-size: 13px; }
+  .strong-hour, .time-cell { font-size: 15px !important; }
+  .safety-chart-wrap { min-height: 390px !important; height: 390px !important; }
+  .safety-trend-inner { min-width: 2000px !important; height: 380px !important; }
+}

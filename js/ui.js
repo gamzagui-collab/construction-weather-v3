@@ -400,12 +400,25 @@ function buildHealthManagement(row) {
 }
 
 function renderSafetySummary(summary) {
-  document.getElementById("safeTempNow").textContent = summary?.tempNow || "-";
-  document.getElementById("safeApparentNow").textContent = summary?.apparentNow || "-";
-  document.getElementById("safeHumidityNow").textContent = summary?.humidityNow || "-";
-  document.getElementById("safeWindNow").textContent = summary?.windNow || "-";
-  document.getElementById("safeRiskNow").textContent = summary?.riskNow || "-";
+  const temp = summary?.tempNow || "-";
+  const apparent = summary?.apparentNow || "-";
+  const humidity = summary?.humidityNow || "-";
+  const wind = summary?.windNow || "-";
+  const risk = summary?.riskNow || "-";
+
+  document.getElementById("safeTempNow").textContent = temp;
+  document.getElementById("safeApparentNow").textContent = apparent;
+  document.getElementById("safeHumidityNow").textContent = humidity;
+  document.getElementById("safeWindNow").textContent = wind;
+  document.getElementById("safeRiskNow").textContent = risk;
   document.getElementById("safetyRecommendationText").textContent = summary?.recommendation || "온도 안전관리 자료가 부족합니다.";
+
+  const setText = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value; };
+  setText("globalSafeTemp", temp);
+  setText("globalSafeApparent", apparent);
+  setText("globalSafeHumidity", humidity);
+  setText("globalSafeWind", wind);
+  setText("globalSafeRisk", risk);
 }
 
 
@@ -459,7 +472,7 @@ function renderSafetyTable(rows) {
   if (!body) return;
   body.innerHTML = "";
 
-  const displayRows = limitDays(rows || [], 2).filter((row) => isWorkHour(row, 7, 17));
+  const displayRows = limitWorkDays(rows || [], 2, 7, 17);
   let prevDate = "";
 
   displayRows.forEach((row) => {
@@ -474,7 +487,7 @@ function renderSafetyTable(rows) {
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td class="date-cell day-empty"></td>
-      <td class="time-cell">${row.hour}</td>
+      <td class="time-cell strong-hour">${row.hour}</td>
       <td class="temp-cell ${getTemperatureCellClass(row.temperature)}">${formatNumber(row.temperature, 1)}℃</td>
       <td class="temp-cell apparent ${getTemperatureCellClass(row.apparentTemperature)}">${formatNumber(row.apparentTemperature, 1)}℃</td>
       <td class="humidity-cell ${getHumidityCellClass(row.humidity)}">${formatNumber(row.humidity, 0)}%</td>
@@ -487,12 +500,13 @@ function renderSafetyTable(rows) {
   });
 }
 
+
 let safetyChart = null;
 function renderSafetyChart(rows) {
   const canvas = document.getElementById("safetyChart");
   if (!canvas) return;
 
-  const today = rows?.[0]?.date;
+  const today = getFirstWorkDate(rows || [], 6, 18) || rows?.[0]?.date;
   const todayRows = (rows || []).filter((row) => row.date === today && isWorkHour(row, 6, 18));
 
   const labels = todayRows.map((row) => row.hour);
@@ -501,10 +515,13 @@ function renderSafetyChart(rows) {
 
   const stickerPoints = todayRows
     .map((row, index) => ({ row, index }))
-    .filter(({ row }) => typeof row.apparentTemperature === "number" && (row.apparentTemperature >= 31 || row.apparentTemperature <= 0));
+    .filter(({ row }) => getSafetyPointLabel(row));
+
+  const maxTemp = Math.max(...apparent.filter((v)=>typeof v === "number"), ...temperature.filter((v)=>typeof v === "number"), 35);
+  const minTemp = Math.min(...apparent.filter((v)=>typeof v === "number"), ...temperature.filter((v)=>typeof v === "number"), 15);
 
   const stickerPlugin = {
-    id: "stickerPlugin",
+    id: "todaySafetyStickerPlugin",
     afterDatasetsDraw(chart) {
       const { ctx } = chart;
       const meta = chart.getDatasetMeta(0);
@@ -512,26 +529,19 @@ function renderSafetyChart(rows) {
       ctx.font = "bold 12px Arial";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      stickerPoints.forEach(({ row, index }) => {
+      stickerPoints.forEach(({ row, index }, order) => {
         const point = meta.data[index];
         if (!point) return;
-        const temp = row.apparentTemperature;
-        let label = "주의요망!";
-        let fill = "rgba(245, 158, 11, .95)";
-        if (temp >= 37) { label = "작업중단!"; fill = "rgba(124, 58, 237, .95)"; }
-        else if (temp >= 35) { label = "작업단축!"; fill = "rgba(220, 38, 38, .95)"; }
-        else if (temp >= 33) { label = "고위험!"; fill = "rgba(249, 115, 22, .95)"; }
-        else if (temp <= -5) { label = "한랭위험!"; fill = "rgba(37, 99, 235, .95)"; }
-        else if (temp <= 0) { label = "한랭주의!"; fill = "rgba(14, 165, 233, .95)"; }
-
-        const x = point.x + 8;
-        const y = point.y - 28;
+        const label = getSafetyPointLabel(row);
+        const x = point.x + ((order % 2) ? 18 : -18);
+        const y = point.y - 32 - ((order % 3) * 10);
+        const fill = getSafetyPointColor(row);
         ctx.save();
         ctx.translate(x, y);
-        ctx.rotate(-Math.PI / 7);
-        const w = Math.max(62, label.length * 14);
+        ctx.rotate(-Math.PI / 8);
+        const w = Math.max(56, label.length * 13);
         ctx.fillStyle = fill;
-        roundRect(ctx, -w / 2, -13, w, 26, 13);
+        roundRect(ctx, -w / 2, -12, w, 24, 12);
         ctx.fill();
         ctx.fillStyle = "#fff";
         ctx.fillText(label, 0, 0);
@@ -548,29 +558,41 @@ function renderSafetyChart(rows) {
     data: {
       labels,
       datasets: [
-        { label: "체감온도", data: apparent, tension: 0.35, borderWidth: 3, pointRadius: 4 },
-        { label: "기온", data: temperature, tension: 0.35, borderWidth: 2, pointRadius: 3 }
+        {
+          label: "체감온도",
+          data: apparent,
+          tension: 0.35,
+          borderWidth: 3,
+          pointRadius: todayRows.map((row) => getSafetyPointLabel(row) ? 6 : 4),
+          pointHoverRadius: 8,
+          borderColor: "#ef4444",
+          backgroundColor: "rgba(239,68,68,.12)",
+          pointBackgroundColor: todayRows.map((row) => getSafetyPointLabel(row) ? getSafetyPointColor(row) : "#ef4444")
+        },
+        {
+          label: "기온",
+          data: temperature,
+          tension: 0.35,
+          borderWidth: 2,
+          pointRadius: 3,
+          borderColor: "#f97316",
+          backgroundColor: "rgba(249,115,22,.10)",
+          pointBackgroundColor: "#f97316"
+        }
       ]
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
       interaction: { mode: "index", intersect: false },
-      layout: { padding: { top: 42 } },
+      layout: { padding: { top: 70, left: 8, right: 8 } },
       plugins: {
         legend: { position: "top" },
-        tooltip: {
-          callbacks: {
-            label(context) {
-              if (context.raw === null) return `${context.dataset.label}: 정보없음`;
-              return `${context.dataset.label}: ${context.raw.toFixed(1)}℃`;
-            }
-          }
-        }
+        tooltip: { callbacks: { label(context) { return context.raw === null ? `${context.dataset.label}: 정보없음` : `${context.dataset.label}: ${context.raw.toFixed(1)}℃`; } } }
       },
       scales: {
-        x: { ticks: { autoSkip: false, maxRotation: 0 } },
-        y: { title: { display: true, text: "온도 (℃)" }, suggestedMin: 10, suggestedMax: 40 }
+        x: { ticks: { autoSkip: false, maxRotation: 0, font: { size: 13, weight: "bold" } } },
+        y: { title: { display: true, text: "온도 (℃)" }, suggestedMin: Math.floor(minTemp - 3), suggestedMax: Math.ceil(maxTemp + 4) }
       }
     },
     plugins: [stickerPlugin]
@@ -590,26 +612,21 @@ function renderSafetyTrendChart(rows) {
     .filter(({ row }) => typeof row.apparentTemperature === "number" && (row.apparentTemperature >= 35 || row.apparentTemperature <= -5));
 
   const extremeStickerPlugin = {
-    id: "extremeStickerPlugin",
+    id: "extremeIconPlugin",
     afterDatasetsDraw(chart) {
       const { ctx } = chart;
       const meta = chart.getDatasetMeta(0);
       ctx.save();
-      ctx.font = "bold 11px Arial";
+      ctx.font = "bold 16px Arial";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      extremePoints.forEach(({ row, index }) => {
+      extremePoints.forEach(({ row, index }, order) => {
         const point = meta.data[index];
         if (!point) return;
-        const hot = row.apparentTemperature >= 35;
-        const label = hot ? "폭염" : "한랭";
+        const icon = row.apparentTemperature >= 35 ? "⚠️" : "❄️";
         const x = point.x;
-        const y = point.y - 20;
-        ctx.fillStyle = hot ? "rgba(239, 68, 68, .92)" : "rgba(37, 99, 235, .92)";
-        roundRect(ctx, x - 24, y - 11, 48, 22, 11);
-        ctx.fill();
-        ctx.fillStyle = "#fff";
-        ctx.fillText(label, x, y);
+        const y = point.y - 16 - ((order % 2) * 10);
+        ctx.fillText(icon, x, y);
       });
       ctx.restore();
     }
@@ -621,20 +638,20 @@ function renderSafetyTrendChart(rows) {
     data: {
       labels,
       datasets: [
-        { label: "체감온도(℃)", data: displayRows.map((row) => pick(row.apparentTemperature)), yAxisID: "yTemp", tension: 0.3, borderWidth: 3, pointRadius: 2 },
-        { label: "기온(℃)", data: displayRows.map((row) => pick(row.temperature)), yAxisID: "yTemp", tension: 0.3, borderWidth: 2, pointRadius: 1 },
-        { label: "습도(%)", data: displayRows.map((row) => pick(row.humidity)), yAxisID: "yEnv", tension: 0.25, borderWidth: 2, pointRadius: 1 },
-        { label: "풍속(m/s)", data: displayRows.map((row) => pick(row.windSpeed)), yAxisID: "yWind", tension: 0.25, borderWidth: 2, pointRadius: 1 }
+        { label: "체감온도(℃)", data: displayRows.map((row) => pick(row.apparentTemperature)), yAxisID: "yTemp", tension: 0.3, borderWidth: 3, pointRadius: 2, borderColor: "#ef4444", pointBackgroundColor: "#ef4444" },
+        { label: "기온(℃)", data: displayRows.map((row) => pick(row.temperature)), yAxisID: "yTemp", tension: 0.3, borderWidth: 2, pointRadius: 1, borderColor: "#f97316", pointBackgroundColor: "#f97316" },
+        { label: "습도(%)", data: displayRows.map((row) => pick(row.humidity)), yAxisID: "yEnv", tension: 0.25, borderWidth: 2, pointRadius: 1, borderColor: "#8b5cf6", pointBackgroundColor: "#8b5cf6" },
+        { label: "풍속(m/s)", data: displayRows.map((row) => pick(row.windSpeed)), yAxisID: "yWind", tension: 0.25, borderWidth: 2, pointRadius: 1, borderColor: "#84cc16", pointBackgroundColor: "#84cc16" }
       ]
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
       interaction: { mode: "index", intersect: false },
-      layout: { padding: { top: 32 } },
+      layout: { padding: { top: 42 } },
       plugins: { legend: { position: "top" } },
       scales: {
-        x: { ticks: { autoSkip: true, maxTicksLimit: 36, maxRotation: 60, minRotation: 60 } },
+        x: { ticks: { autoSkip: true, maxTicksLimit: 36, maxRotation: 60, minRotation: 60, font: { size: 12, weight: "bold" } } },
         yTemp: { type: "linear", position: "left", title: { display: true, text: "온도(℃)" } },
         yEnv: { type: "linear", position: "right", min: 0, max: 100, grid: { drawOnChartArea: false }, title: { display: true, text: "습도(%)" } },
         yWind: { type: "linear", position: "right", min: 0, max: 20, display: false }
@@ -643,6 +660,7 @@ function renderSafetyTrendChart(rows) {
     plugins: [extremeStickerPlugin]
   });
 }
+
 
 function roundRect(ctx, x, y, width, height, radius) {
   ctx.beginPath();
@@ -661,6 +679,52 @@ function roundRect(ctx, x, y, width, height, radius) {
 function formatNumber(value, digits) {
   if (typeof value !== "number" || Number.isNaN(value)) return "-";
   return value.toFixed(digits);
+}
+
+
+function getFirstWorkDate(rows, start = 7, end = 17) {
+  const workRows = (rows || []).filter((row) => isWorkHour(row, start, end));
+  return workRows.length ? workRows[0].date : ((rows || [])[0]?.date || null);
+}
+
+function getRowsForWorkDate(rows, date, start = 7, end = 17) {
+  return (rows || []).filter((row) => row.date === date && isWorkHour(row, start, end));
+}
+
+function limitWorkDays(rows, days = 2, start = 7, end = 17) {
+  const out = [];
+  const seen = new Set();
+  (rows || []).forEach((row) => {
+    if (!isWorkHour(row, start, end)) return;
+    if (!seen.has(row.date) && seen.size >= days) return;
+    seen.add(row.date);
+    out.push(row);
+  });
+  return out;
+}
+
+function getSafetyPointLabel(row) {
+  const temp = typeof row?.apparentTemperature === "number" ? row.apparentTemperature : null;
+  if (temp === null) return "";
+  if (temp >= 37) return "작업중단!";
+  if (temp >= 35) return "작업단축!";
+  if (temp >= 33) return "고위험!";
+  if (temp >= 31) return "주의!";
+  if (temp <= -5) return "한랭위험!";
+  if (temp <= 0) return "한랭주의!";
+  return "";
+}
+
+function getSafetyPointColor(row) {
+  const temp = typeof row?.apparentTemperature === "number" ? row.apparentTemperature : null;
+  if (temp === null) return "rgba(37,99,235,.95)";
+  if (temp >= 37) return "rgba(124,58,237,.95)";
+  if (temp >= 35) return "rgba(220,38,38,.95)";
+  if (temp >= 33) return "rgba(249,115,22,.95)";
+  if (temp >= 31) return "rgba(245,158,11,.95)";
+  if (temp <= -5) return "rgba(37,99,235,.95)";
+  if (temp <= 0) return "rgba(14,165,233,.95)";
+  return "rgba(37,99,235,.95)";
 }
 
 function downloadCsv(rows) {
@@ -691,7 +755,9 @@ function renderFieldGuide(rainRows, safetyRows) {
   const roles = [...document.querySelectorAll(".guide-role:checked")].map((el) => el.value);
   const processes = [...document.querySelectorAll(".guide-process:checked")].map((el) => el.value);
 
-  const today = safetyRows?.[0]?.date || rainRows?.[0]?.date;
+  const safetyWorkRows = (safetyRows || []).filter((row) => isWorkHour(row, 7, 17));
+  const rainWorkRows = (rainRows || []).filter((row) => isWorkHour(row, 7, 17));
+  const today = safetyWorkRows?.[0]?.date || rainWorkRows?.[0]?.date || safetyRows?.[0]?.date || rainRows?.[0]?.date;
   const todaySafety = (safetyRows || []).filter((row) => row.date === today && isWorkHour(row, 7, 17));
   const todayRain = (rainRows || []).filter((row) => row.date === today && isWorkHour(row, 7, 17));
 

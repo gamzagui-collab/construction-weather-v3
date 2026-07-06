@@ -26,6 +26,14 @@
     </div>
   </header>
 
+  <div id="globalSafetyBar" class="global-safety-bar">
+    <span class="gsb-item"><b>현재 기온</b><strong id="globalSafeTemp">-</strong></span>
+    <span class="gsb-item"><b>체감온도</b><strong id="globalSafeApparent">-</strong></span>
+    <span class="gsb-item"><b>습도</b><strong id="globalSafeHumidity">-</strong></span>
+    <span class="gsb-item"><b>풍속</b><strong id="globalSafeWind">-</strong></span>
+    <span class="gsb-item gsb-risk"><b>안전등급</b><strong id="globalSafeRisk">-</strong></span>
+  </div>
+
   <main class="layout">
     <section class="card search-card">
       <div class="form-group">
@@ -333,6 +341,7 @@
             <h2>역할 선택</h2>
             <p>복수 선택 가능합니다. 선택값은 이 브라우저에 저장됩니다.</p>
           </div>
+          <div class="guide-bulk-actions"><button type="button" id="selectAllRolesBtn" class="mini-btn">역할 전체 선택</button><button type="button" id="clearRolesBtn" class="mini-btn">역할 전체 해제</button></div>
           <div class="check-grid guide-role-grid">
             <label><input type="checkbox" class="guide-role" value="safety"> 안전관리자</label>
             <label><input type="checkbox" class="guide-role" value="construction"> 공사관리자</label>
@@ -347,6 +356,7 @@
             <h2>오늘 공정 선택</h2>
             <p>오늘 예정된 공정을 체크하면 날씨 조건에 맞는 주의사항이 생성됩니다.</p>
           </div>
+          <div class="guide-bulk-actions"><button type="button" id="selectAllProcessesBtn" class="mini-btn">공정 전체 선택</button><button type="button" id="clearProcessesBtn" class="mini-btn">공정 전체 해제</button></div>
           <div class="check-grid guide-process-grid">
             <label><input type="checkbox" class="guide-process" value="concrete"> 콘크리트 타설</label>
             <label><input type="checkbox" class="guide-process" value="rebar"> 철근 조립</label>

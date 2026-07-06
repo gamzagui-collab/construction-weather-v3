@@ -25,6 +25,13 @@ function init() {
 }
 
 
+
+function setGuideGroupChecked(selector, checked) {
+  document.querySelectorAll(selector).forEach((el) => { el.checked = checked; });
+  saveGuideSelections();
+  renderFieldGuide(currentRows, currentSafetyRows);
+}
+
 function initFieldGuideInputs(){
   restoreGuideSelections();
   document.querySelectorAll(".guide-role,.guide-process").forEach((el)=>{
@@ -33,6 +40,15 @@ function initFieldGuideInputs(){
       renderFieldGuide(currentRows,currentSafetyRows);
     });
   });
+  const selectRoles = document.getElementById("selectAllRolesBtn");
+  const clearRoles = document.getElementById("clearRolesBtn");
+  const selectProcesses = document.getElementById("selectAllProcessesBtn");
+  const clearProcesses = document.getElementById("clearProcessesBtn");
+  if (selectRoles) selectRoles.addEventListener("click", () => setGuideGroupChecked(".guide-role", true));
+  if (clearRoles) clearRoles.addEventListener("click", () => setGuideGroupChecked(".guide-role", false));
+  if (selectProcesses) selectProcesses.addEventListener("click", () => setGuideGroupChecked(".guide-process", true));
+  if (clearProcesses) clearProcesses.addEventListener("click", () => setGuideGroupChecked(".guide-process", false));
+
   const copyBtn=document.getElementById("copyTbmBtn");
   if(copyBtn){
     copyBtn.addEventListener("click",()=>{
