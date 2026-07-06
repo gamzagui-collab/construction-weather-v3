@@ -1,20 +1,18 @@
-# GUI's Arc v6.2 Site Schedule & Split Guides
+# GUI's Arc v6.0.1
 
-v6.2 패치입니다.
+건설현장 날씨·안전·작업가이드 안정 개선판입니다.
 
-## 핵심
-- 현장스케줄은 기록만 합니다.
-- 오늘의 안전가이드는 스케줄/날씨/장비에서 안전 항목만 읽습니다.
-- 오늘의 현장가이드는 공사/품질/자재 항목만 읽습니다.
-- 건설사고 브리핑은 포스터형 사고사례 뉴스 카드로 표시합니다.
+## 적용
 
-## 추가 파일
-- css/v62-schedule-guides.css
-- js/database/materialRules.js
-- js/database/accidentPosters.js
-- js/schedule/siteSchedule.js
-- js/guides/v62Tabs.js
-- js/guides/splitGuides.js
-- js/accidents/accidentNews.js
-- data/schedule/material_rules.json
-- data/accidents/poster_seed.json
+1. 기존 프로젝트 백업
+2. `.git` 폴더는 유지
+3. ZIP 내용을 덮어쓰기
+4. `git add .` → `git commit` → `git push`
+5. `worker/worker.js`를 Cloudflare Worker에 배포
+
+
+## v6.2 Integrated
+- 탭 구조 분리: 강수 예보 / 온도·안전관리 / 오늘의 안전가이드 / 오늘의 현장가이드 / 현장스케줄 / 건설사고 브리핑
+- 현장스케줄 달력형 기록
+- 자재·장비 반입 기록을 안전가이드와 현장가이드에 자동 반영
+- 건설사고 브리핑 포스터형 카드

@@ -6,6 +6,7 @@
   <title>GUI's Arc · Construction Field Guide</title>
   <link rel="icon" href="./images/logo.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/v62-schedule-guides.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -59,10 +60,13 @@
       </div>
     </section>
 
-    <nav class="tab-nav" aria-label="weather tabs">
-      <button class="tab-btn active" type="button" data-tab="rainPanel"><span class="tab-icon">🌧</span><span>강수 예보</span></button>
-      <button class="tab-btn" type="button" data-tab="safetyPanel"><span class="tab-icon">🌡</span><span>온도·안전관리</span></button>
-      <button class="tab-btn" type="button" data-tab="guidePanel"><span class="tab-icon">🏗</span><span>오늘의 현장가이드</span></button>
+    <nav class="tab-nav ga-tabs-v62" aria-label="GUI's Arc tabs">
+      <button class="tab-btn ga-tab-v62 active" type="button" data-tab="rainPanel"><span class="tab-icon">🌧</span><span>강수 예보</span></button>
+      <button class="tab-btn ga-tab-v62" type="button" data-tab="safetyPanel"><span class="tab-icon">🌡</span><span>온도·안전관리</span></button>
+      <button class="tab-btn ga-tab-v62" type="button" data-tab="safetyGuidePanel"><span class="tab-icon">🛡</span><span>오늘의 안전가이드</span></button>
+      <button class="tab-btn ga-tab-v62" type="button" data-tab="guidePanel"><span class="tab-icon">🏗</span><span>오늘의 현장가이드</span></button>
+      <button class="tab-btn ga-tab-v62" type="button" data-tab="schedulePanel"><span class="tab-icon">📅</span><span>현장스케줄</span></button>
+      <button class="tab-btn ga-tab-v62" type="button" data-tab="accidentNewsPanel"><span class="tab-icon">🚨</span><span>건설사고 브리핑</span></button>
     </nav>
 
     <section id="rainPanel" class="tab-panel active">
@@ -341,7 +345,12 @@
     </section>
 
 
+    <section id="safetyGuidePanel" class="tab-panel">
+      <section id="todaySafetyGuideRoot"></section>
+    </section>
+
     <section id="guidePanel" class="tab-panel">
+      <section id="todayFieldGuideRoot"></section>
       <section class="card guide-hero-card">
         <div class="section-title">
           <h2>🧰 오늘의 현장 가이드</h2>
@@ -460,30 +469,6 @@
         </section>
       </section>
 
-
-
-      <section class="guide-output-grid guide-v61-grid">
-        <section class="card guide-list-card standards-library-card full-guide-output">
-          <div class="section-title table-actions">
-            <div>
-              <h2>📚 건설안전 기준 라이브러리</h2>
-              <p>선택 공종에 맞춰 KCS·산업안전보건기준·관련 법령·체크리스트를 자동 연결합니다.</p>
-            </div>
-          </div>
-          <div id="standardsLibrary" class="standards-library"></div>
-        </section>
-
-        <section class="card guide-list-card ai-assistant-card full-guide-output">
-          <div class="section-title table-actions">
-            <div>
-              <h2>🤖 AI 현장비서</h2>
-              <p>선택 공종과 07~17시 기상조건을 종합해 사고위험 TOP5, 품질문제 TOP3, 감리지적 가능성 TOP3를 표시합니다.</p>
-            </div>
-          </div>
-          <div id="aiSiteAssistant" class="ai-site-assistant"></div>
-        </section>
-      </section>
-
       <section class="card tbm-card">
         <div class="section-title table-actions">
           <h2>📣 오늘 TBM 전달문</h2>
@@ -493,17 +478,29 @@
       </section>
     </section>
 
+
+    <section id="schedulePanel" class="tab-panel">
+      <section id="siteScheduleRoot"></section>
+    </section>
+
+    <section id="accidentNewsPanel" class="tab-panel">
+      <section id="accidentNewsRoot"></section>
+    </section>
+
   </main>
 
   <footer class="brand-footer">
     <strong>GUI's Arc</strong>
     <span>Construction Field Guide</span>
-    <em>v6.1 Standards + AI Assistant · Developed for Construction Site Decision Support</em>
+    <em>v6.2 Site Schedule · Developed for Construction Site Decision Support</em>
   </footer>
 
   <script src="./js/regions.js"></script>
   <script src="./js/api.js"></script>
   <script src="./js/ui.js"></script>
   <script src="./js/app.js"></script>
+  <script type="module" src="./js/schedule/siteSchedule.js"></script>
+  <script type="module" src="./js/guides/splitGuides.js"></script>
+  <script type="module" src="./js/accidents/accidentNews.js"></script>
 </body>
 </html>
