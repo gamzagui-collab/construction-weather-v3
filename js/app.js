@@ -13,7 +13,7 @@ const printBtn = document.getElementById("printBtn");
 const darkModeBtn = document.getElementById("darkModeBtn");
 const shareBtn = document.getElementById("shareBtn");
 function init() {
-  initDarkMode(); initClock(); initRegionSelect(); initTabs(); initMap(); applySharedParams();
+  initDarkMode(); initClock(); initRegionSelect(); initTabs(); initMap(); initFieldGuideInputs(); applySharedParams();
   regionSearch.addEventListener("input", handleRegionInput);
   regionResult.addEventListener("change", handleRegionSelect);
   searchBtn.addEventListener("click", handleSearch);
@@ -23,6 +23,37 @@ function init() {
   shareBtn.addEventListener("click", copyShareLink);
   handleSearch();
 }
+
+
+function initFieldGuideInputs(){
+  restoreGuideSelections();
+  document.querySelectorAll(".guide-role,.guide-process").forEach((el)=>{
+    el.addEventListener("change",()=>{
+      saveGuideSelections();
+      renderFieldGuide(currentRows,currentSafetyRows);
+    });
+  });
+  const copyBtn=document.getElementById("copyTbmBtn");
+  if(copyBtn){
+    copyBtn.addEventListener("click",()=>{
+      const text=document.getElementById("tbmText")?.textContent || "";
+      navigator.clipboard.writeText(text).then(()=>alert("TBM 문구가 복사되었습니다.")).catch(()=>prompt("아래 문구를 복사하세요.", text));
+    });
+  }
+}
+function saveGuideSelections(){
+  const roles=[...document.querySelectorAll(".guide-role:checked")].map((el)=>el.value);
+  const processes=[...document.querySelectorAll(".guide-process:checked")].map((el)=>el.value);
+  localStorage.setItem("guideRoles", JSON.stringify(roles));
+  localStorage.setItem("guideProcesses", JSON.stringify(processes));
+}
+function restoreGuideSelections(){
+  const roles=JSON.parse(localStorage.getItem("guideRoles")||"[]");
+  const processes=JSON.parse(localStorage.getItem("guideProcesses")||"[]");
+  document.querySelectorAll(".guide-role").forEach((el)=>{ el.checked=roles.includes(el.value); });
+  document.querySelectorAll(".guide-process").forEach((el)=>{ el.checked=processes.includes(el.value); });
+}
+
 function initClock(){ updateCurrentTime(); setInterval(updateCurrentTime,1000); }
 function initTabs(){
   document.querySelectorAll(".tab-btn").forEach((btn)=>{
@@ -32,6 +63,7 @@ function initTabs(){
       document.querySelectorAll(".tab-panel").forEach((panel)=>panel.classList.toggle("active",panel.id===target));
       if(target==="rainPanel" && rainChart) setTimeout(()=>rainChart.resize(),50);
       if(target==="safetyPanel" && safetyChart) setTimeout(()=>safetyChart.resize(),50);
+      if(target==="guidePanel") setTimeout(()=>renderFieldGuide(currentRows, currentSafetyRows),50);
     });
   });
 }
@@ -66,7 +98,7 @@ async function handleSearch(){
     if(!currentLocation){ const d=REGION_MAP[DEFAULT_REGION_KEY]; currentLocation={name:d.name,lat:d.lat,lon:d.lon,key:d.key,source:"local"}; regionSearch.value=currentLocation.name; setRegionResultSingle(currentLocation); }
     regionSearch.value=currentLocation.name; renderLocationInfo(currentLocation); moveMapTo(currentLocation.lat,currentLocation.lon); updateWindyMap(currentLocation.lat,currentLocation.lon);
     const forecast=await fetchForecastFromWorker(currentLocation); currentRows=forecast.rows||[]; currentSafetyRows=forecast.safetyRows||[];
-    renderSummary(forecast.summary||{}); renderTable(currentRows); renderChart(currentRows); renderSafetySummary(forecast.safetySummary||{}); renderSafetyTable(currentSafetyRows); renderSafetyChart(currentSafetyRows); renderHealthManagement(currentSafetyRows); renderBrandInfo(forecast.brand,forecast.meta);
+    renderSummary(forecast.summary||{}); renderTable(currentRows); renderChart(currentRows); renderSafetySummary(forecast.safetySummary||{}); renderSafetyTable(currentSafetyRows); renderSafetyChart(currentSafetyRows); renderHealthManagement(currentSafetyRows); renderFieldGuide(currentRows, currentSafetyRows); renderBrandInfo(forecast.brand,forecast.meta);
     console.log("API 상태:", forecast.status);
   }catch(e){ console.error("예보 조회 실패:",e); alert(e.message||"예보 조회에 실패했습니다."); }
   finally{ searchBtn.disabled=false; searchBtn.textContent="예보 조회"; }

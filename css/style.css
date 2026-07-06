@@ -240,3 +240,82 @@ body.dark .health-management-grid > div {
     font-size: 15px;
   }
 }
+
+/* GUI's Arc v4.2 Today Field Guide */
+.guide-hero-card { border-left: 6px solid var(--primary); }
+.guide-risk-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-top: 12px;
+}
+.guide-risk-card {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(248,250,252,.85));
+  min-height: 118px;
+}
+body.dark .guide-risk-card { background: #202936; }
+.guide-risk-card span { display:block; color: var(--sub); font-size: 13px; font-weight: 800; margin-bottom: 8px; }
+.guide-risk-card strong { display:block; font-size: 24px; color: var(--text); margin-bottom: 8px; }
+.guide-risk-card small { color: var(--sub); line-height: 1.4; }
+.guide-risk-hot { box-shadow: inset 0 4px 0 #ef4444; }
+.guide-risk-rain { box-shadow: inset 0 4px 0 #2563eb; }
+.guide-risk-wind { box-shadow: inset 0 4px 0 #f59e0b; }
+.guide-risk-stop { box-shadow: inset 0 4px 0 #7c3aed; }
+.guide-input-grid,
+.guide-output-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.check-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.check-grid label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(255,255,255,.65);
+  font-weight: 700;
+}
+body.dark .check-grid label { background: #202936; }
+.check-grid input { width: 18px; height: 18px; }
+.guide-checklist { display: grid; gap: 14px; }
+.guide-section {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  background: rgba(248,250,252,.8);
+}
+body.dark .guide-section { background: #202936; }
+.guide-section h3 { margin-bottom: 10px; font-size: 17px; }
+.guide-section ul { list-style: none; display: grid; gap: 8px; }
+.guide-section li label { line-height: 1.45; cursor: pointer; }
+.guide-section input { margin-right: 8px; width: 16px; height: 16px; vertical-align: middle; }
+.guide-empty { color: var(--sub); padding: 12px; }
+.tbm-card { border-left: 6px solid #0f172a; }
+body.dark .tbm-card { border-left-color: #93c5fd; }
+.tbm-text {
+  white-space: pre-wrap;
+  font-family: "Noto Sans KR", Arial, sans-serif;
+  line-height: 1.8;
+  background: #0f172a;
+  color: #e5e7eb;
+  padding: 18px;
+  border-radius: 12px;
+  overflow-x: auto;
+}
+@media (max-width: 900px) {
+  .guide-risk-grid,
+  .guide-input-grid,
+  .guide-output-grid { grid-template-columns: 1fr; }
+  .check-grid { grid-template-columns: 1fr; }
+  .guide-risk-card strong { font-size: 20px; }
+}

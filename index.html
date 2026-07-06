@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GUI's Weather · Construction Weather Safety</title>
+  <title>GUI's Arc · Construction Field Guide</title>
   <link rel="icon" href="./images/logo.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="./css/style.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -13,10 +13,10 @@
 <body>
   <header class="top-header">
     <div class="brand-title">
-      <img src="./images/logo.svg" alt="GUI's Weather" />
+      <img src="./images/logo.svg" alt="GUI's Arc" />
       <div>
-        <h1>GUI's Weather</h1>
-        <p>건설현장 강수·온도 안전관리 판단용</p>
+        <h1>GUI's Arc</h1>
+        <p>건설현장 날씨·안전·작업가이드</p>
       </div>
     </div>
     <div class="header-actions">
@@ -54,6 +54,7 @@
     <nav class="tab-nav" aria-label="weather tabs">
       <button class="tab-btn active" type="button" data-tab="rainPanel">🌧 강수 예보</button>
       <button class="tab-btn" type="button" data-tab="safetyPanel">🌡 온도·안전관리</button>
+      <button class="tab-btn" type="button" data-tab="guidePanel">📋 오늘의 현장가이드</button>
     </nav>
 
     <section id="rainPanel" class="tab-panel active">
@@ -232,12 +233,80 @@
         </div>
       </section>
     </section>
+
+
+    <section id="guidePanel" class="tab-panel">
+      <section class="card guide-hero-card">
+        <div class="section-title">
+          <h2>오늘의 현장 가이드</h2>
+          <p>역할과 오늘 공정을 선택하면 강수·온도·습도·풍속 데이터를 바탕으로 아침 업무 체크리스트와 TBM 문구를 자동 생성합니다.</p>
+        </div>
+        <div id="guideRiskSummary" class="guide-risk-grid"></div>
+      </section>
+
+      <section class="guide-input-grid">
+        <section class="card">
+          <div class="section-title">
+            <h2>역할 선택</h2>
+            <p>복수 선택 가능합니다. 선택값은 이 브라우저에 저장됩니다.</p>
+          </div>
+          <div class="check-grid guide-role-grid">
+            <label><input type="checkbox" class="guide-role" value="safety"> 안전관리자</label>
+            <label><input type="checkbox" class="guide-role" value="construction"> 공사관리자</label>
+            <label><input type="checkbox" class="guide-role" value="quality"> 품질관리자</label>
+            <label><input type="checkbox" class="guide-role" value="equipment"> 장비담당자</label>
+            <label><input type="checkbox" class="guide-role" value="siteManager"> 현장소장</label>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="section-title">
+            <h2>오늘 공정 선택</h2>
+            <p>오늘 예정된 공정을 체크하면 날씨 조건에 맞는 주의사항이 생성됩니다.</p>
+          </div>
+          <div class="check-grid guide-process-grid">
+            <label><input type="checkbox" class="guide-process" value="concrete"> 콘크리트 타설</label>
+            <label><input type="checkbox" class="guide-process" value="rebar"> 철근 조립</label>
+            <label><input type="checkbox" class="guide-process" value="formwork"> 거푸집 설치</label>
+            <label><input type="checkbox" class="guide-process" value="earthwork"> 토공</label>
+            <label><input type="checkbox" class="guide-process" value="waterproof"> 방수</label>
+            <label><input type="checkbox" class="guide-process" value="plaster"> 미장</label>
+            <label><input type="checkbox" class="guide-process" value="lifting"> 양중작업</label>
+            <label><input type="checkbox" class="guide-process" value="highwork"> 고소작업</label>
+            <label><input type="checkbox" class="guide-process" value="exterior"> 외부마감</label>
+            <label><input type="checkbox" class="guide-process" value="paving"> 포장</label>
+            <label><input type="checkbox" class="guide-process" value="landscape"> 조경</label>
+          </div>
+        </section>
+      </section>
+
+      <section class="guide-output-grid">
+        <section class="card guide-list-card">
+          <div class="section-title"><h2>역할별 오늘 할 일</h2></div>
+          <div id="roleChecklist" class="guide-checklist"></div>
+        </section>
+
+        <section class="card guide-list-card">
+          <div class="section-title"><h2>공정별 주의사항</h2></div>
+          <div id="processChecklist" class="guide-checklist"></div>
+        </section>
+      </section>
+
+      <section class="card tbm-card">
+        <div class="section-title table-actions">
+          <h2>오늘 TBM 전달문</h2>
+          <div><button id="copyTbmBtn" class="sub-btn" type="button">TBM 문구 복사</button></div>
+        </div>
+        <pre id="tbmText" class="tbm-text">예보를 조회하고 역할·공정을 선택하면 TBM 문구가 자동 생성됩니다.</pre>
+      </section>
+    </section>
+
   </main>
 
   <footer class="brand-footer">
-    <strong>GUI's Weather</strong>
-    <span>Construction Weather Safety</span>
-    <em>v4.0 UI · Developed for Construction Site Decision Support</em>
+    <strong>GUI's Arc</strong>
+    <span>Construction Field Guide</span>
+    <em>v4.2 Today Field Guide · Developed for Construction Site Decision Support</em>
   </footer>
 
   <script src="./js/regions.js"></script>

@@ -1,4 +1,4 @@
-# GUI's Weather v4.0 Safety
+# GUI's Arc v4.2 Today Field Guide
 
 건설현장 강수 예보와 온도·안전관리 판단을 위한 웹앱입니다.
 
