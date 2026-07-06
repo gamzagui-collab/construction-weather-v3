@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GAMZAGUI Construction Weather v3.2 Hourly</title>
+  <title>GUI's Weather · Construction Weather</title>
+  <link rel="icon" href="./images/logo.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="./css/style.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -11,14 +12,17 @@
 </head>
 <body>
   <header class="top-header">
-    <div>
-      <h1>건설현장 강수 예보</h1>
-      <p>1시간 단위 · 콘크리트 타설 및 현장 작업 판단용</p>
+    <div class="brand-title">
+      <img src="./images/logo.svg" alt="GUI's Weather" />
+      <div>
+        <h1>GUI's Weather</h1>
+        <p>건설현장 강수 예보 · 콘크리트 타설 판단용</p>
+      </div>
     </div>
     <div class="header-actions">
       <span id="currentTime">현재 시각: -</span>
-      <button id="darkModeBtn">다크모드</button>
-      <button id="shareBtn">공유 링크</button>
+      <button id="darkModeBtn" type="button">다크모드</button>
+      <button id="shareBtn" type="button">공유 링크</button>
     </div>
   </header>
 
@@ -36,7 +40,7 @@
         <label for="customCoord">직접 좌표</label>
         <input id="customCoord" type="text" placeholder="예: 35.8036,126.8809" />
       </div>
-      <button id="searchBtn" class="primary-btn">예보 조회</button>
+      <button id="searchBtn" class="primary-btn" type="button">예보 조회</button>
     </section>
 
     <section class="location-banner">
@@ -62,49 +66,56 @@
 
     <section class="map-grid">
       <section class="card">
-        <div class="section-title"><h2>좌표 선택 지도</h2><p>지도를 클릭하면 해당 좌표의 위치명을 조회하고 예보 위치로 설정합니다.</p></div>
+        <div class="section-title">
+          <h2>좌표 선택 지도</h2>
+          <p>지도를 클릭하면 해당 좌표의 위치명을 확인하고 예보를 조회할 수 있습니다.</p>
+        </div>
         <div id="selectMap" class="map-box"></div>
       </section>
       <section class="card">
-        <div class="section-title"><h2>Windy 강수 지도</h2><p>비구름과 강수 흐름 확인용입니다.</p></div>
-        <iframe id="windyFrame" class="windy-frame" loading="lazy"></iframe>
+        <div class="section-title">
+          <h2>Windy 강수 지도</h2>
+          <p>비구름과 강수 흐름 확인용입니다.</p>
+        </div>
+        <iframe id="windyFrame" class="windy-frame" title="Windy weather map" loading="lazy"></iframe>
       </section>
     </section>
 
     <section class="card">
-      <div class="section-title"><h2>모델별 1시간 강수량 그래프</h2><p>모바일에서는 좌우로 밀어서 확인하세요.</p></div>
+      <div class="section-title"><h2>모델별 강수량 그래프</h2></div>
       <div class="chart-scroll"><div class="chart-inner"><canvas id="rainChart"></canvas></div></div>
     </section>
 
     <section class="card">
       <div class="section-title table-actions">
+        <h2>7일 시간별 강수 예보</h2>
         <div>
-          <h2>1시간 단위 강수 예보</h2>
-          <div class="risk-guide">
-  <span>위험도 기준</span>
-  <b class="guide-green">0 mm/hr 가능 · 일반 시공</b>
-  <b class="guide-green">0~1 mm/hr 가능(주의) · 표면 보호 준비</b>
-  <b class="guide-yellow">1~2 mm/hr 조건부 · 보호조치 + 승인</b>
-  <b class="guide-orange">2~3 mm/hr 조건부 · 승인 + 추가 공시체</b>
-  <b class="guide-red">3mm/hr 초과 금지 · 5mm/hr 이상 중단 · 10mm/hr 이상 타설 불가</b>
-</div>
-        </div>
-        <div class="table-buttons">
-          <button id="csvBtn" class="sub-btn">CSV 다운로드</button>
-          <button id="printBtn" class="sub-btn">PDF 출력</button>
+          <button id="csvBtn" class="sub-btn" type="button">CSV 다운로드</button>
+          <button id="printBtn" class="sub-btn" type="button">PDF 출력</button>
         </div>
       </div>
+
+      <div class="risk-guide">
+        <span>강우량 위험도 기준 (1시간 강우량)</span>
+        <b class="guide-green">0 mm/hr<br>✅ 가능<br><small>일반 시공</small></b>
+        <b class="guide-green">0~1 mm/hr<br>✅ 가능(주의)<br><small>표면 보호 준비 권장</small></b>
+        <b class="guide-yellow">1~2 mm/hr<br>⚠️ 조건부 가능<br><small>보호조치 + 책임기술자 승인</small></b>
+        <b class="guide-orange">2~3 mm/hr<br>⚠️ 조건부 가능<br><small>승인 + 추가 공시체 제작</small></b>
+        <b class="guide-red">3 mm/hr 초과<br>❌ 원칙적 금지<br><small>타설 중지</small></b>
+        <b class="guide-red">5 mm/hr 이상<br>❌ 절대 금지<br><small>작업 중단</small></b>
+        <b class="guide-red">10 mm/hr 이상<br>❌ 집중호우<br><small>타설 불가</small></b>
+      </div>
+
       <div class="table-wrap">
         <table>
           <thead>
             <tr>
-              <th>날짜</th>
-              <th>시간</th>
+              <th>날짜</th><th>시간</th>
               <th>KMA<br><small>1~3일 mm<br>4~7일 강수확률</small></th>
               <th>ECMWF<br><small>유럽중기예보센터</small></th>
               <th>GFS<br><small>미국 전지구 모델</small></th>
               <th>JMA<br><small>일본기상청</small></th>
-              <th>평균</th>
+              <th>평균<br><small>mm/hr</small></th>
               <th>위험도</th>
               <th>일치도</th>
             </tr>
@@ -116,9 +127,9 @@
   </main>
 
   <footer class="brand-footer">
-    <strong>GAMZAGUI</strong>
+    <strong>GUI's Weather</strong>
     <span>Construction Weather</span>
-    <em>v3.2.0 Hourly</em>
+    <em>v3.2 Final · Developed for Construction Site Decision Support</em>
   </footer>
 
   <script src="./js/regions.js"></script>
