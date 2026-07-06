@@ -1,67 +1,469 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>GUI's Arc v6.0</title>
-  <link rel="stylesheet" href="css/base.css" />
-  <link rel="stylesheet" href="css/layout.css" />
-  <link rel="stylesheet" href="css/weather.css" />
-  <link rel="stylesheet" href="css/safety.css" />
-  <link rel="stylesheet" href="css/fieldguide.css" />
-  <link rel="stylesheet" href="css/mobile.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GUI's Arc · Construction Field Guide</title>
+  <link rel="icon" href="./images/logo.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
   <header class="top-header">
-    <div class="brand"><strong>GUI's Arc</strong><span>Construction Field Assistant</span></div>
-    <div id="globalSafetyBar" class="global-safety-bar">
-      <div><span>현재 기온</span><b id="topTemp">-</b></div>
-      <div><span>체감온도</span><b id="topApparent">-</b></div>
-      <div><span>습도</span><b id="topHumidity">-</b></div>
-      <div><span>풍속</span><b id="topWind">-</b></div>
-      <div><span>안전등급</span><b id="topSafety">-</b></div>
+    <div class="brand-title">
+      <img src="./images/logo.svg" alt="GUI's Arc" />
+      <div>
+        <h1>GUI's Arc</h1>
+        <p>건설현장 날씨·안전·작업가이드</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <span id="currentTime">현재 시각: -</span>
+      <button id="darkModeBtn" type="button">다크모드</button>
+      <button id="shareBtn" type="button">공유 링크</button>
     </div>
   </header>
 
+  <div id="globalSafetyBar" class="global-safety-bar">
+    <span class="gsb-item"><b>현재 기온</b><strong id="globalSafeTemp">-</strong></span>
+    <span class="gsb-item"><b>체감온도</b><strong id="globalSafeApparent">-</strong></span>
+    <span class="gsb-item"><b>습도</b><strong id="globalSafeHumidity">-</strong></span>
+    <span class="gsb-item"><b>풍속</b><strong id="globalSafeWind">-</strong></span>
+    <span class="gsb-item gsb-risk"><b>안전등급</b><strong id="globalSafeRisk">-</strong></span>
+  </div>
+
   <main class="layout">
     <section class="card search-card">
-      <div class="form-group"><label>지역명</label><input id="regionSearch" value="전북 김제시" /></div>
-      <div class="form-group"><label>직접좌표</label><input id="customCoord" placeholder="35.8036,126.8809" /></div>
-      <button id="searchBtn" class="primary-btn">예보 조회</button>
+      <div class="form-group">
+        <label for="regionSearch">지역 검색</label>
+        <input id="regionSearch" type="text" placeholder="예: 김제시, 백산면, 봉동읍, 군산 옥서면" />
+      </div>
+      <div class="form-group">
+        <label for="regionResult">검색 결과</label>
+        <select id="regionResult"><option value="">검색 후 선택</option></select>
+      </div>
+      <div class="form-group">
+        <label for="customCoord">직접 좌표</label>
+        <input id="customCoord" type="text" placeholder="예: 35.8036,126.8809" />
+      </div>
+      <button id="searchBtn" class="primary-btn" type="button">예보 조회</button>
     </section>
 
-    <nav class="tabs">
-      <button data-tab="rain" class="tab-btn active">강수예보</button>
-      <button data-tab="safety" class="tab-btn">온도·안전관리</button>
-      <button data-tab="fieldguide" class="tab-btn">오늘의 현장가이드</button>
+    <section class="location-banner">
+      <div>
+        <span class="location-label">현재 조회 지역</span>
+        <strong id="currentLocationName">전북 김제시</strong>
+        <small id="currentLocationCoord">35.803600, 126.880900</small>
+      </div>
+    </section>
+
+    <nav class="tab-nav" aria-label="weather tabs">
+      <button class="tab-btn active" type="button" data-tab="rainPanel">🌧 강수 예보</button>
+      <button class="tab-btn" type="button" data-tab="safetyPanel">🌡 온도·안전관리</button>
+      <button class="tab-btn" type="button" data-tab="guidePanel">📋 오늘의 현장가이드</button>
     </nav>
 
-    <section id="tab-rain" class="tab-panel active">
-      <div class="card"><h2>6일 시간별 강수 예보</h2><div class="table-wrap"><table><thead><tr><th>날짜</th><th>시</th><th>KMA</th><th>ECMWF</th><th>GFS</th><th>JMA</th><th>평균</th><th>위험도</th></tr></thead><tbody id="rainTableBody"></tbody></table></div></div>
+    <section id="rainPanel" class="tab-panel active">
+      <section class="summary-grid">
+        <div class="summary-card"><span>비 시작</span><strong id="rainStart">-</strong></div>
+        <div class="summary-card"><span>비 종료</span><strong id="rainEnd">-</strong></div>
+        <div class="summary-card"><span>누적 강수량</span><strong id="totalRain">-</strong></div>
+        <div class="summary-card"><span>작업 가능 시간</span><strong id="workableHours">-</strong></div>
+        <div class="summary-card"><span>예보 일치도</span><strong id="agreementSummary">-</strong></div>
+      </section>
+
+      <section class="card recommendation-card">
+        <h2>현장 판단 요약</h2>
+        <p id="recommendationText">예보를 조회하면 자동 판단 결과가 표시됩니다.</p>
+      </section>
+
+      <section class="map-grid">
+        <section class="card">
+          <div class="section-title">
+            <h2>좌표 선택 지도</h2>
+            <p>지도를 클릭하면 해당 좌표의 위치명을 확인하고 예보를 조회할 수 있습니다.</p>
+          </div>
+          <div id="selectMap" class="map-box"></div>
+        </section>
+        <section class="card">
+          <div class="section-title">
+            <h2>Windy 강수 지도</h2>
+            <p>비구름과 강수 흐름 확인용입니다.</p>
+          </div>
+          <iframe id="windyFrame" class="windy-frame" title="Windy weather map" loading="lazy"></iframe>
+        </section>
+      </section>
+
+      <section class="card">
+        <div class="section-title"><h2>모델별 강수량 그래프</h2></div>
+        <div class="chart-scroll"><div class="chart-inner"><canvas id="rainChart"></canvas></div></div>
+      </section>
+
+      <section class="card">
+        <div class="section-title table-actions">
+          <h2>6일 시간별 강수 예보</h2>
+          <div>
+            <button id="csvBtn" class="sub-btn" type="button">CSV 다운로드</button>
+            <button id="printBtn" class="sub-btn" type="button">PDF 출력</button>
+          </div>
+        </div>
+
+        <div class="risk-guide">
+          <span>강우량 위험도 기준 (1시간 강우량)</span>
+          <b class="guide-green">0 mm/hr<br>✅ 가능<br><small>일반 시공</small></b>
+          <b class="guide-green">0~1 mm/hr<br>✅ 가능(주의)<br><small>표면 보호 준비 권장</small></b>
+          <b class="guide-yellow">1~2 mm/hr<br>⚠️ 조건부 가능<br><small>보호조치 + 책임기술자 승인</small></b>
+          <b class="guide-orange">2~3 mm/hr<br>⚠️ 조건부 가능<br><small>승인 + 추가 공시체 제작</small></b>
+          <b class="guide-red">3 mm/hr 초과<br>❌ 원칙적 금지<br><small>타설 중지</small></b>
+          <b class="guide-red">5 mm/hr 이상<br>❌ 절대 금지<br><small>작업 중단</small></b>
+          <b class="guide-red">10 mm/hr 이상<br>❌ 집중호우<br><small>타설 불가</small></b>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>날짜</th><th>시간</th>
+                <th>KMA<br><small>1~3일 mm<br>4~6일 강수확률</small></th>
+                <th>ECMWF<br><small>유럽중기예보센터</small></th>
+                <th>GFS<br><small>미국 전지구 모델</small></th>
+                <th>JMA<br><small>일본기상청</small></th>
+                <th>평균<br><small>mm/hr</small></th>
+                <th>위험도</th>
+                <th>일치도</th>
+              </tr>
+            </thead>
+            <tbody id="forecastTableBody"></tbody>
+          </table>
+        </div>
+      </section>
     </section>
 
-    <section id="tab-safety" class="tab-panel">
-      <div class="card"><h2>오늘 06~18시 체감온도 그래프</h2><canvas id="todaySafetyChart" height="120"></canvas><div id="todaySafetyStickers" class="sticker-row"></div></div>
-      <div class="card"><h2>건강관리 위험도</h2><div id="healthRiskCard" class="health-risk-card">예보 조회 후 표시됩니다.</div></div>
-      <div class="card"><h2>2일 시간별 온도·안전관리</h2><div class="table-wrap"><table><thead><tr><th>날짜</th><th>시</th><th>기온</th><th>체감</th><th>습도</th><th>풍속</th><th>등급</th><th>체감상황</th><th>관리조치</th></tr></thead><tbody id="safetyTableBody"></tbody></table></div></div>
-      <div class="card"><h2>6일 온도·습도·풍속 변화</h2><canvas id="sixDayEnvironmentChart" height="120"></canvas></div>
+    <section id="safetyPanel" class="tab-panel">
+      <section class="summary-grid safety-summary-grid">
+        <div class="summary-card"><span>현재 기온</span><strong id="safeTempNow">-</strong></div>
+        <div class="summary-card"><span>체감온도</span><strong id="safeApparentNow">-</strong></div>
+        <div class="summary-card"><span>습도</span><strong id="safeHumidityNow">-</strong></div>
+        <div class="summary-card"><span>풍속</span><strong id="safeWindNow">-</strong></div>
+        <div class="summary-card"><span>안전등급</span><strong id="safeRiskNow">-</strong></div>
+      </section>
+
+      <section class="card recommendation-card safety-card">
+        <h2>온도·안전관리 요약</h2>
+        <p id="safetyRecommendationText">예보를 조회하면 온도·습도·풍속 기반 안전관리 의견이 표시됩니다.</p>
+      </section>
+
+      <section class="card health-card">
+        <div class="section-title">
+          <h2>건강관리 위험도</h2>
+          <p>기온·습도·풍속을 종합하여 예상 질환, 체감상황, 중점관리와 응급조치를 제안합니다.</p>
+        </div>
+
+        <div class="health-dashboard">
+          <div class="health-level-card" id="healthLevelCard">
+            <span class="health-kicker">체감위험도</span>
+            <strong id="healthStars">-</strong>
+            <b id="healthLevel">자료 부족</b>
+            <small id="healthEnv">기온 - · 습도 - · 풍속 -</small>
+          </div>
+
+          <div class="health-feel-card">
+            <span class="health-kicker">체감상황</span>
+            <p id="healthFeelText">온도 자료를 조회하면 현장 체감 설명이 표시됩니다.</p>
+          </div>
+        </div>
+
+        <div class="health-management-grid">
+          <div>
+            <h3>중점 관리</h3>
+            <ul id="healthActions" class="health-list"></ul>
+          </div>
+          <div>
+            <h3>예상 질환·증상</h3>
+            <ul id="healthSymptoms" class="health-list"></ul>
+          </div>
+          <div>
+            <h3>응급 대응</h3>
+            <ul id="healthFirstAid" class="health-list"></ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="guide-output-grid safety-focus-grid">
+        <section class="card health-focus-card">
+          <div class="section-title">
+            <h2>관리자 집중관리 시간</h2>
+            <p>오늘 06~18시 중 온도·습도·풍속 기준으로 가장 주의해야 할 시간을 자동 추출합니다.</p>
+          </div>
+          <div id="healthFocusTime" class="health-focus-box">예보를 조회하면 집중관리 시간이 표시됩니다.</div>
+        </section>
+
+        <section class="card health-ai-card">
+          <div class="section-title">
+            <h2>AI 작업판단</h2>
+            <p>강수·체감온도·습도·풍속을 종합해 오늘 작업 운영 방향을 제안합니다.</p>
+          </div>
+          <div id="healthAiDecision" class="health-ai-text">예보를 조회하면 작업판단 문구가 표시됩니다.</div>
+        </section>
+      </section>
+
+      <section class="card">
+        <div class="section-title">
+          <h2>오늘 위험 작업</h2>
+          <p>오늘 06~18시의 환경 위험을 반영하여 공정별 위험도를 참고용으로 표시합니다.</p>
+        </div>
+        <div id="healthWorkRisk" class="work-risk-grid"></div>
+      </section>
+
+      <section class="card emergency-card-section">
+        <div class="section-title">
+          <h2>질환별 응급처치 카드</h2>
+          <p>위험도가 높을 때 현장에서 바로 확인할 수 있는 기본 응급 대응입니다.</p>
+        </div>
+        <div class="emergency-grid">
+          <article class="emergency-card heat">
+            <h3>🥵 열탈진</h3>
+            <ul>
+              <li>그늘이나 시원한 장소로 이동</li>
+              <li>작업복을 느슨하게 풀기</li>
+              <li>시원한 물을 조금씩 제공</li>
+              <li>증상이 지속되면 의료기관 연락</li>
+            </ul>
+          </article>
+          <article class="emergency-card heatstroke">
+            <h3>🔥 열사병(응급)</h3>
+            <ul>
+              <li>즉시 119 신고</li>
+              <li>얼음·찬물로 적극적으로 체온 낮추기</li>
+              <li>의식이 없으면 음료를 억지로 먹이지 않기</li>
+              <li>관리자가 증상 발생 시간을 기록</li>
+            </ul>
+          </article>
+          <article class="emergency-card cold">
+            <h3>🥶 저체온증</h3>
+            <ul>
+              <li>젖은 옷을 벗기고 보온</li>
+              <li>담요·핫팩으로 중심부 보온</li>
+              <li>의식이 있으면 따뜻한 음료 제공</li>
+              <li>심한 떨림·의식저하 시 의료기관 이송</li>
+            </ul>
+          </article>
+          <article class="emergency-card frost">
+            <h3>🧊 동상</h3>
+            <ul>
+              <li>동상 부위 마찰 금지</li>
+              <li>미지근한 물로 서서히 가온</li>
+              <li>수포를 터뜨리지 않기</li>
+              <li>가능하면 의료기관 진료</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-title">
+          <h2>습도 체감 예시</h2>
+          <p>현장 근로자가 바로 이해하기 쉽게 습도 느낌을 생활 표현으로 표시합니다.</p>
+        </div>
+        <div class="humidity-guide">
+          <span>20% 입술이 마르고 피부가 당김</span>
+          <span>40% 뽀송뽀송하고 끈적임 적음</span>
+          <span>60% 덜 마른 빨래를 입은 느낌</span>
+          <span>80% 사우나 입구처럼 답답함</span>
+          <span>90% 젖은 옷을 입은 듯한 느낌</span>
+        </div>
+      </section>
+
+
+      <section class="card">
+        <div class="section-title">
+          <h2>오늘 체감온도 그래프</h2>
+          <p>오늘 06~18시 기준으로 기온·체감온도를 표시하고 위험수위에는 말풍선 스티커를 표시합니다.</p>
+        </div>
+        <div class="safety-chart-wrap">
+          <canvas id="safetyChart"></canvas>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-title">
+          <h2>6일 온도·습도·풍속 변화 그래프</h2>
+          <p>장기 흐름은 표 대신 그래프로 확인하고, 고온·저온 위험 시간대는 말풍선으로 강조합니다.</p>
+        </div>
+        <div class="chart-scroll">
+          <div class="chart-inner safety-trend-inner">
+            <canvas id="safetyTrendChart"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-title table-actions">
+          <h2>2일 시간별 온도·안전관리</h2>
+          <p>오늘과 내일 07~17시 작업시간 중심으로 세부 안전관리 권장사항을 표시합니다.</p>
+        </div>
+        <div class="table-wrap safety-wrap">
+          <table class="safety-table">
+            <thead>
+              <tr>
+                <th>날짜</th>
+                <th>시간</th>
+                <th>기온</th>
+                <th>체감</th>
+                <th>습도</th>
+                <th>풍속</th>
+                <th>작업권장</th>
+                <th>습도 체감</th>
+                <th>관리 조치</th>
+              </tr>
+            </thead>
+            <tbody id="safetyTableBody"></tbody>
+          </table>
+        </div>
+      </section>
     </section>
 
-    <section id="tab-fieldguide" class="tab-panel">
-      <div class="card"><h2>오늘의 현장 가이드</h2><p>역할과 공종을 선택하면 강수·온도·습도·풍속 데이터를 바탕으로 체크리스트와 TBM 문구를 생성합니다.</p></div>
-      <div class="card"><h3>역할 선택</h3><div id="roleSelector" class="chip-row"></div></div>
-      <div class="card"><h3>오늘 공종 선택</h3><input id="tradeSearch" class="wide-input" placeholder="공종 검색" /><div id="selectedTrades" class="selected-tags"></div><div id="tradeAccordion" class="trade-accordion"></div></div>
-      <div class="card"><h3>오늘 위험요약</h3><div id="fieldRiskSummary" class="guide-grid"></div></div>
-      <div class="card"><h3>역할별 오늘 할 일</h3><div class="toolbar"><button id="checkAllRoleTasks">역할 전체 체크</button><button id="clearRoleTasks">역할 전체 해제</button><button id="copyGuideBtn">전체 가이드 복사</button><button id="exportGuideCsvBtn">CSV 내보내기</button><button id="printGuideBtn">PDF/인쇄</button></div><div id="roleTasks"></div></div>
-      <div class="card"><h3>AI 작업판단</h3><div id="aiDecisionPanel" class="ai-decision-panel"></div></div>
-      <div class="card report-output-card"><h3>오늘 작업일보</h3><p class="muted">역할·공종·기상 위험을 통합한 출력용 요약입니다.</p><div id="dailyReportPanel"></div></div>
-      <div class="card"><h3>건설안전 브리핑</h3><div id="diseaseBriefing" class="disease-grid"></div></div>
-      <div class="card"><h3>공정별 주의사항</h3><div class="toolbar"><button id="checkAllTradeTasks">공정 전체 체크</button><button id="clearTradeTasks">공정 전체 해제</button></div><div id="tradeTasks"></div></div>
-      <div class="card"><h3>TBM 자동 문구</h3><textarea id="tbmText" rows="8"></textarea></div>
+
+    <section id="guidePanel" class="tab-panel">
+      <section class="card guide-hero-card">
+        <div class="section-title">
+          <h2>오늘의 현장 가이드</h2>
+          <p>역할과 오늘 공정을 선택하면 강수·온도·습도·풍속 데이터를 바탕으로 아침 업무 체크리스트와 TBM 문구를 자동 생성합니다.</p>
+        </div>
+        <div id="guideRiskSummary" class="guide-risk-grid"></div>
+      </section>
+
+      <section class="guide-input-stack">
+        <section class="card guide-role-card full-row-card">
+          <div class="section-title compact-title">
+            <div>
+              <h2>역할 선택</h2>
+              <p>선택한 역할에 따라 오늘 해야 할 안전·공사·품질·장비 관리 항목이 자동 생성됩니다. 선택값은 이 브라우저에 저장됩니다.</p>
+            </div>
+            <div class="guide-bulk-actions"><button type="button" id="selectAllRolesBtn" class="mini-btn">역할 전체 선택</button><button type="button" id="clearRolesBtn" class="mini-btn">역할 전체 해제</button></div>
+          </div>
+          <div class="check-grid guide-role-grid role-horizontal-grid">
+            <label><input type="checkbox" class="guide-role" value="safety"> 안전관리자</label>
+            <label><input type="checkbox" class="guide-role" value="construction"> 공사관리자</label>
+            <label><input type="checkbox" class="guide-role" value="quality"> 품질관리자</label>
+            <label><input type="checkbox" class="guide-role" value="equipment"> 장비담당자</label>
+            <label><input type="checkbox" class="guide-role" value="siteManager"> 현장소장</label>
+          </div>
+        </section>
+
+        <section class="card guide-work-card full-row-card">
+          <div class="section-title compact-title">
+            <div>
+              <h2>오늘 공종 선택</h2>
+              <p>공종 DB에서 검색·대분류 접기/펼치기로 선택합니다. 선택한 공종은 상단 고정 영역에 태그로 표시됩니다.</p>
+            </div>
+            <div class="work-category-actions top-work-actions">
+              <button type="button" id="expandWorkGroupsBtn" class="mini-btn">전체 펼침</button>
+              <button type="button" id="collapseWorkGroupsBtn" class="mini-btn">전체 접기</button>
+            </div>
+          </div>
+
+          <div class="work-db-search work-search-sticky">
+            <label for="workSearchInput">공종 검색</label>
+            <div class="work-search-row">
+              <input id="workSearchInput" type="search" placeholder="예: 콘크리트, 철근, 방수, 크레인, 천공, 견출, 분진">
+              <button type="button" id="addVisibleWorksBtn" class="mini-btn">검색결과 추가</button>
+              <button type="button" id="clearSelectedWorksBtn" class="mini-btn danger-light">선택 해제</button>
+            </div>
+          </div>
+
+          <div class="work-db-block selected-work-block selected-work-sticky">
+            <div class="selected-work-head">
+              <h3>오늘 선택한 공종</h3>
+              <small>선택한 공종은 체크리스트·AI 작업판단·TBM에 반영됩니다.</small>
+            </div>
+            <div id="selectedWorkItems" class="selected-work-list"></div>
+          </div>
+
+          <div class="work-db-block favorite-work-block">
+            <h3>자주 찾는 공종</h3>
+            <div id="favoriteWorkItems" class="work-chip-row"></div>
+          </div>
+
+          <div class="work-selector-layout">
+            <div class="work-category-pane">
+              <div class="work-db-block work-category-block">
+                <div class="work-category-head">
+                  <div>
+                    <h3>대분류별 공종 선택</h3>
+                    <p>대분류를 접고 펼치면서 필요한 공종을 체크하세요. 검색어를 입력하면 관련 공종만 표시됩니다.</p>
+                  </div>
+                </div>
+                <div id="workCategoryAccordion" class="work-category-accordion"></div>
+              </div>
+            </div>
+
+            <aside class="work-search-pane">
+              <div class="work-db-block search-result-panel">
+                <h3>검색 결과</h3>
+                <p class="work-help-text">검색어와 관련된 공종을 빠르게 추가합니다.</p>
+                <div id="workSearchResults" class="work-result-list"></div>
+              </div>
+            </aside>
+          </div>
+        </section>
+      </section>
+
+      <section class="guide-output-grid">
+        <section class="card guide-list-card">
+          <div class="section-title"><h2>역할별 오늘 할 일</h2></div>
+          <div id="roleChecklist" class="guide-checklist"></div>
+        </section>
+
+        <section class="card guide-list-card process-guide-card full-guide-output">
+          <div class="section-title table-actions">
+            <div>
+              <h2>공정별 주의사항</h2>
+              <p>선택한 역할에 맞는 안전·공사·품질·장비·체크 항목을 공종별로 정리합니다.</p>
+            </div>
+            <div class="process-export-actions">
+              <button type="button" class="sub-btn" onclick="copyProcessChecklist()">복사</button>
+              <button type="button" class="sub-btn" onclick="downloadProcessChecklistCsv()">엑셀 CSV</button>
+              <button type="button" class="sub-btn" onclick="printProcessChecklist()">PDF/인쇄</button>
+            </div>
+          </div>
+          <div id="processChecklist" class="guide-checklist process-checklist-print"></div>
+        </section>
+      </section>
+
+      <section class="guide-output-grid guide-extra-grid">
+        <section class="card guide-list-card">
+          <div class="section-title"><h2>STEP6 AI 작업판단</h2><p>선택 공종과 강수·온도·풍속 조건을 종합해 오늘/명일 대비 조언을 표시합니다.</p></div>
+          <div id="guideWorkPlan" class="guide-checklist"></div>
+        </section>
+        <section class="card guide-list-card">
+          <div class="section-title"><h2>건설안전 브리핑</h2><p>오늘 주의해야 할 질환·증상·응급조치를 자동 표시합니다.</p></div>
+          <div id="guideSafetyBriefing" class="guide-checklist"></div>
+        </section>
+      </section>
+
+      <section class="card tbm-card">
+        <div class="section-title table-actions">
+          <h2>오늘 TBM 전달문</h2>
+          <div><button id="copyTbmBtn" class="sub-btn" type="button">TBM 문구 복사</button></div>
+        </div>
+        <pre id="tbmText" class="tbm-text">예보를 조회하고 역할·공정을 선택하면 TBM 문구가 자동 생성됩니다.</pre>
+      </section>
     </section>
+
   </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script type="module" src="js/app.js"></script>
+  <footer class="brand-footer">
+    <strong>GUI's Arc</strong>
+    <span>Construction Field Guide</span>
+    <em>v5.1 Field System Fixes · Developed for Construction Site Decision Support</em>
+  </footer>
+
+  <script src="./js/regions.js"></script>
+  <script src="./js/api.js"></script>
+  <script src="./js/ui.js"></script>
+  <script src="./js/app.js"></script>
 </body>
 </html>
