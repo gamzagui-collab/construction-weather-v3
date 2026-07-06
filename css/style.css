@@ -712,3 +712,85 @@ body.dark .work-result-card{background:#202936;}
   .selected-work-head{display:block;}
   .selected-work-head small{display:block;margin-top:4px;}
 }
+
+/* v5.1 layout/readability fixes */
+.global-safety-bar {
+  top: 74px !important;
+  grid-template-columns: repeat(5, minmax(140px, 1fr)) !important;
+  gap: 10px !important;
+  padding: 10px 42px !important;
+  align-items: stretch !important;
+  overflow: visible !important;
+}
+.gsb-item {
+  min-height: 50px !important;
+  border-radius: 14px !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  line-height: 1.15 !important;
+}
+.gsb-item b { font-size: 13px !important; opacity: .88 !important; }
+.gsb-item strong { font-size: 18px !important; line-height: 1.2 !important; }
+.guide-output-grid {
+  grid-template-columns: 1fr !important;
+}
+.full-guide-output {
+  grid-column: 1 / -1;
+}
+.process-export-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.process-guide-card .guide-checklist {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.process-guide-card .guide-section {
+  break-inside: avoid;
+}
+.process-role-block {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  background: rgba(255,255,255,.55);
+}
+body.dark .process-role-block { background: rgba(255,255,255,.04); }
+.process-role-block h4 {
+  margin: 0 0 8px;
+  font-size: 14px;
+  color: #2563eb;
+}
+.process-role-block ul { margin: 0; padding: 0; }
+.guide-section li { line-height: 1.5; }
+.work-advice-list { display:grid; gap:12px; }
+.work-advice-card {
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:14px;
+  background:rgba(248,250,252,.86);
+  box-shadow: inset 4px 0 0 #3b82f6;
+}
+body.dark .work-advice-card { background:#202936; }
+.work-advice-card.warning { box-shadow: inset 4px 0 0 #f59e0b; }
+.work-advice-card.danger { box-shadow: inset 4px 0 0 #ef4444; }
+.work-advice-card h3 { margin:0 0 8px; font-size:16px; }
+.work-advice-card p { margin:0 0 8px; color:var(--sub); line-height:1.45; }
+.work-advice-card ul { list-style:none; display:grid; gap:6px; margin:0; padding:0; }
+@media(max-width:900px){
+  .global-safety-bar {
+    top: 0 !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    padding: 8px 10px !important;
+  }
+  .gsb-item { min-height: 44px !important; }
+  .gsb-item b { font-size: 12px !important; }
+  .gsb-item strong { font-size: 16px !important; }
+  .process-guide-card .guide-checklist { grid-template-columns: 1fr; }
+}
+@media print{
+  .top-header,.global-safety-bar,.search-card,.tab-nav,.guide-input-grid,.tbm-card .table-actions,.process-export-actions{display:none!important;}
+  .process-guide-card .guide-checklist{grid-template-columns:1fr!important;}
+}

@@ -472,12 +472,9 @@ function renderWorkCategoryAccordion(keyword=""){
     return;
   }
 
-  // 검색 중에는 검색 결과가 있는 그룹을 자동으로 펼침
+  // 검색 중에는 관련 그룹을 자동 펼침. 일반 상태에서는 사용자가 펼친 그룹만 유지합니다.
   if(keyword && keyword.trim()){
     groups.forEach((group)=>FIELD_OPEN_WORK_GROUPS.add(group.name));
-  } else if(FIELD_OPEN_WORK_GROUPS.size === 0 && groups.length){
-    // 처음 로드 시 주요 첫 그룹 2개만 펼침
-    groups.slice(0, 2).forEach((group)=>FIELD_OPEN_WORK_GROUPS.add(group.name));
   }
 
   el.innerHTML = groups.map((group)=>{
@@ -606,3 +603,54 @@ function escapeHtml(value){
 }
 function encodeAttr(value){ return encodeURIComponent(String(value ?? "")); }
 function decodeAttr(value){ return decodeURIComponent(String(value ?? "")); }
+
+
+/* =========================================================
+   v5.1 Process checklist export helpers
+   ========================================================= */
+function getProcessChecklistPlainText(){
+  const root = document.getElementById("processChecklist");
+  if(!root) return "";
+  const lines = [];
+  root.querySelectorAll(".guide-section").forEach((section)=>{
+    const title = section.querySelector("h3")?.innerText?.trim();
+    if(title) lines.push(`\n[${title}]`);
+    section.querySelectorAll("li").forEach((li)=>{
+      const text = li.innerText.replace(/\s+/g," ").trim();
+      if(text) lines.push(`□ ${text}`);
+    });
+  });
+  return lines.join("\n").trim();
+}
+
+function copyProcessChecklist(){
+  const text = getProcessChecklistPlainText();
+  if(!text){ alert("복사할 공정별 주의사항이 없습니다."); return; }
+  navigator.clipboard?.writeText(text).then(()=>alert("공정별 주의사항을 복사했습니다."));
+}
+
+function downloadProcessChecklistCsv(){
+  const root = document.getElementById("processChecklist");
+  if(!root){ alert("내보낼 내용이 없습니다."); return; }
+  const rows = [["공종","항목"]];
+  root.querySelectorAll(".guide-section").forEach((section)=>{
+    const title = section.querySelector("h3")?.innerText?.replace(/\s+/g," ").trim() || "공종";
+    section.querySelectorAll("li").forEach((li)=>{
+      const text = li.innerText.replace(/\s+/g," ").trim();
+      if(text) rows.push([title, text]);
+    });
+  });
+  if(rows.length <= 1){ alert("내보낼 항목이 없습니다."); return; }
+  const csv = rows.map((r)=>r.map((v)=>`"${String(v).replace(/"/g,'""')}"`).join(",")).join("\n");
+  const blob = new Blob(["\uFEFF" + csv], {type:"text/csv;charset=utf-8;"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "gui-arc-process-checklist.csv";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function printProcessChecklist(){
+  window.print();
+}

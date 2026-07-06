@@ -417,15 +417,25 @@
           <div id="roleChecklist" class="guide-checklist"></div>
         </section>
 
-        <section class="card guide-list-card">
-          <div class="section-title"><h2>공정별 주의사항</h2></div>
-          <div id="processChecklist" class="guide-checklist"></div>
+        <section class="card guide-list-card process-guide-card full-guide-output">
+          <div class="section-title table-actions">
+            <div>
+              <h2>공정별 주의사항</h2>
+              <p>선택한 역할에 맞는 안전·공사·품질·장비·체크 항목을 공종별로 정리합니다.</p>
+            </div>
+            <div class="process-export-actions">
+              <button type="button" class="sub-btn" onclick="copyProcessChecklist()">복사</button>
+              <button type="button" class="sub-btn" onclick="downloadProcessChecklistCsv()">엑셀 CSV</button>
+              <button type="button" class="sub-btn" onclick="printProcessChecklist()">PDF/인쇄</button>
+            </div>
+          </div>
+          <div id="processChecklist" class="guide-checklist process-checklist-print"></div>
         </section>
       </section>
 
       <section class="guide-output-grid guide-extra-grid">
         <section class="card guide-list-card">
-          <div class="section-title"><h2>STEP6 AI 작업판단</h2><p>작업시간 07~17시 기준으로 오늘의 추천 작업순서를 표시합니다.</p></div>
+          <div class="section-title"><h2>STEP6 AI 작업판단</h2><p>선택 공종과 강수·온도·풍속 조건을 종합해 오늘/명일 대비 조언을 표시합니다.</p></div>
           <div id="guideWorkPlan" class="guide-checklist"></div>
         </section>
         <section class="card guide-list-card">
@@ -448,7 +458,7 @@
   <footer class="brand-footer">
     <strong>GUI's Arc</strong>
     <span>Construction Field Guide</span>
-    <em>v4.4 Safety Flow · Developed for Construction Site Decision Support</em>
+    <em>v5.1 Field System Fixes · Developed for Construction Site Decision Support</em>
   </footer>
 
   <script src="./js/regions.js"></script>
