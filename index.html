@@ -335,14 +335,16 @@
         <div id="guideRiskSummary" class="guide-risk-grid"></div>
       </section>
 
-      <section class="guide-input-grid">
-        <section class="card">
-          <div class="section-title">
-            <h2>역할 선택</h2>
-            <p>복수 선택 가능합니다. 선택값은 이 브라우저에 저장됩니다.</p>
+      <section class="guide-input-stack">
+        <section class="card guide-role-card full-row-card">
+          <div class="section-title compact-title">
+            <div>
+              <h2>역할 선택</h2>
+              <p>선택한 역할에 따라 오늘 해야 할 안전·공사·품질·장비 관리 항목이 자동 생성됩니다. 선택값은 이 브라우저에 저장됩니다.</p>
+            </div>
+            <div class="guide-bulk-actions"><button type="button" id="selectAllRolesBtn" class="mini-btn">역할 전체 선택</button><button type="button" id="clearRolesBtn" class="mini-btn">역할 전체 해제</button></div>
           </div>
-          <div class="guide-bulk-actions"><button type="button" id="selectAllRolesBtn" class="mini-btn">역할 전체 선택</button><button type="button" id="clearRolesBtn" class="mini-btn">역할 전체 해제</button></div>
-          <div class="check-grid guide-role-grid">
+          <div class="check-grid guide-role-grid role-horizontal-grid">
             <label><input type="checkbox" class="guide-role" value="safety"> 안전관리자</label>
             <label><input type="checkbox" class="guide-role" value="construction"> 공사관리자</label>
             <label><input type="checkbox" class="guide-role" value="quality"> 품질관리자</label>
@@ -351,48 +353,60 @@
           </div>
         </section>
 
-        <section class="card">
-          <div class="section-title">
-            <h2>오늘 공종 선택</h2>
-            <p>공종 DB에서 검색해 선택합니다. 자주 쓰는 공종은 상단에 자동 표시됩니다.</p>
+        <section class="card guide-work-card full-row-card">
+          <div class="section-title compact-title">
+            <div>
+              <h2>오늘 공종 선택</h2>
+              <p>공종 DB에서 검색·대분류 접기/펼치기로 선택합니다. 선택한 공종은 상단 고정 영역에 태그로 표시됩니다.</p>
+            </div>
+            <div class="work-category-actions top-work-actions">
+              <button type="button" id="expandWorkGroupsBtn" class="mini-btn">전체 펼침</button>
+              <button type="button" id="collapseWorkGroupsBtn" class="mini-btn">전체 접기</button>
+            </div>
           </div>
 
-          <div class="work-db-search">
+          <div class="work-db-search work-search-sticky">
             <label for="workSearchInput">공종 검색</label>
             <div class="work-search-row">
               <input id="workSearchInput" type="search" placeholder="예: 콘크리트, 철근, 방수, 크레인, 천공, 견출, 분진">
               <button type="button" id="addVisibleWorksBtn" class="mini-btn">검색결과 추가</button>
-              <button type="button" id="clearSelectedWorksBtn" class="mini-btn">선택 해제</button>
+              <button type="button" id="clearSelectedWorksBtn" class="mini-btn danger-light">선택 해제</button>
             </div>
           </div>
 
-          <div class="work-db-block">
+          <div class="work-db-block selected-work-block selected-work-sticky">
+            <div class="selected-work-head">
+              <h3>오늘 선택한 공종</h3>
+              <small>선택한 공종은 체크리스트·AI 작업판단·TBM에 반영됩니다.</small>
+            </div>
+            <div id="selectedWorkItems" class="selected-work-list"></div>
+          </div>
+
+          <div class="work-db-block favorite-work-block">
             <h3>자주 찾는 공종</h3>
             <div id="favoriteWorkItems" class="work-chip-row"></div>
           </div>
 
-          <div class="work-db-block work-category-block">
-            <div class="work-category-head">
-              <div>
-                <h3>대분류별 공종 선택</h3>
-                <p>대분류를 접고 펼치면서 필요한 공종을 체크하세요. 검색어를 입력하면 관련 공종만 표시됩니다.</p>
-              </div>
-              <div class="work-category-actions">
-                <button type="button" id="expandWorkGroupsBtn" class="mini-btn">전체 펼침</button>
-                <button type="button" id="collapseWorkGroupsBtn" class="mini-btn">전체 접기</button>
+          <div class="work-selector-layout">
+            <div class="work-category-pane">
+              <div class="work-db-block work-category-block">
+                <div class="work-category-head">
+                  <div>
+                    <h3>대분류별 공종 선택</h3>
+                    <p>대분류를 접고 펼치면서 필요한 공종을 체크하세요. 검색어를 입력하면 관련 공종만 표시됩니다.</p>
+                  </div>
+                </div>
+                <div id="workCategoryAccordion" class="work-category-accordion"></div>
               </div>
             </div>
-            <div id="workCategoryAccordion" class="work-category-accordion"></div>
-          </div>
 
-          <div class="work-db-block">
-            <h3>검색 결과</h3>
-            <div id="workSearchResults" class="work-result-list"></div>
-          </div>
-
-          <div class="work-db-block selected-work-block">
-            <h3>오늘 선택한 공종</h3>
-            <div id="selectedWorkItems" class="selected-work-list"></div>
+            <aside class="work-search-pane">
+              <div class="work-db-block search-result-panel">
+                <h3>검색 결과</h3>
+                <p class="work-help-text">검색어와 관련된 공종을 빠르게 추가합니다.</p>
+                <div id="workSearchResults" class="work-result-list"></div>
+              </div>
+            </aside>
           </div>
         </section>
       </section>

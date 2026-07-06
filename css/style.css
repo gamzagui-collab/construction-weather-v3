@@ -638,3 +638,77 @@ body.dark .work-check-card.checked{background:#0f3b57;border-color:#38bdf8;}
   .work-group-header{padding:11px 12px;}
   .work-check-card{min-height:64px;}
 }
+
+/* =========================================================
+   GUI's Arc v5.0 - Field Guide layout refactor
+   역할 선택은 가로 전체, 공종 선택은 전체 폭 + 대분류 아코디언
+   ========================================================= */
+.guide-input-grid{display:block!important;}
+.guide-input-stack{display:grid;grid-template-columns:1fr;gap:18px;margin-bottom:20px;}
+.full-row-card{width:100%;}
+.compact-title{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;}
+.role-horizontal-grid{display:grid!important;grid-template-columns:repeat(5,minmax(140px,1fr));gap:12px;}
+.role-horizontal-grid label{display:flex;align-items:center;gap:8px;padding:12px 14px;border:1px solid var(--border);border-radius:12px;background:#f8fafc;font-weight:900;cursor:pointer;}
+body.dark .role-horizontal-grid label{background:#202936;}
+.role-horizontal-grid input{width:18px;height:18px;}
+.guide-work-card{padding-bottom:24px;}
+.top-work-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;}
+.work-search-sticky{position:sticky;top:78px;z-index:90;background:var(--card);padding:12px;border:1px solid var(--border);border-radius:14px;box-shadow:0 8px 18px rgba(15,23,42,.06);margin-bottom:12px;}
+.selected-work-sticky{position:sticky;top:170px;z-index:80;background:linear-gradient(180deg,#f8fbff,#ffffff);border:1px solid #bfdbfe;box-shadow:0 8px 18px rgba(37,99,235,.08);}
+body.dark .selected-work-sticky{background:#202936;border-color:#334155;}
+.selected-work-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:10px;}
+.selected-work-head small{color:var(--sub);font-size:12px;}
+.selected-work-list{display:flex;flex-wrap:wrap;gap:8px;min-height:38px;align-items:center;}
+.selected-work-item{display:inline-flex!important;align-items:center;gap:6px;padding:7px 10px;border-radius:999px;background:#dbeafe;color:#1e3a8a;font-weight:900;font-size:12px;}
+.selected-work-item button{border:0;background:#1e40af;color:#fff;border-radius:999px;width:18px;height:18px;font-weight:900;line-height:18px;cursor:pointer;}
+.work-selector-layout{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:16px;align-items:start;}
+.work-category-pane{min-width:0;}
+.work-search-pane{position:sticky;top:260px;align-self:start;max-height:70vh;overflow:auto;}
+.search-result-panel{margin-bottom:0;}
+.work-help-text{color:var(--sub);font-size:12px;margin-bottom:10px;}
+.work-category-accordion{display:grid;gap:10px;}
+.work-group{border:1px solid var(--border);border-radius:14px;overflow:hidden;background:#fff;}
+body.dark .work-group{background:#1f2937;}
+.work-group-header{width:100%;border:0;background:#f1f5f9;color:#0f172a;display:flex;align-items:center;justify-content:space-between;padding:13px 15px;cursor:pointer;text-align:left;}
+body.dark .work-group-header{background:#26313d;color:#fff;}
+.work-group-title{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.work-group-title strong{font-size:15px;}
+.work-group-count{font-size:12px;color:var(--sub);font-weight:800;}
+.work-group-toggle{color:#2563eb;font-weight:900;font-size:12px;}
+.work-group-body{display:none;padding:12px;background:#fff;}
+body.dark .work-group-body{background:#1b222b;}
+.work-group.open .work-group-body{display:block;}
+.work-group-toolbar{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
+.work-check-grid{display:grid;grid-template-columns:repeat(4,minmax(170px,1fr));gap:10px;}
+.work-check-card{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--border);border-radius:12px;padding:10px;background:#fff;cursor:pointer;min-height:76px;}
+body.dark .work-check-card{background:#202936;}
+.work-check-card.checked{background:#eff6ff;border-color:#60a5fa;box-shadow:inset 4px 0 0 #2563eb;}
+body.dark .work-check-card.checked{background:#172554;}
+.work-check-card input{width:16px;height:16px;margin-top:2px;flex:0 0 auto;}
+.work-check-card strong{display:block;font-size:13px;line-height:1.25;word-break:keep-all;}
+.work-check-card small{display:block;margin-top:4px;color:var(--sub);font-size:11px;line-height:1.25;white-space:normal;}
+.work-chip-row{display:flex;flex-wrap:wrap;gap:8px;}
+.work-chip{border:0;border-radius:999px;padding:8px 11px;background:#e0f2fe;color:#075985;font-size:12px;font-weight:900;cursor:pointer;}
+.work-result-list{display:grid;gap:8px;}
+.work-result-card{border:1px solid var(--border);border-radius:12px;padding:10px;background:#fff;display:grid;gap:4px;}
+body.dark .work-result-card{background:#202936;}
+.work-result-card strong{font-size:13px;}
+.work-result-card span{font-size:11px;color:var(--sub);line-height:1.35;}
+.work-result-card button{margin-top:6px;justify-self:start;}
+.danger-light{background:#fee2e2!important;color:#991b1b!important;}
+
+@media(max-width:1200px){
+  .work-selector-layout{grid-template-columns:1fr;}
+  .work-search-pane{position:static;max-height:none;}
+  .work-check-grid{grid-template-columns:repeat(3,minmax(160px,1fr));}
+  .selected-work-sticky,.work-search-sticky{position:static;}
+}
+@media(max-width:768px){
+  .compact-title{display:block;}
+  .guide-bulk-actions,.top-work-actions{margin-top:10px;justify-content:flex-start;}
+  .role-horizontal-grid{grid-template-columns:1fr 1fr!important;}
+  .work-search-row{display:grid;grid-template-columns:1fr;gap:8px;}
+  .work-check-grid{grid-template-columns:1fr;}
+  .selected-work-head{display:block;}
+  .selected-work-head small{display:block;margin-top:4px;}
+}

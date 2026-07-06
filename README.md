@@ -1,20 +1,17 @@
-# GUI's Arc v4.7 Work Accordion
+# GUI's Arc v5.0 Field System
 
-건설현장 날씨·안전·공정 가이드 웹앱입니다.
+건설현장 강수·온도·안전·작업가이드 웹앱입니다.
 
-## 주요 개선
-- 오늘의 현장가이드 공종 DB 선택 화면 전문화
-- 대공종별 접기/펼치기 UI
-- 전체 공종 또는 50개 이상 공종 선택 대응
-- 검색창 + 자주 찾는 공종 + 대분류 선택 병행
+## v5.0 핵심 변경
+- 역할 선택 상단 가로 배치
+- 공종 선택 전체 폭 레이아웃
+- 대분류별 접기/펼치기 아코디언
+- 검색·자주 찾는 공종·선택 공종 태그 개선
+- 역할 + 공종 + 날씨 기반 오늘의 할 일 생성 구조 유지
 
-## 적용
-1. 압축을 기존 Git 폴더에 덮어쓰기
-2. `worker/worker.js`를 Cloudflare Worker에 전체 붙여넣고 Deploy
-3. 아래 명령 실행
-
-```bash
-git add .
-git commit -m "Improve work trade selector with accordion"
-git push
-```
+## 배포
+1. GitHub 저장소에 파일 덮어쓰기
+2. `git add .`
+3. `git commit -m "Refactor field guide work selector"`
+4. `git push`
+5. Cloudflare Worker의 `worker/worker.js` 전체 교체 후 Deploy
