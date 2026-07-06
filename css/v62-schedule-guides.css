@@ -1,0 +1,78 @@
+
+/* GUI's Arc v6.2 - schedule / split guides / accident news */
+.ga-tabs-v62{
+  display:flex; flex-wrap:wrap; gap:10px; align-items:center;
+  padding:10px; background:rgba(255,255,255,.78); backdrop-filter:blur(12px);
+  border:1px solid #e2e8f0; border-radius:18px; box-shadow:0 12px 28px rgba(15,23,42,.08);
+}
+.ga-tab-v62{
+  border:0; border-radius:14px; padding:12px 16px; font-weight:900; cursor:pointer;
+  background:#f8fafc; color:#0f172a; transition:.18s; display:flex; gap:8px; align-items:center;
+}
+.ga-tab-v62:hover{transform:translateY(-1px); background:#e0f2fe}
+.ga-tab-v62.active{background:linear-gradient(135deg,#0f172a,#1d4ed8); color:#fff; box-shadow:0 10px 22px rgba(29,78,216,.25)}
+.ga-section-title{
+  display:flex; gap:10px; align-items:center; font-size:22px; font-weight:1000; color:#0f172a; margin:18px 0 12px;
+}
+.ga-section-title::before{
+  content:""; width:8px; height:28px; border-radius:99px; background:linear-gradient(#f59e0b,#2563eb);
+}
+.schedule-shell{
+  display:grid; grid-template-columns:1.2fr .8fr; gap:18px;
+}
+.schedule-card,.guide-card,.accident-news-card{
+  background:#fff; border:1px solid #e2e8f0; border-radius:20px; box-shadow:0 12px 32px rgba(15,23,42,.08); padding:18px;
+}
+.schedule-calendar{
+  display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:8px;
+}
+.schedule-day{
+  min-height:112px; border:1px solid #e2e8f0; border-radius:14px; padding:9px; background:#f8fafc; cursor:pointer; position:relative;
+}
+.schedule-day.today{outline:3px solid #f59e0b; background:#fff7ed}
+.schedule-day.selected{outline:3px solid #2563eb; background:#eff6ff}
+.schedule-date{font-weight:1000; color:#0f172a; font-size:14px}
+.schedule-chip{display:block; margin-top:6px; padding:5px 7px; border-radius:10px; background:#dbeafe; color:#1e3a8a; font-weight:800; font-size:11px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.schedule-form-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+.schedule-form-grid label{font-size:12px; font-weight:900; color:#475569}
+.schedule-form-grid input,.schedule-form-grid select,.schedule-form-grid textarea{
+  width:100%; border:1px solid #cbd5e1; border-radius:12px; padding:10px; font-weight:700; background:#fff;
+}
+.schedule-form-grid textarea{grid-column:1/-1; min-height:74px}
+.schedule-actions{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px}
+.schedule-actions button,.ga-copy-btn{
+  border:0; border-radius:12px; background:#2563eb; color:#fff; font-weight:900; padding:10px 14px; cursor:pointer;
+}
+.schedule-actions button.secondary{background:#e2e8f0; color:#0f172a}
+.schedule-list{margin-top:12px; display:grid; gap:8px}
+.schedule-item{border:1px solid #e2e8f0; border-left:6px solid #f59e0b; border-radius:14px; padding:10px; background:#fff}
+.schedule-item strong{display:block; color:#0f172a}
+.guide-split-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+.task-group-title{font-weight:1000; margin:12px 0 8px; color:#172554}
+.task-list{display:grid; gap:7px}
+.task-line{display:flex; gap:8px; align-items:flex-start; padding:9px; background:#f8fafc; border-radius:12px; border:1px solid #e2e8f0; line-height:1.45}
+.task-line.safety{border-left:5px solid #ef4444}
+.task-line.field{border-left:5px solid #2563eb}
+.accident-news-grid{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px}
+.accident-poster{
+  min-height:210px; border-radius:18px; padding:16px; background:linear-gradient(145deg,#fff,#f8fafc);
+  border:1px solid #e2e8f0; box-shadow:0 8px 20px rgba(15,23,42,.07); position:relative; overflow:hidden;
+}
+.accident-poster::after{
+  content:""; position:absolute; right:-30px; top:-30px; width:100px; height:100px; border-radius:50%; background:rgba(239,68,68,.12);
+}
+.accident-poster .type{display:inline-flex; padding:6px 10px; border-radius:999px; background:#fee2e2; color:#991b1b; font-weight:1000; font-size:12px}
+.accident-poster h4{font-size:16px; margin:12px 0 8px; color:#0f172a}
+.accident-poster p{font-size:13px; color:#475569; line-height:1.55}
+.accident-poster ul{font-size:12px; padding-left:18px; line-height:1.6}
+.source-link-row{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin-top:14px}
+.source-link-row a{text-align:center; text-decoration:none; padding:10px; border-radius:12px; background:#eff6ff; color:#1d4ed8; font-weight:900}
+@media(max-width:1000px){
+  .schedule-shell,.guide-split-grid{grid-template-columns:1fr}
+  .accident-news-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:640px){
+  .schedule-calendar{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .accident-news-grid,.source-link-row{grid-template-columns:1fr}
+  .ga-tab-v62{flex:1 1 100%; justify-content:center}
+}

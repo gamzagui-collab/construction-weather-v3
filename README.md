@@ -1,8 +1,20 @@
-# GUI's Arc v6.1 Standards + AI Assistant
+# GUI's Arc v6.2 Site Schedule & Split Guides
 
-- KCS / 산업안전보건기준 / 관련 법령 연결 구조
-- 사고위험 TOP5 / 품질문제 TOP3 / 감리지적 가능성 TOP3
-- 공종별 기준 라이브러리 및 체크리스트 자동 생성
-- TBM 카드 글자색 및 체크박스형 출력 개선
+v6.2 패치입니다.
 
-※ 기준 라이브러리는 현장 검토용 연결 정보입니다. 실제 적용 시 최신 KCS·관계 법령·현장 시방서를 원문으로 확인하세요.
+## 핵심
+- 현장스케줄은 기록만 합니다.
+- 오늘의 안전가이드는 스케줄/날씨/장비에서 안전 항목만 읽습니다.
+- 오늘의 현장가이드는 공사/품질/자재 항목만 읽습니다.
+- 건설사고 브리핑은 포스터형 사고사례 뉴스 카드로 표시합니다.
+
+## 추가 파일
+- css/v62-schedule-guides.css
+- js/database/materialRules.js
+- js/database/accidentPosters.js
+- js/schedule/siteSchedule.js
+- js/guides/v62Tabs.js
+- js/guides/splitGuides.js
+- js/accidents/accidentNews.js
+- data/schedule/material_rules.json
+- data/accidents/poster_seed.json
