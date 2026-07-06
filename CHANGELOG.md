@@ -1,8 +1,7 @@
-# GUI's Arc v6.0.1 Final UI/UX
+# CHANGELOG
 
-- TBM 전달문 글자색 오류 수정
-- TBM을 아이콘 + 체크박스 카드 형식으로 자동 생성
-- TBM 복사 기능 기존 방식 유지
-- 제목/카드/탭/헤더 가독성 보강
-- GUI's Arc 건축형 SVG 로고 개선
-- 07:00~17:00 작업시간 기준 안내 강화
+## v6.1
+- Add construction standards library panel.
+- Add AI site assistant risk ranking.
+- Improve TBM card readability and checkbox layout.
+- Connect selected trades to KCS/safety/legal/checklist guidance.

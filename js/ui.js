@@ -1396,3 +1396,335 @@ function buildTbmHtml(roles=[], processesOrLabels=[], focus=null, labelsAlready=
     <div class="tbm-footer-note">관리자는 위험 시간대 순회점검과 사진·일지 증빙을 남기고, 작업자는 이상 증상이 있으면 즉시 보고하십시오.</div>
   </div>`;
 }
+
+/* =========================================================
+   v6.1 Standards Library + AI Site Assistant
+   - KCS / 산업안전보건기준 / 관련 법령 연결형 DB
+   - 사고위험 TOP5 / 품질문제 TOP3 / 감리지적 가능성 TOP3
+   - TBM 카드 재정의
+   ========================================================= */
+const V61_STANDARD_RULES = [
+  {
+    id: "concrete",
+    match: /콘크리트|타설|레미콘|슬래브|벽체|기둥|보|양생/,
+    title: "콘크리트 타설",
+    kcs: ["KCS 14 20 10 콘크리트공사 일반", "KCS 14 20 40 콘크리트 시공", "KCS 14 20 계열: 타설·다짐·양생 기준 확인"],
+    safety: ["펌프카·레미콘 차량 동선 통제", "호스 반동·협착·전도 위험 관리", "강우 시 표면 우수 유입 방지 및 미끄럼 관리"],
+    law: ["산업안전보건기준: 차량계 건설기계, 작업장 통로, 추락·낙하 방지 관련 기준 확인", "콘크리트 타설 전 위험성평가·작업계획·TBM 실시"],
+    accident: ["펌프카 호스 반동", "레미콘 차량 협착", "슬래브 단부 추락", "강우 중 미끄럼", "폭염 시간대 열탈진"],
+    quality: ["강우 중 타설로 표면 품질 저하", "다짐 부족·재료분리", "공시체·슬럼프 기록 누락"],
+    inspection: ["타설 전 감리 검측 누락", "강우 보양계획 미흡", "공시체 추가 제작 검토 누락"],
+    checklist: ["타설 전 보양재·비닐·천막 준비", "배수로·집수정·양수기 작동 확인", "슬럼프·공시체·온도 기록", "책임기술자·감리 승인 여부 확인"]
+  },
+  {
+    id: "rebar",
+    match: /철근|배근|결속|이음|정착|피복/,
+    title: "철근 조립",
+    kcs: ["KCS 14 20 11 철근공사", "철근 이음·정착·피복두께·간격 기준 확인", "구조도면 및 배근상세도와 일치 여부 확인"],
+    safety: ["철근 돌출부 찔림 방지캡 설치", "고소부 작업발판·안전대 확인", "자재 낙하·결속선 찔림·손 베임 관리"],
+    law: ["산업안전보건기준: 추락방지, 낙하물방지, 작업발판 관련 기준 확인"],
+    accident: ["철근 돌출부 찔림", "작업발판 추락", "철근 다발 낙하", "결속 중 손 베임", "폭염 시간대 집중력 저하"],
+    quality: ["피복두께 부족", "정착길이 부족", "철근 간격 불량"],
+    inspection: ["배근 사진 누락", "감리 검측 전 후속공정 진행", "이음·정착길이 확인 미흡"],
+    checklist: ["피복두께 스페이서 확인", "정착·이음길이 확인", "배근 전경·상세 사진 확보", "감리 검측 후 후속공정 진행"]
+  },
+  {
+    id: "formwork",
+    match: /거푸집|동바리|서포트|비계|해체|슬래브 거푸집/,
+    title: "거푸집·동바리",
+    kcs: ["KCS 14 20 12 거푸집 및 동바리", "동바리 설치간격·수직도·해체시기 기준 확인"],
+    safety: ["동바리 전도·붕괴 방지", "상부 작업 중 낙하물 통제", "해체작업 순서와 출입통제 확인"],
+    law: ["산업안전보건기준: 거푸집동바리 조립·해체, 추락·낙하물 방지 관련 기준 확인"],
+    accident: ["동바리 붕괴", "거푸집 해체 중 낙하", "작업발판 추락", "자재 협착", "강풍 시 자재 날림"],
+    quality: ["수직도·평탄도 불량", "누수·벌어짐", "해체시기 부적정"],
+    inspection: ["동바리 설치검사 누락", "해체 전 강도 확인 미흡", "거푸집 청소상태 불량"],
+    checklist: ["동바리 수직도·간격 확인", "해체작업 순서 공유", "작업구역 출입통제", "타설 전 거푸집 벌어짐·누수 확인"]
+  },
+  {
+    id: "earthwork",
+    match: /굴착|토공|터파기|되메우기|흙막이|덤프|운반|토사/,
+    title: "토공·굴착·운반",
+    kcs: ["KCS 11 계열 토공사 기준 확인", "흙막이·굴착면 안정·되메우기 다짐 기준 확인"],
+    safety: ["굴착면 붕괴·매몰 위험 관리", "덤프·굴삭기 회전반경 출입통제", "우천 시 사면·배수로 상태 확인"],
+    law: ["산업안전보건기준: 굴착작업, 차량계 건설기계, 유도자 배치 관련 기준 확인"],
+    accident: ["굴착면 붕괴", "덤프 후진 협착", "굴삭기 회전반경 접촉", "우천 시 사면 미끄럼", "지하매설물 손상"],
+    quality: ["되메우기 다짐 부족", "지지층 확인 미흡", "배수 불량"],
+    inspection: ["굴착심도·지반상태 기록 누락", "다짐시험·사진 누락", "흙막이 변위 확인 미흡"],
+    checklist: ["굴착면 균열·용수 확인", "장비 유도자 배치", "우천 전 배수로 정비", "덤프 동선과 보행자 동선 분리"]
+  },
+  {
+    id: "lifting",
+    match: /크레인|양중|지게차|하역|팔레트|장비|고소|스카이|리프트/,
+    title: "장비·양중·하역",
+    kcs: ["공종별 장비 작업계획서 및 시공계획 기준 확인", "양중하중·작업반경·지반지지력 확인"],
+    safety: ["풍속 상승 시 양중작업 중지기준 공유", "신호수·유도자 배치", "줄걸이·와이어·아웃트리거 확인"],
+    law: ["산업안전보건기준: 차량계 하역운반기계, 양중기, 크레인, 작업계획서 관련 기준 확인"],
+    accident: ["인양물 낙하", "지게차 전도", "크레인 아웃트리거 침하", "작업반경 내 협착", "강풍 중 흔들림"],
+    quality: ["자재 파손", "반입수량 확인 미흡", "보관상태 불량"],
+    inspection: ["장비점검표 누락", "반입검수 기록 누락", "신호수 배치 미흡"],
+    checklist: ["장비작업계획서 확인", "신호수·유도자 배치", "하역구역 출입통제", "풍속 7m/s 이상 시 작업 기준 재확인"]
+  },
+  {
+    id: "waterproof_finish",
+    match: /방수|도장|미장|견출|면갈이|타일|석공|외부마감|분진|그라인더/,
+    title: "방수·마감·분진작업",
+    kcs: ["KCS 41 계열 건축마감공사 기준 확인", "방수 바탕면 함수율·건조상태·시공온도 조건 확인"],
+    safety: ["분진·비산물 보안경·방진마스크 착용", "고소부 추락방지", "강수·습도 상승 시 방수·도장 작업 재검토"],
+    law: ["산업안전보건기준: 분진, 보호구, 고소작업, 유해위험물질 관련 기준 확인"],
+    accident: ["분진 흡입", "그라인더 비산물 눈 손상", "고소부 추락", "습윤 바닥 미끄럼", "유기용제 흡입"],
+    quality: ["바탕면 건조 부족", "접착불량·들뜸", "강우 후 하자 발생"],
+    inspection: ["바탕면 함수율 기록 누락", "시공 전 사진 누락", "양생·보양 미흡"],
+    checklist: ["방진마스크·보안경 착용", "집진기·살수 등 분진저감 확인", "강우·습도 조건 확인", "바탕면 건조·청소상태 확인"]
+  }
+];
+
+function v61SelectedWorkDetails() {
+  if (typeof getSelectedGuideWorkDetails === "function") {
+    const details = getSelectedGuideWorkDetails();
+    if (Array.isArray(details) && details.length) return details;
+  }
+  return [...document.querySelectorAll(".guide-process:checked")].map((el) => ({ work_item: { 세부작업: processName(el.value), 대공종: "기본공정", 중공종: "선택공정" } }));
+}
+
+function v61WorkLabel(detail) {
+  if (typeof dbWorkTitle === "function") return dbWorkTitle(detail);
+  const item = detail?.work_item || detail || {};
+  return item.세부작업 || item.작업명 || item.name || String(detail || "선택 공종");
+}
+
+function v61WorkPath(detail) {
+  const item = detail?.work_item || detail || {};
+  return [item.대공종, item.중공종, item.세부공종].filter(Boolean).join(" › ") || "공종 DB";
+}
+
+function v61MatchStandard(label) {
+  const text = String(label || "");
+  return V61_STANDARD_RULES.filter((rule) => rule.match.test(text));
+}
+
+function v61DefaultStandard(label) {
+  return {
+    id: "general",
+    title: label || "선택 공종",
+    kcs: ["해당 공종의 KCS·시방서·도면·승인도서를 확인", "시공계획서와 작업순서 일치 여부 확인"],
+    safety: ["위험성평가·TBM 실시", "작업구역 통제·PPE 착용상태 확인", "기상조건에 따른 작업중지 기준 공유"],
+    law: ["산업안전보건기준 관련 조항은 최신 원문으로 확인", "작업계획서·교육·점검기록 등 증빙 확보"],
+    accident: ["추락", "낙하물", "협착", "미끄럼", "폭염·한랭 질환"],
+    quality: ["시공순서 불량", "사진·검측 누락", "자재 보관상태 불량"],
+    inspection: ["검측 전 후속공정 진행", "품질사진 누락", "작업계획과 실제 시공 불일치"],
+    checklist: ["작업 전 TBM", "위험성평가 확인", "사진·검측·일지 기록", "기상조건 재확인"]
+  };
+}
+
+function renderStandardsLibrary(workDetails, focus) {
+  const el = document.getElementById("standardsLibrary");
+  if (!el) return;
+  if (!workDetails.length) {
+    el.innerHTML = `<p class="guide-empty">공종을 선택하면 관련 KCS·산업안전보건기준·체크리스트가 표시됩니다.</p>`;
+    return;
+  }
+  el.innerHTML = workDetails.slice(0, 12).map((detail) => {
+    const label = v61WorkLabel(detail);
+    const path = v61WorkPath(detail);
+    const rules = v61MatchStandard(label);
+    const rule = rules[0] || v61DefaultStandard(label);
+    return `<article class="standard-work-card">
+      <div class="standard-work-head">
+        <div><h3>📚 ${label}</h3><div class="standard-path">${path}</div></div>
+        <div class="standard-pill-row">
+          <span class="standard-pill">KCS</span>
+          <span class="standard-pill">산안기준</span>
+          <span class="standard-pill">체크리스트</span>
+        </div>
+      </div>
+      <div class="standard-grid">
+        ${v61StandardBlock("📘", "KCS·시방 기준", rule.kcs)}
+        ${v61StandardBlock("🛡", "산업안전·법령 연결", [...rule.safety, ...rule.law].slice(0,5))}
+        ${v61StandardBlock("✅", "오늘 체크리스트", rule.checklist)}
+      </div>
+      <p class="standard-note">※ 기준명은 현장 검토용 연결 정보입니다. 실제 적용 시 최신 KCS·관계 법령·현장 시방서를 원문으로 재확인하세요.</p>
+    </article>`;
+  }).join("");
+}
+
+function v61StandardBlock(icon, title, items) {
+  return `<div class="standard-block"><h4>${icon} ${title}</h4><ul>${(items||[]).map((x)=>`<li>${decorateRiskText(String(x))}</li>`).join("")}</ul></div>`;
+}
+
+function buildV61RiskData(workDetails, focus) {
+  const acc = { accident: [], quality: [], inspection: [], actions: [] };
+  const labels = workDetails.map(v61WorkLabel);
+  const rules = labels.flatMap((label) => v61MatchStandard(label).length ? v61MatchStandard(label) : [v61DefaultStandard(label)]);
+  rules.forEach((rule) => {
+    rule.accident?.forEach((x) => acc.accident.push({ text:x, score:v61ScoreRisk(x, focus) }));
+    rule.quality?.forEach((x) => acc.quality.push({ text:x, score:v61ScoreQuality(x, focus) }));
+    rule.inspection?.forEach((x) => acc.inspection.push({ text:x, score:v61ScoreInspection(x, focus) }));
+  });
+  if (focus?.riskySafetyRange && focus.riskySafetyRange !== "없음") {
+    acc.accident.push({ text:`${focus.riskySafetyRange} 폭염·온열질환`, score:5 });
+    acc.actions.push({ title:"폭염 집중관리", text:`${focus.riskySafetyRange} 작업자 수분·휴식·체온 관리를 강화하세요.` });
+  }
+  if (focus?.rainRange && focus.rainRange !== "없음") {
+    acc.quality.push({ text:`${focus.rainRange} 강수에 따른 보양·품질저하`, score:5 });
+    acc.inspection.push({ text:"강우 시 감리 승인·보양계획·공시체 검토 누락", score:5 });
+    acc.actions.push({ title:"강수 대비", text:`${focus.rainRange} 외부작업·타설·방수 공정은 보양재와 배수 상태를 먼저 확인하세요.` });
+  }
+  if (focus?.windRange && focus.windRange !== "없음") {
+    acc.accident.push({ text:`${focus.windRange} 강풍에 따른 양중·고소작업 위험`, score:4 });
+    acc.actions.push({ title:"풍속 대비", text:`${focus.windRange} 크레인·지게차·고소작업은 신호수와 작업중지 기준을 공유하세요.` });
+  }
+  return {
+    accident: v61TopUnique(acc.accident, 5),
+    quality: v61TopUnique(acc.quality, 3),
+    inspection: v61TopUnique(acc.inspection, 3),
+    actions: acc.actions.length ? acc.actions : [{title:"기본 관리", text:"선택 공종의 위험성평가, 작업허가, 사진·일지 증빙을 확인하세요."}]
+  };
+}
+
+function v61TopUnique(items, n) {
+  const map = new Map();
+  items.forEach((item) => {
+    const key = String(item.text).replace(/\s+/g," ").trim();
+    if (!key) return;
+    if (!map.has(key) || map.get(key).score < item.score) map.set(key, item);
+  });
+  return [...map.values()].sort((a,b)=>b.score-a.score).slice(0,n);
+}
+function v61ScoreRisk(text, focus) {
+  let s = 3;
+  if (/추락|붕괴|협착|낙하|전도|열탈진|강풍|호스|매몰/.test(text)) s += 1;
+  if (focus?.riskySafetyRange !== "없음" && /열|폭염|탈진|집중력/.test(text)) s += 1;
+  if (focus?.windRange !== "없음" && /강풍|양중|낙하|전도|흔들림/.test(text)) s += 1;
+  if (focus?.rainRange !== "없음" && /미끄럼|강우|사면|붕괴/.test(text)) s += 1;
+  return Math.min(5,s);
+}
+function v61ScoreQuality(text, focus) {
+  let s = 3;
+  if (/강우|보양|공시체|다짐|피복|정착|방수|건조/.test(text)) s += 1;
+  if (focus?.rainRange !== "없음" && /강우|보양|방수|건조|품질/.test(text)) s += 1;
+  return Math.min(5,s);
+}
+function v61ScoreInspection(text, focus) {
+  let s = 3;
+  if (/감리|검측|사진|승인|기록|공시체/.test(text)) s += 1;
+  if (focus?.rainRange !== "없음" && /강우|보양|공시체|승인/.test(text)) s += 1;
+  return Math.min(5,s);
+}
+
+function renderAiSiteAssistant(workDetails, focus) {
+  const el = document.getElementById("aiSiteAssistant");
+  if (!el) return;
+  if (!workDetails.length && !focus) {
+    el.innerHTML = `<p class="guide-empty">예보 조회와 공종 선택 후 AI 현장비서 분석이 표시됩니다.</p>`;
+    return;
+  }
+  const data = buildV61RiskData(workDetails, focus || {});
+  const headline = v61DecisionSentence(workDetails, focus, data);
+  el.innerHTML = `<div class="ai-assistant-panel">
+    <div class="ai-decision-box"><h3>🤖 오늘 AI 현장비서 판단</h3><p>${headline}</p></div>
+    <div class="risk-top-grid">
+      ${v61TopCard("🚨 사고위험 TOP5", data.accident)}
+      ${v61TopCard("📐 품질문제 TOP3", data.quality)}
+      ${v61TopCard("🔎 감리지적 가능성 TOP3", data.inspection)}
+    </div>
+    <div class="ai-action-list">
+      ${data.actions.slice(0,6).map((a)=>`<div class="ai-action-item"><b>${a.title}</b>${a.text}</div>`).join("")}
+    </div>
+  </div>`;
+}
+
+function v61DecisionSentence(workDetails, focus, data) {
+  const count = workDetails.length;
+  const works = workDetails.map(v61WorkLabel).slice(0,5).join(" · ") || "선택 공종";
+  const bits = [];
+  if (focus?.riskySafetyRange && focus.riskySafetyRange !== "없음") bits.push(`${focus.riskySafetyRange} 온열질환 집중관리`);
+  if (focus?.rainRange && focus.rainRange !== "없음") bits.push(`${focus.rainRange} 강수·보양관리`);
+  if (focus?.windRange && focus.windRange !== "없음") bits.push(`${focus.windRange} 풍속·장비관리`);
+  const condition = bits.length ? bits.join(" / ") : "07~17시 기준 큰 기상 위험은 낮음";
+  return `오늘 선택 공종 ${count ? count + "개" : "없음"}(${works})에 대해 ${condition}가 핵심입니다. 사고위험은 ${data.accident[0]?.text || "기본 안전관리"}, 품질은 ${data.quality[0]?.text || "검측·사진 기록"}, 감리지적은 ${data.inspection[0]?.text || "승인·기록 누락"}을 우선 확인하세요.`;
+}
+
+function v61TopCard(title, rows) {
+  const safe = rows && rows.length ? rows : [{text:"선택 공종 또는 예보 자료 부족", score:1}];
+  return `<div class="risk-top-card"><h4>${title}</h4><ol>${safe.map((r)=>`<li class="risk-rank-item"><strong>${r.text}</strong><span class="stars">${"★".repeat(r.score)}${"☆".repeat(Math.max(0,5-r.score))}</span></li>`).join("")}</ol></div>`;
+}
+
+/* v6.1 final render override */
+function renderFieldGuide(rainRows, safetyRows) {
+  const summaryEl = document.getElementById("guideRiskSummary");
+  const roleEl = document.getElementById("roleChecklist");
+  const processEl = document.getElementById("processChecklist");
+  const tbmEl = document.getElementById("tbmText");
+  const planEl = document.getElementById("guideWorkPlan");
+  const briefingEl = document.getElementById("guideSafetyBriefing");
+  if (!summaryEl || !roleEl || !processEl || !tbmEl) return;
+
+  const roles = [...document.querySelectorAll(".guide-role:checked")].map((el) => el.value);
+  const workDetails = v61SelectedWorkDetails();
+  const workIds = typeof getSelectedGuideWorkIds === "function" ? getSelectedGuideWorkIds() : [];
+  const legacyProcesses = [...document.querySelectorAll(".guide-process:checked")].map((el) => el.value);
+
+  const safetyWorkRows = (safetyRows || []).filter((row) => isWorkHour(row, 7, 17));
+  const rainWorkRows = (rainRows || []).filter((row) => isWorkHour(row, 7, 17));
+  const today = safetyWorkRows?.[0]?.date || rainWorkRows?.[0]?.date || safetyRows?.[0]?.date || rainRows?.[0]?.date;
+  const todaySafety = (safetyRows || []).filter((row) => row.date === today && isWorkHour(row, 7, 17));
+  const todayRain = (rainRows || []).filter((row) => row.date === today && isWorkHour(row, 7, 17));
+  const focus = buildGuideFocus(todaySafety.length ? todaySafety : safetyWorkRows, todayRain.length ? todayRain : rainWorkRows);
+
+  if (!rainRows?.length && !safetyRows?.length) {
+    summaryEl.innerHTML = `<div class="guide-risk-card"><strong>자료 부족</strong><span>예보 조회 후 오늘의 가이드가 생성됩니다.</span></div>`;
+    roleEl.innerHTML = `<p class="guide-empty">역할을 선택하세요.</p>`;
+    processEl.innerHTML = `<p class="guide-empty">공종 DB를 불러온 뒤 오늘 공종을 선택하세요.</p>`;
+    if (planEl) planEl.innerHTML = `<p class="guide-empty">예보 조회 후 07~17시 작업판단이 표시됩니다.</p>`;
+    if (briefingEl) briefingEl.innerHTML = `<p class="guide-empty">예보 조회 후 건설안전 브리핑이 표시됩니다.</p>`;
+    renderStandardsLibrary(workDetails, null);
+    renderAiSiteAssistant(workDetails, null);
+    tbmEl.innerHTML = buildTbmHtml([], [], null);
+    return;
+  }
+
+  summaryEl.innerHTML = renderGuideRiskCards(focus);
+  roleEl.innerHTML = buildRoleChecklist(roles, focus).map(renderGuideSection).join("") || `<p class="guide-empty">역할을 선택하면 해야 할 일이 표시됩니다.</p>`;
+
+  if (workDetails.length && typeof buildDbProcessChecklist === "function") {
+    processEl.innerHTML = buildDbProcessChecklist(workDetails, roles, focus).map(renderGuideSection).join("");
+  } else {
+    processEl.innerHTML = buildProcessChecklist(legacyProcesses, focus).map(renderGuideSection).join("") || `<p class="guide-empty">공종을 검색해 추가하면 DB 기반 안전·시공·품질·장비 체크리스트가 표시됩니다.</p>`;
+  }
+
+  const selectedLabels = workDetails.length ? workDetails.map(v61WorkLabel) : legacyProcesses.map(processName);
+  if (planEl) planEl.innerHTML = renderWorkPlan(buildWorkPlan(selectedLabels, focus, true));
+  if (briefingEl) briefingEl.innerHTML = renderSafetyBriefing(focus);
+  renderStandardsLibrary(workDetails, focus);
+  renderAiSiteAssistant(workDetails, focus);
+  tbmEl.innerHTML = buildTbmHtml(roles, selectedLabels, focus, true);
+}
+
+/* v6.1 TBM override - visible, structured, checkbox based */
+function buildTbmHtml(roles=[], processesOrLabels=[], focus=null, labelsAlready=false) {
+  if (!focus) {
+    return `<div class="tbm-card-html tbm-empty">
+      <div class="tbm-header-line"><span>📣</span><div><strong>오늘 TBM 전달문</strong><small>예보 조회 후 자동 생성</small></div></div>
+      <p>예보를 조회하고 역할·공종을 선택하면 TBM 문구가 자동 생성됩니다.</p>
+    </div>`;
+  }
+  const roleText = roles && roles.length ? roles.map(roleName).join(", ") : "전체 관리자";
+  const procLabels = processesOrLabels && processesOrLabels.length ? (labelsAlready ? processesOrLabels : processesOrLabels.map(processName)) : ["주요 공정"];
+  const hasConcrete = procLabels.some((x)=>/콘크리트|타설|레미콘|슬래브|벽체/.test(String(x)));
+  const hasLifting = procLabels.some((x)=>/크레인|양중|지게차|하역|장비|고소/.test(String(x)));
+  const hasDust = procLabels.some((x)=>/견출|면갈이|분진|그라인더|석공|도장/.test(String(x)));
+  const sections = [
+    { icon:"🌡", title:"온도·건강관리", cls: focus.riskySafetyRange !== "없음" ? "tbm-warn" : "", items: focus.riskySafetyRange !== "없음" ? [`${focus.riskySafetyRange} 체감온도 상승 시간대 집중관리`, "30분 간격 수분섭취와 휴식 지도", "어지럼증·두통·근육경련 즉시 보고"] : ["작업 전 건강상태 확인", "냉수·휴게시설 상태 확인"] },
+    { icon:"🌧", title:"강수·보양관리", cls: focus.rainRange !== "없음" ? "tbm-danger" : "", items: focus.rainRange !== "없음" ? [`${focus.rainRange} 강수 영향 시간대 작업 재검토`, "자재 덮개·보양재·배수로 확인", hasConcrete ? "콘크리트 타설은 책임기술자·감리 승인 및 추가 공시체 검토" : "외부작업은 보양계획 재확인"] : ["강수 위험 낮음, 최신 예보 재확인"] },
+    { icon:"💨", title:"풍속·장비관리", cls: focus.windRange !== "없음" ? "tbm-warn" : "", items: focus.windRange !== "없음" || hasLifting ? [`${focus.windRange !== "없음" ? focus.windRange : "작업 전"} 풍속과 장비작업 기준 확인`, "신호수·유도자·출입통제 구역 확인", "줄걸이·와이어·아웃트리거·지반상태 확인"] : ["풍속 특이사항 낮음, 장비 일상점검 유지"] },
+    { icon:"🏗", title:"공정·품질관리", cls: hasConcrete ? "tbm-danger" : "", items: [procLabels.slice(0,8).join(" · ") + (procLabels.length>8 ? " 외" : ""), "공정별 위험성평가·작업허가·검측 필요 여부 확인", "사진·일지·검측서류 증빙 누락 방지"] },
+    { icon:"😷", title:"분진·보호구", cls: hasDust ? "tbm-warn" : "", items: hasDust ? ["견출·면갈이·절단 작업 방진마스크·보안경 착용", "집진·살수·환기 등 분진저감 조치", "비산물 위험구역 출입통제"] : ["작업별 PPE 착용 상태 확인"] }
+  ];
+  const sectionHtml = sections.map((s)=>`<div class="tbm-section ${s.cls}"><h3><span>${s.icon}</span>${s.title}</h3><ul>${s.items.map((x)=>`<li><label><input type="checkbox"> ${decorateRiskText(String(x))}</label></li>`).join("")}</ul></div>`).join("");
+  return `<div class="tbm-card-html">
+    <div class="tbm-header-line"><span>📣</span><div><strong>오늘 TBM 전달문</strong><small>작업시간 기준 07:00~17:00 · ${focus.date || "오늘"}</small></div></div>
+    <div class="tbm-meta-grid"><div><b>대상 역할</b><p>${roleText}</p></div><div><b>오늘 공종</b><p>${procLabels.slice(0,10).join(" · ")}${procLabels.length>10?" 외":""}</p></div></div>
+    <div class="tbm-sections">${sectionHtml}</div>
+    <div class="tbm-footer-note">관리자는 위험 시간대 순회점검과 사진·일지 증빙을 남기고, 작업자는 이상 증상이 있으면 즉시 보고하십시오.</div>
+  </div>`;
+}

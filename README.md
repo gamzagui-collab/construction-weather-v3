@@ -1,18 +1,8 @@
-# GUI's Arc v6.0.1 Final UI/UX
+# GUI's Arc v6.1 Standards + AI Assistant
 
-건설현장 날씨·안전·작업가이드 안정화 버전입니다.
+- KCS / 산업안전보건기준 / 관련 법령 연결 구조
+- 사고위험 TOP5 / 품질문제 TOP3 / 감리지적 가능성 TOP3
+- 공종별 기준 라이브러리 및 체크리스트 자동 생성
+- TBM 카드 글자색 및 체크박스형 출력 개선
 
-## 적용
-
-1. 기존 프로젝트 백업
-2. `.git` 폴더는 유지
-3. 압축 해제 후 덮어쓰기
-4. Git 반영
-
-```bash
-git add .
-git commit -m "Apply GUI's Arc v6.0.1 final UI polish"
-git push
-```
-
-`worker/worker.js`는 Cloudflare Worker에 전체 붙여넣고 Deploy 하세요.
+※ 기준 라이브러리는 현장 검토용 연결 정보입니다. 실제 적용 시 최신 KCS·관계 법령·현장 시방서를 원문으로 확인하세요.
