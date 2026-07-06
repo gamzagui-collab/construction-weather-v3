@@ -76,3 +76,17 @@
   .accident-news-grid,.source-link-row{grid-template-columns:1fr}
   .ga-tab-v62{flex:1 1 100%; justify-content:center}
 }
+
+.poster-files {
+  display: grid;
+  gap: 5px;
+  margin: 8px 0;
+}
+.poster-files a,
+.accident-poster > a {
+  display: inline-flex;
+  margin-top: 7px;
+  color: #1d4ed8;
+  font-weight: 900;
+  text-decoration: none;
+}

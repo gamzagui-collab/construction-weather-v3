@@ -22,8 +22,9 @@ export default {
       if (url.pathname === "/forecast") return await handleForecast(request, env);
       if (url.pathname === "/geocode") return await handleGeocode(request);
       if (url.pathname === "/reverse") return await handleReverse(request);
+      if (url.pathname === "/accidents") return await handleAccidents(request, env);
       if (url.pathname === "/health") return jsonResponse(request, { ok: true, brand: BRAND, time: new Date().toISOString() });
-      return jsonResponse(request, { ok: false, message: "지원하지 않는 경로입니다.", available: ["/forecast","/geocode","/reverse","/health"], brand: BRAND }, 404);
+      return jsonResponse(request, { ok: false, message: "지원하지 않는 경로입니다.", available: ["/forecast","/geocode","/reverse","/accidents","/health"], brand: BRAND }, 404);
     } catch (error) {
       return jsonResponse(request, { ok: false, message: error.message, brand: BRAND }, 500);
     }

@@ -32,3 +32,13 @@ function getRegionFromLocalKeyword(keyword) {
 function normalizeGeocodeResult(item) {
   return { name: item.name, lat: item.lat, lon: item.lon, key: `geo_${item.lat}_${item.lon}`, source: "geocode" };
 }
+
+
+async function fetchAccidentsFromWorker({ business = "건설업", keyword = "", pageNo = 1, numOfRows = 10 } = {}) {
+  const url = `${WORKER_BASE_URL}/accidents?business=${encodeURIComponent(business)}&keyword=${encodeURIComponent(keyword)}&pageNo=${encodeURIComponent(pageNo)}&numOfRows=${encodeURIComponent(numOfRows)}`;
+  const response = await fetch(url, { cache: "no-store" });
+  if (!response.ok) throw new Error(`사고사례 조회 실패: ${response.status} ${await response.text()}`);
+  const json = await response.json();
+  if (!json.ok) throw new Error(json.message || "사고사례 응답 오류");
+  return json;
+}

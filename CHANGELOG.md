@@ -20,3 +20,10 @@
 - Moved safety-related guide content into Today Safety Guide.
 - Updated Serious Accident Siren URL to the Industrial Safety Portal.
 - Finalized v6.2 before v6.3 AI assistant work.
+
+
+## v6.2.1 KOSHA Accident API
+- Added Cloudflare Worker `/accidents` endpoint.
+- Added KOSHA disaster case API integration.
+- Added attachment API integration.
+- Accident briefing now shows occurredAt, region, trade, accidentType and checks.
