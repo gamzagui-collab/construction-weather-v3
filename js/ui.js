@@ -27,51 +27,12 @@ function renderLocationInfo(location) {
   document.getElementById("currentLocationCoord").textContent = `${Number(location.lat).toFixed(6)}, ${Number(location.lon).toFixed(6)}`;
 }
 function renderTable(rows) {
-  const tableBody = document.getElementById("forecastTableBody");
-  tableBody.innerHTML = "";
-
-  const dateRowSpanMap = getDateRowSpanMap(rows);
-  const renderedDates = new Set();
-
+  const tableBody = document.getElementById("forecastTableBody"); tableBody.innerHTML = "";
+  const dateRowSpanMap = getDateRowSpanMap(rows); const renderedDates = new Set();
   rows.forEach((row) => {
-    const tr = document.createElement("tr");
-
-    let dateCell = "";
-
-    if (!renderedDates.has(row.date)) {
-      dateCell = `
-        <td rowspan="${dateRowSpanMap[row.date]}" class="date-cell">
-          ${row.date}
-          <br>
-          <small>(${row.weekday})</small>
-        </td>
-      `;
-      renderedDates.add(row.date);
-    }
-
-    tr.innerHTML = `
-      ${dateCell}
-      <td>${row.hour}</td>
-      <td class="${getRainCellClass(row.kma)}">${formatRain(row.kma)}</td>
-      <td class="${getRainCellClass(row.ecmwf)}">${formatRain(row.ecmwf)}</td>
-      <td class="${getRainCellClass(row.gfs)}">${formatRain(row.gfs)}</td>
-      <td class="${getRainCellClass(row.jma)}">${formatRain(row.jma)}</td>
-      <td class="avg-cell ${getRainCellClass(row.avg)}">${formatAvg(row.avg)}</td>
-      <td class="risk-cell">
-        <div class="risk-box">
-          <span class="risk-badge risk-${row.riskCode}">
-            ${row.riskLabel}
-          </span>
-          <span class="risk-desc">${row.riskDesc || ""}</span>
-        </div>
-      </td>
-      <td>
-        <span class="risk-badge agreement-${row.agreementCode}">
-          ${row.agreementLabel} ${row.agreementStars}
-        </span>
-      </td>
-    `;
-
+    const tr = document.createElement("tr"); let dateCell = "";
+    if (!renderedDates.has(row.date)) { dateCell = `<td rowspan="${dateRowSpanMap[row.date]}" class="date-cell">${row.date}<br><small>(${row.weekday})</small></td>`; renderedDates.add(row.date); }
+    tr.innerHTML = `${dateCell}<td>${row.hour}</td><td class="${getRainCellClass(row.kma)}">${formatRain(row.kma)}</td><td class="${getRainCellClass(row.ecmwf)}">${formatRain(row.ecmwf)}</td><td class="${getRainCellClass(row.gfs)}">${formatRain(row.gfs)}</td><td class="${getRainCellClass(row.jma)}">${formatRain(row.jma)}</td><td class="${getRainCellClass(row.avg)}">${formatAvg(row.avg)}</td><td><span class="risk-badge risk-${row.riskCode}">${row.riskLabel}</span><div class="risk-desc">${row.riskDesc || ""}</div></td><td><span class="risk-badge agreement-${row.agreementCode}">${row.agreementLabel} ${row.agreementStars}</span></td>`;
     tableBody.appendChild(tr);
   });
 }
