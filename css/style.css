@@ -794,3 +794,97 @@ body.dark .work-advice-card { background:#202936; }
   .top-header,.global-safety-bar,.search-card,.tab-nav,.guide-input-grid,.tbm-card .table-actions,.process-export-actions{display:none!important;}
   .process-guide-card .guide-checklist{grid-template-columns:1fr!important;}
 }
+
+/* =========================================================
+   GUI's Arc v6.0 Refactor - soft safety color system
+   목적: 2일 시간별 온도·안전관리 표의 음영을 더 자연스럽고 부드럽게 조정
+   ========================================================= */
+:root {
+  --soft-cold-2: #dceafe;
+  --soft-cold-1: #eaf2ff;
+  --soft-comfort: #f8fafc;
+  --soft-warm-1: #fff7df;
+  --soft-warm-2: #ffe9cf;
+  --soft-hot-1: #ffd9d2;
+  --soft-hot-2: #e7d8ff;
+  --soft-hum-dry: #f7f2df;
+  --soft-hum-good: #edf7ef;
+  --soft-hum-wet: #f1ecff;
+  --soft-hum-bad: #e3d8ff;
+  --soft-hum-worst: #d4c2ff;
+  --soft-wind-calm: #f8fafc;
+  --soft-wind-normal: #eef8e8;
+  --soft-wind-strong: #dff1d0;
+  --soft-wind-danger: #cde7b7;
+  --soft-wind-stop: #9fc986;
+}
+
+.temp-cell.temp-cold-high { background: var(--soft-cold-2) !important; color:#18324f !important; font-weight:800; }
+.temp-cell.temp-cold { background: var(--soft-cold-1) !important; color:#1f3b57 !important; font-weight:800; }
+.temp-cell.temp-normal { background: var(--soft-comfort) !important; color: var(--text) !important; font-weight:700; }
+.temp-cell.temp-caution { background: var(--soft-warm-1) !important; color:#5f4500 !important; font-weight:800; }
+.temp-cell.temp-warning { background: var(--soft-warm-2) !important; color:#744100 !important; font-weight:800; }
+.temp-cell.temp-danger { background: var(--soft-hot-1) !important; color:#7f1d1d !important; font-weight:900; }
+.temp-cell.temp-stop { background: var(--soft-hot-2) !important; color:#4c1d95 !important; font-weight:900; }
+
+.humidity-cell.humidity-dry { background: var(--soft-hum-dry) !important; color:#4a3d16 !important; font-weight:700; }
+.humidity-cell.humidity-good { background: var(--soft-hum-good) !important; color:#16452c !important; font-weight:700; }
+.humidity-cell.humidity-wet { background: var(--soft-hum-wet) !important; color:#3b2a74 !important; font-weight:800; }
+.humidity-cell.humidity-bad { background: var(--soft-hum-bad) !important; color:#3b1f78 !important; font-weight:800; }
+.humidity-cell.humidity-worst { background: var(--soft-hum-worst) !important; color:#2f1368 !important; font-weight:900; }
+
+.wind-cell.wind-calm { background: var(--soft-wind-calm) !important; color: var(--text) !important; font-weight:700; }
+.wind-cell.wind-normal { background: var(--soft-wind-normal) !important; color:#244a18 !important; font-weight:700; }
+.wind-cell.wind-strong { background: var(--soft-wind-strong) !important; color:#2f5f1d !important; font-weight:800; }
+.wind-cell.wind-danger { background: var(--soft-wind-danger) !important; color:#2f5f1d !important; font-weight:900; }
+.wind-cell.wind-stop { background: var(--soft-wind-stop) !important; color:#12220b !important; font-weight:900; }
+
+body.dark .temp-cell.temp-normal,
+body.dark .wind-cell.wind-calm { background:#202936 !important; color:#f8fafc !important; }
+
+body.dark .temp-cell,
+body.dark .humidity-cell,
+body.dark .wind-cell { filter: saturate(.9) brightness(.95); }
+
+/* v6.0: 상단 고정 안전바 가독성 보강 */
+.global-safety-bar {
+  min-height: 54px;
+  display: grid;
+  align-items: center;
+}
+.global-safety-bar strong,
+.global-safety-bar b {
+  font-size: clamp(14px, 1.2vw, 18px) !important;
+  line-height: 1.25 !important;
+}
+.global-safety-bar span,
+.global-safety-bar small {
+  line-height: 1.25 !important;
+}
+
+/* v6.0: 현장가이드 출력 영역은 넓게 사용 */
+.guide-output-grid,
+.guide-extra-grid {
+  grid-template-columns: 1fr !important;
+}
+.process-guide-card,
+.full-guide-output,
+.full-row-card {
+  grid-column: 1 / -1 !important;
+}
+
+/* v6.0: 공정별 주의사항 가독성 */
+.process-checklist-print .guide-check-card,
+.process-checklist-print .guide-check-item {
+  line-height: 1.55;
+}
+.process-checklist-print strong {
+  font-size: 15px;
+}
+
+/* v6.0: 아코디언 전체 접힘 상태 보강 */
+.work-category.collapsed .work-category-body,
+.work-category.is-collapsed .work-category-body,
+.work-category[aria-expanded="false"] .work-category-body {
+  display: none !important;
+}
