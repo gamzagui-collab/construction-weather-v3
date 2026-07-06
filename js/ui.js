@@ -852,7 +852,7 @@ function renderGuideSection(section) {
         <ul>${[...new Set(block.items || [])].slice(0, 12).map((item)=>`<li><label><input type="checkbox"> ${item}</label></li>`).join("")}</ul>
       </div>`).join("")}</div>`;
   }
-  return `<div class="guide-section"><h3>${section.title}</h3><ul>${(section.items || []).map((item)=>`<li><label><input type="checkbox"> ${item}</label></li>`).join("")}</ul></div>`;
+  return `<div class="guide-section"><h3>${section.title}</h3><ul>${(section.items || []).map((item)=>`<li><label><input type="checkbox"> ${decorateRiskText(item)}</label></li>`).join("")}</ul></div>`;
 }
 
 
@@ -996,7 +996,7 @@ function buildTbmText(roles, processes, focus) {
 작업시간 기준: 07:00~17:00\n\n대상 역할: ${roleText}\n오늘 공정: ${procText}\n\n${hotLine}\n${rainLine}\n${windLine}\n\n작업자는 어지럼증, 두통, 근육경련, 손발 저림 등 이상 증상이 있으면 즉시 보고하십시오.\n관리자는 위험 시간대 순회점검과 휴식·수분·보양 상태를 확인하십시오.`;
 }
 
-function roleName(key){ return ({safety:"안전관리자",construction:"공사관리자",quality:"품질관리자",equipment:"장비담당자",siteManager:"현장소장"})[key] || key; }
+function roleName(key){ return ({siteManager:"현장소장",safety:"안전관리자",quality:"품질관리자",construction:"공사관리자",equipment:"장비관리자",material:"자재관리자"})[key] || key; }
 function processName(key){ return ({concrete:"콘크리트 타설",rebar:"철근",formwork:"거푸집",earthwork:"토공",waterproof:"방수",plaster:"미장",lifting:"양중",highwork:"고소작업",exterior:"외부마감",paving:"포장",landscape:"조경", forkliftUnload:"지게차 하역작업", excavation:"굴착작업", dumpTransport:"덤프 운반작업", pileDrilling:"파일 천공작업", craneWork:"크레인작업", grindingDust:"견출·면갈이 분진작업"})[key] || key; }
 
 /* =========================================================
@@ -1101,8 +1101,15 @@ function buildDbProcessChecklist(workDetails, roles, focus) {
 
     if (allowed("equipment")) {
       const items = [];
-      dbTake(detail.equipment_materials, 6).forEach((x)=>items.push(`${x["장비/자재/PPE"] || "장비·자재·PPE"} · ${x.관리포인트 || "작업 전 확인"}`));
-      if(items.length) blocks.push({ heading:"장비담당자", items });
+      dbTake(detail.equipment_materials, 4).forEach((x)=>items.push(`${x["장비/자재/PPE"] || "장비·PPE"} · ${x.관리포인트 || "작업 전 확인"}`));
+      if(items.length) blocks.push({ heading:"장비관리자", items });
+    }
+
+    if (allowed("material")) {
+      const items = [];
+      dbTake(detail.equipment_materials, 4).forEach((x)=>items.push(`${x["장비/자재/PPE"] || "자재"} · 반입·보관·덮개·야적장 배수상태 확인`));
+      if (rain) items.unshift(`${focus.rainRange} 강수 예보 기준 자재 덮개·야적장 배수·침수방지 우선 확인`);
+      if(items.length) blocks.push({ heading:"자재관리자", items });
     }
 
     sections.push({
@@ -1236,7 +1243,7 @@ function renderGuideRiskCards(focus) {
 }
 
 function buildRoleChecklist(roles, focus) {
-  const selected = roles && roles.length ? roles : ["safety","construction","quality","equipment","siteManager"];
+  const selected = roles && roles.length ? roles : ["siteManager","safety","quality","construction","equipment","material"];
   const rain = focus.rainRange !== "없음";
   const wind = focus.windRange !== "없음";
   const hot = focus.riskySafetyRange !== "없음";
@@ -1265,11 +1272,17 @@ function buildRoleChecklist(roles, focus) {
     "감리 검측 전 후속공정 진행 방지, 검측사진 누락 방지",
     "품질기록: 온도·강수·습도·풍속과 시공상태 함께 기록"
   ]});
-  if (selected.includes("equipment")) blocks.push({ title:"자재·장비 담당", items:[
-    rain ? "비닐·천막·덮개·양수기·배수자재 사전 확보" : "자재 반입·보관·동선 상태 확인",
+  if (selected.includes("equipment")) blocks.push({ title:"장비관리자", items:[
     wind ? "크레인·지게차·덤프·굴착장비 작업반경과 풍속기준 확인" : "장비 일상점검, 후진유도자, 보행자 분리 확인",
     "와이어·샤클·줄걸이·아웃트리거·경광등·후진경보 점검",
-    "분진작업 시 집진기·방진마스크·보안경·살수장비 준비"
+    "분진작업 시 집진기·방진마스크·보안경·살수장비 준비",
+    "장비 작업계획서·신호수·작업반경 출입통제 확인"
+  ]});
+  if (selected.includes("material")) blocks.push({ title:"자재관리자", items:[
+    rain ? "비닐·천막·덮개·양수기·배수자재 사전 확보" : "자재 반입·보관·야적장 배수상태 확인",
+    "팔레트·철근·거푸집·시멘트계 자재 침수·오염 방지",
+    "하역장 동선, 지게차 통로, 보행자 분리, 적재높이 확인",
+    "익일 반입 자재는 강수·풍속 예보 기준으로 덮개와 고정상태 사전 점검"
   ]});
   return blocks;
 }
@@ -1279,10 +1292,10 @@ function renderGuideSection(section) {
     return `<div class="guide-section"><h3>${section.title}</h3>${section.blocks.map((block)=>`
       <div class="process-role-block">
         <h4>${block.heading}</h4>
-        <ul>${[...new Set(block.items || [])].slice(0, 14).map((item)=>`<li><label><input type="checkbox"> ${item}</label></li>`).join("")}</ul>
+        <ul>${[...new Set(block.items || [])].slice(0, 14).map((item)=>`<li><label><input type="checkbox"> ${decorateRiskText(item)}</label></li>`).join("")}</ul>
       </div>`).join("")}</div>`;
   }
-  return `<div class="guide-section"><h3>${section.title}</h3><ul>${(section.items || []).map((item)=>`<li><label><input type="checkbox"> ${item}</label></li>`).join("")}</ul></div>`;
+  return `<div class="guide-section"><h3>${section.title}</h3><ul>${(section.items || []).map((item)=>`<li><label><input type="checkbox"> ${decorateRiskText(item)}</label></li>`).join("")}</ul></div>`;
 }
 
 function buildTbmText(roles, processesOrLabels, focus, labelsAlready=false) {
@@ -1293,4 +1306,16 @@ function buildTbmText(roles, processesOrLabels, focus, labelsAlready=false) {
   const windLine = focus.windRange !== "없음" ? `풍속 주의 시간은 ${focus.windRange}입니다. 양중·고소·외부작업은 풍속 기준과 신호수 배치를 확인하십시오.` : "풍속 특이사항은 낮습니다.";
   return `오늘 TBM 전달사항
 작업시간 기준: 07:00~17:00\n\n대상 역할: ${roleText}\n오늘 공종: ${procText}\n\n${hotLine}\n${rainLine}\n${windLine}\n\n콘크리트 타설이 있는 경우 강우 중지기준, 책임기술자·감리 승인, 추가 공시체 제작 여부, 보양재와 배수로 상태를 반드시 확인하십시오.\n작업자는 어지럼증, 두통, 근육경련, 손발 저림 등 이상 증상이 있으면 즉시 보고하고, 관리자는 순회점검과 사진·일지 증빙을 남기십시오.`;
+}
+
+
+// v6.0.1: 위험요소 문구 강조 렌더링
+function decorateRiskText(text) {
+  let value = String(text || "");
+  value = value.replace(/\[위험요소\/(상|높음|고|위험|매우위험)\]/g, '<span class="risk-chip-high">⚠ HIGH</span>');
+  value = value.replace(/\[위험요소\/(중|보통)\]/g, '<span class="risk-chip-mid">주의</span>');
+  value = value.replace(/\[위험요소\/(하|낮음)\]/g, '<span class="risk-chip-low">확인</span>');
+  value = value.replace(/(추락|낙하|협착|감전|붕괴|전도|질식|화재|폭염|열탈진|강풍|타설 중지|집중호우)/g, '<span class="risk-text-high">$1</span>');
+  value = value.replace(/(보양|승인|공시체|감리|검측|품질|배수|덮개)/g, '<span class="risk-text-mid">$1</span>');
+  return value;
 }

@@ -60,9 +60,9 @@
     </section>
 
     <nav class="tab-nav" aria-label="weather tabs">
-      <button class="tab-btn active" type="button" data-tab="rainPanel">🌧 강수 예보</button>
-      <button class="tab-btn" type="button" data-tab="safetyPanel">🌡 온도·안전관리</button>
-      <button class="tab-btn" type="button" data-tab="guidePanel">📋 오늘의 현장가이드</button>
+      <button class="tab-btn active" type="button" data-tab="rainPanel"><span class="tab-icon">🌧</span><span>강수 예보</span></button>
+      <button class="tab-btn" type="button" data-tab="safetyPanel"><span class="tab-icon">🌡</span><span>온도·안전관리</span></button>
+      <button class="tab-btn" type="button" data-tab="guidePanel"><span class="tab-icon">🏗</span><span>오늘의 현장가이드</span></button>
     </nav>
 
     <section id="rainPanel" class="tab-panel active">
@@ -166,7 +166,7 @@
       </section>
 
       <section class="card recommendation-card safety-card">
-        <h2>🌡 온도·안전관리 요약</h2>
+        <h2><span class="tab-icon">🌡</span><span>온도·안전관리</span> 요약</h2>
         <p id="safetyRecommendationText">예보를 조회하면 온도·습도·풍속 기반 안전관리 의견이 표시됩니다.</p>
       </section>
 
@@ -360,11 +360,12 @@
             <div class="guide-bulk-actions"><button type="button" id="selectAllRolesBtn" class="mini-btn">역할 전체 선택</button><button type="button" id="clearRolesBtn" class="mini-btn">역할 전체 해제</button></div>
           </div>
           <div class="check-grid guide-role-grid role-horizontal-grid">
-            <label><input type="checkbox" class="guide-role" value="safety"> 안전관리자</label>
-            <label><input type="checkbox" class="guide-role" value="construction"> 공사관리자</label>
-            <label><input type="checkbox" class="guide-role" value="quality"> 품질관리자</label>
-            <label><input type="checkbox" class="guide-role" value="equipment"> 장비담당자</label>
-            <label><input type="checkbox" class="guide-role" value="siteManager"> 현장소장</label>
+            <label><input type="checkbox" class="guide-role" value="siteManager"> <span>🏢 현장소장</span></label>
+            <label><input type="checkbox" class="guide-role" value="safety"> <span>🛡 안전관리자</span></label>
+            <label><input type="checkbox" class="guide-role" value="quality"> <span>📐 품질관리자</span></label>
+            <label><input type="checkbox" class="guide-role" value="construction"> <span>🏗 공사관리자</span></label>
+            <label><input type="checkbox" class="guide-role" value="equipment"> <span>🚜 장비관리자</span></label>
+            <label><input type="checkbox" class="guide-role" value="material"> <span>📦 자재관리자</span></label>
           </div>
         </section>
 

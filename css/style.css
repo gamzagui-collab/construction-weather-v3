@@ -834,3 +834,221 @@ th{font-size:15px;background:#eaf1f8!important;color:#0f172a}td{font-size:14px}.
 body.dark .card,body.dark .guide-section,body.dark .work-advice-card,body.dark .rule-grid div{background:#1b222b;border-color:#334155}body.dark .section-title h2,body.dark .guide-section h3,body.dark .rule-head strong,body.dark .summary-card strong{color:#f8fafc}body.dark .concrete-pour-rule-card,body.dark .risk-guide{background:#111827;border-color:#334155}body.dark .rule-grid p,body.dark .rule-head span{color:#cbd5e1}body.dark th{background:#263241!important;color:#f8fafc}body.dark .avg-cell{background:#18202a!important;color:#cbd5e1!important}
 @media(max-width:900px){.guide-risk-grid,.guide-checklist,.work-advice-list,.rule-grid{grid-template-columns:1fr}.global-safety-bar{top:0;overflow-x:auto}.gsb-item{min-width:130px}.section-title h2{font-size:21px}.rule-head{display:block}.map-box,.windy-frame{min-height:320px}}
 @media print{.map-grid,.search-card,.tab-nav,.header-actions,.global-safety-bar{display:none!important}.tbm-card{background:#fff!important;color:#000!important}.tbm-text{background:#fff!important;color:#000!important;border:1px solid #ddd}}
+
+
+/* =========================================================
+   v6.0.1 UI/UX Premium Polish
+   작업시간 기준: 07:00~17:00 / GUI's Arc brand refresh
+   ========================================================= */
+:root{
+  --arc-ink:#0b1220;
+  --arc-slate:#27364a;
+  --arc-line:#dce5ef;
+  --arc-warm:#f59e0b;
+  --arc-warm-soft:#fff7ed;
+  --arc-blue-soft:#edf6ff;
+  --arc-green-soft:#eefbf3;
+  --arc-red-soft:#fff1f2;
+  --arc-glass:rgba(255,255,255,.74);
+}
+body{
+  background:
+    radial-gradient(circle at 12% 8%, rgba(37,99,235,.12), transparent 26%),
+    radial-gradient(circle at 88% 0%, rgba(245,158,11,.16), transparent 28%),
+    linear-gradient(180deg,#f8fafc 0%,#eef4fa 48%,#edf2f7 100%) !important;
+}
+.top-header{
+  padding:18px 28px !important;
+  background:rgba(255,255,255,.86) !important;
+  backdrop-filter:blur(18px) saturate(140%);
+  border-bottom:1px solid rgba(148,163,184,.28) !important;
+  box-shadow:0 18px 46px rgba(15,23,42,.08) !important;
+}
+body.dark .top-header{background:rgba(17,24,39,.88)!important;}
+.brand-title img{
+  width:54px!important;
+  height:54px!important;
+  filter:drop-shadow(0 10px 18px rgba(15,23,42,.18));
+}
+.brand-title h1{
+  font-size:32px!important;
+  font-weight:1000;
+  letter-spacing:-.06em;
+  background:linear-gradient(90deg,#0f172a,#1d4ed8,#f59e0b);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent!important;
+}
+body.dark .brand-title h1{background:linear-gradient(90deg,#f8fafc,#93c5fd,#fbbf24);-webkit-background-clip:text;background-clip:text;}
+.brand-title p{font-size:14px!important;font-weight:800!important;color:#52637a!important;}
+.header-actions button,.sub-btn,.mini-btn,.primary-btn{
+  border-radius:14px!important;
+  letter-spacing:-.02em;
+  transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+}
+.primary-btn{background:linear-gradient(135deg,#1d4ed8,#2563eb,#0ea5e9)!important;box-shadow:0 12px 24px rgba(37,99,235,.22);}
+.header-actions button:hover,.sub-btn:hover,.mini-btn:hover,.primary-btn:hover{transform:translateY(-2px);}
+.global-safety-bar{
+  top:90px!important;
+  padding:12px 28px!important;
+  gap:12px!important;
+  background:linear-gradient(90deg,#0b1220,#172554 48%,#1e3a8a)!important;
+  box-shadow:0 16px 40px rgba(15,23,42,.26)!important;
+}
+.gsb-item{
+  border:1px solid rgba(255,255,255,.16)!important;
+  background:rgba(255,255,255,.08)!important;
+  border-radius:18px!important;
+  min-height:64px!important;
+}
+.gsb-item b{font-size:14px!important;font-weight:900!important;color:#cbd5e1!important;}
+.gsb-item strong{font-size:22px!important;font-weight:1000!important;color:#fff!important;}
+.gsb-risk{background:linear-gradient(135deg,rgba(245,158,11,.18),rgba(37,99,235,.12))!important;}
+.gsb-risk strong{color:#fde68a!important;}
+.layout{width:min(1760px,96%)!important;}
+.card,.summary-card{
+  border:1px solid rgba(148,163,184,.24)!important;
+  box-shadow:0 18px 50px rgba(15,23,42,.08)!important;
+  border-radius:22px!important;
+  background:rgba(255,255,255,.86)!important;
+  backdrop-filter:blur(10px);
+}
+body.dark .card,body.dark .summary-card{background:rgba(27,34,43,.9)!important;}
+.tab-nav{
+  position:sticky;
+  top:166px;
+  z-index:760;
+  background:rgba(248,250,252,.72);
+  backdrop-filter:blur(16px);
+  padding:10px;
+  border:1px solid rgba(148,163,184,.22);
+  border-radius:24px;
+  box-shadow:0 16px 42px rgba(15,23,42,.08);
+}
+body.dark .tab-nav{background:rgba(15,23,42,.76);}
+.tab-btn{
+  display:flex!important;
+  align-items:center!important;
+  gap:10px!important;
+  padding:14px 22px!important;
+  border-radius:18px!important;
+  font-size:17px!important;
+  font-weight:1000!important;
+  background:#fff!important;
+  color:#26364a!important;
+  border:1px solid rgba(148,163,184,.22)!important;
+  box-shadow:0 6px 16px rgba(15,23,42,.06);
+}
+.tab-btn .tab-icon{
+  display:inline-grid;
+  place-items:center;
+  width:34px;
+  height:34px;
+  border-radius:12px;
+  background:linear-gradient(135deg,#eff6ff,#dbeafe);
+  font-size:20px;
+}
+.tab-btn.active{
+  background:linear-gradient(135deg,#10213f,#1d4ed8)!important;
+  color:#fff!important;
+  box-shadow:0 18px 38px rgba(37,99,235,.28)!important;
+}
+.tab-btn.active .tab-icon{background:linear-gradient(135deg,#f59e0b,#fde68a);}
+.section-title{position:relative;padding-left:16px;}
+.section-title:before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:4px;
+  bottom:4px;
+  width:5px;
+  border-radius:999px;
+  background:linear-gradient(180deg,#2563eb,#f59e0b);
+}
+.section-title h2{
+  font-size:27px!important;
+  font-weight:1000!important;
+  letter-spacing:-.055em!important;
+  color:#0f172a!important;
+}
+body.dark .section-title h2{color:#f8fafc!important;}
+.summary-card{position:relative;overflow:hidden;text-align:left!important;}
+.summary-card:after{content:"";position:absolute;right:-28px;top:-38px;width:96px;height:96px;border-radius:999px;background:rgba(37,99,235,.08);}
+.summary-card span{font-weight:900!important;color:#64748b!important;}
+.summary-card strong{font-size:24px!important;font-weight:1000!important;}
+.location-banner{border-radius:26px!important;box-shadow:0 24px 50px rgba(37,99,235,.22)!important;}
+.location-banner strong{font-size:36px!important;}
+.guide-role-grid label,.check-grid label{
+  border:1px solid rgba(148,163,184,.25);
+  border-radius:16px;
+  padding:12px 14px;
+  background:linear-gradient(180deg,#fff,#f8fafc);
+  font-weight:1000;
+  cursor:pointer;
+  box-shadow:0 8px 18px rgba(15,23,42,.05);
+}
+.guide-role-grid label:has(input:checked){
+  border-color:#2563eb;
+  background:linear-gradient(135deg,#eff6ff,#dbeafe);
+  box-shadow:inset 4px 0 0 #2563eb,0 10px 22px rgba(37,99,235,.12);
+}
+.guide-section h3:before{content:"⬢"!important;color:#f59e0b!important;}
+.guide-section{border-radius:22px!important;}
+.process-role-block h4{font-weight:1000!important;}
+.process-role-block li,.guide-section li{position:relative;}
+.process-role-block li:has(label),.guide-section li:has(label){border-radius:10px;}
+.guide-section li:has(input)+li{}
+.guide-section li label{display:block;}
+.guide-section li:has(label input){padding:3px 0;}
+.guide-section li:has(label){word-break:keep-all;}
+.guide-section li:has(label):has(input){ }
+.guide-section li:has(label) label:has(input){ }
+/* 공정별 위험 문구 강조 */
+.guide-section li:has(label) label{line-height:1.55;}
+.guide-section li label:has(input){ }
+.guide-section li:has(label) label{ }
+.guide-section li label{ }
+.guide-section li label:has(input){ }
+.guide-section li:has(label){ }
+.guide-section li:has(label) label{ }
+.guide-section li:has(label) label::first-letter{ }
+.guide-section li label{ }
+.guide-section li:has(label) label{ }
+.guide-section li:has(label) label:not(:empty){ }
+.guide-section li:has(label) label{ }
+.guide-section li:has(label) label{ }
+.guide-section li:has(label) label{ }
+/* fallback: bracketed risk text is emphasized by mark-like span inserted via JS */
+.risk-text-high,.risk-text-danger{color:#b91c1c!important;font-weight:1000;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px;}
+.risk-text-mid{color:#c2410c!important;font-weight:1000;}
+.risk-text-low{color:#1d4ed8!important;font-weight:900;}
+.risk-chip-high,.risk-chip-mid,.risk-chip-low{
+  display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:3px 8px;margin-right:4px;font-size:12px;font-weight:1000;
+}
+.risk-chip-high{background:#fee2e2;color:#991b1b;}
+.risk-chip-mid{background:#ffedd5;color:#9a3412;}
+.risk-chip-low{background:#dbeafe;color:#1e40af;}
+.temp-lv1,.apparent-lv1{background:#f4f8fb!important;color:#26364a!important;}
+.temp-lv2,.apparent-lv2{background:#eef8f1!important;color:#14532d!important;}
+.temp-lv3,.apparent-lv3{background:#fff8df!important;color:#854d0e!important;}
+.temp-lv4,.apparent-lv4{background:#fff1e8!important;color:#9a3412!important;}
+.temp-lv5,.apparent-lv5{background:#fff0f1!important;color:#991b1b!important;}
+.humidity-lv1{background:#f5f7fb!important;color:#475569!important;}
+.humidity-lv2{background:#effaf5!important;color:#166534!important;}
+.humidity-lv3{background:#fff8df!important;color:#854d0e!important;}
+.humidity-lv4{background:#f5f0ff!important;color:#6b21a8!important;}
+.humidity-lv5{background:#ede9fe!important;color:#4c1d95!important;}
+.wind-lv1{background:#f8fafc!important;color:#475569!important;}
+.wind-lv2{background:#ecfdf5!important;color:#047857!important;}
+.wind-lv3{background:#fef9c3!important;color:#854d0e!important;}
+.wind-lv4{background:#ffedd5!important;color:#9a3412!important;}
+.wind-lv5{background:#fee2e2!important;color:#991b1b!important;}
+@media(max-width:900px){
+  .top-header{position:static!important;}
+  .global-safety-bar{top:0!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;padding:10px!important;}
+  .tab-nav{top:0;overflow-x:auto;}
+  .tab-btn{min-width:190px;justify-content:center;}
+  .brand-title img{width:48px!important;height:48px!important;}
+  .brand-title h1{font-size:28px!important;}
+  .section-title h2{font-size:22px!important;}
+}

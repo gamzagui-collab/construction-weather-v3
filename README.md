@@ -1,10 +1,11 @@
-# GUI's Arc v6.0 Stable Plus
+# GUI's Arc v6.0.1
 
-건설현장 강수·온도·안전·작업가이드 안정화 버전입니다.
+건설현장 날씨·안전·작업가이드 안정 개선판입니다.
 
-## 포함 사항
-- 강수 탭: 지도/Windy, 6일 강수예보, KMA 중기 강수확률, 콘크리트 타설 판단 기준
-- 온도·안전관리: 건강관리, 작업시간 안전표, 질환별 응급조치
-- 오늘의 현장가이드: 역할별/공정별 체크리스트, 부서별 관리자 주의요망, TBM 복사
+## 적용
 
-Cloudflare Worker의 `worker/worker.js`를 배포한 뒤 Pages를 갱신하세요.
+1. 기존 프로젝트 백업
+2. `.git` 폴더는 유지
+3. ZIP 내용을 덮어쓰기
+4. `git add .` → `git commit` → `git push`
+5. `worker/worker.js`를 Cloudflare Worker에 배포
