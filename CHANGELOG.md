@@ -27,3 +27,16 @@
 - Added KOSHA disaster case API integration.
 - Added attachment API integration.
 - Accident briefing now shows occurredAt, region, trade, accidentType and checks.
+
+## v6.3 Worker Modular & AI Assistant
+- Added worker-modular folder.
+- Added `/ai-assistant` route.
+- Added standards library seed DB.
+- Kept bundled `worker/worker.js` for Cloudflare dashboard paste deployment.
+
+## v6.3.1 KOSHA Stable
+- Added handleAccidentsV631 stable route.
+- Prevented raw KOSHA 500 errors from appearing in briefing UI.
+
+## v6.4 Enterprise Foundation
+- Added platform config, standards library seed DB, enterprise status client, AI field assistant client, and worker-enterprise skeleton.

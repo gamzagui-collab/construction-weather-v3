@@ -22,9 +22,10 @@ export default {
       if (url.pathname === "/forecast") return await handleForecast(request, env);
       if (url.pathname === "/geocode") return await handleGeocode(request);
       if (url.pathname === "/reverse") return await handleReverse(request);
-      if (url.pathname === "/accidents") return await handleAccidents(request, env);
+      if (url.pathname === "/accidents") return await handleAccidentsV631(request, env);
+      if (url.pathname === "/ai-assistant") return await handleAiAssistant(request, env);
       if (url.pathname === "/health") return jsonResponse(request, { ok: true, brand: BRAND, time: new Date().toISOString() });
-      return jsonResponse(request, { ok: false, message: "지원하지 않는 경로입니다.", available: ["/forecast","/geocode","/reverse","/accidents","/health"], brand: BRAND }, 404);
+      return jsonResponse(request, { ok: false, message: "지원하지 않는 경로입니다.", available: ["/forecast","/geocode","/reverse","/accidents","/ai-assistant","/health"], brand: BRAND }, 404);
     } catch (error) {
       return jsonResponse(request, { ok: false, message: error.message, brand: BRAND }, 500);
     }
@@ -418,3 +419,381 @@ function parseKstDateOnly(dateText){ const [y,m,d]=dateText.split("-").map(Numbe
 
 async function handleGeocode(request){ const url=new URL(request.url); const q=(url.searchParams.get("q")||"").trim(); if(!q) return jsonResponse(request,{ok:false,results:[]},400); const cacheKey=new Request(`${url.origin}/cache/geocode/${encodeURIComponent(q)}`); const cache=caches.default; const cached=await cache.match(cacheKey); if(cached) return new Response(cached.body,{status:200,headers:{...corsHeaders(request),"Content-Type":"application/json; charset=utf-8","Cache-Control":`public, max-age=${GEOCODE_CACHE_SECONDS}`}}); const target=`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q+" 대한민국")}&countrycodes=kr&format=jsonv2&limit=10&accept-language=ko`; const res=await fetch(target,{headers:{"User-Agent":"GUI's Arc Construction Field Guide v4.2"}}); if(!res.ok) throw new Error(`지역 검색 실패: ${res.status}`); const json=await res.json(); const data={ok:true,query:q,results:json.map((item)=>({name:item.display_name,lat:Number(item.lat),lon:Number(item.lon)})).filter((i)=>Number.isFinite(i.lat)&&Number.isFinite(i.lon))}; await cache.put(cacheKey,new Response(JSON.stringify(data),{headers:{"Content-Type":"application/json; charset=utf-8","Cache-Control":`public, max-age=${GEOCODE_CACHE_SECONDS}`}})); return jsonResponse(request,data,200,GEOCODE_CACHE_SECONDS); }
 async function handleReverse(request){ const url=new URL(request.url); const lat=Number(url.searchParams.get("lat")); const lon=Number(url.searchParams.get("lon")); if(!Number.isFinite(lat)||!Number.isFinite(lon)) return jsonResponse(request,{ok:false,message:"lat, lon 값이 필요합니다."},400); const target=`https://nominatim.openstreetmap.org/reverse?lat=${encodeURIComponent(lat)}&lon=${encodeURIComponent(lon)}&format=jsonv2&accept-language=ko`; const res=await fetch(target,{headers:{"User-Agent":"GUI's Arc Construction Field Guide v4.2"}}); if(!res.ok) throw new Error(`역지오코딩 실패: ${res.status}`); const json=await res.json(); const a=json.address||{}; const detail=[a.state,a.county,a.city,a.town,a.village,a.suburb,a.neighbourhood].filter(Boolean).filter((v,i,arr)=>arr.indexOf(v)===i).join(" "); return jsonResponse(request,{ok:true,name:detail||json.display_name||"지도 선택 좌표",lat,lon}); }
+
+
+
+/* =========================================================
+   GUI's Arc v6.2.1 KOSHA Accident API - FINAL FIX
+   ========================================================= */
+
+async function handleAccidents(request, env) {
+  const url = new URL(request.url);
+  const business = url.searchParams.get("business") || "건설업";
+  const keyword = url.searchParams.get("keyword") || "";
+  const pageNo = url.searchParams.get("pageNo") || "1";
+  const numOfRows = Math.min(Number(url.searchParams.get("numOfRows") || 10), 10);
+
+  const apiKey = env.KOSHA_API_KEY || env.KMA_API_KEY;
+  if (!apiKey) {
+    return jsonResponse(request, {
+      ok: false,
+      message: "KOSHA_API_KEY 또는 KMA_API_KEY Secret이 없습니다.",
+      rows: [],
+      brand: BRAND
+    }, 500);
+  }
+
+  const cacheKey = new Request(`${url.origin}/cache/kosha-accidents-v621/${encodeURIComponent(business)}/${encodeURIComponent(keyword)}/${pageNo}/${numOfRows}`);
+  const cache = caches.default;
+  const cached = await cache.match(cacheKey);
+  if (cached) {
+    const json = await cached.json();
+    if (json.meta) json.meta.cached = true;
+    return jsonResponse(request, json, 200, 300);
+  }
+
+  const apiUrl = new URL("https://apis.data.go.kr/B552468/disaster_api01");
+  apiUrl.searchParams.set("ServiceKey", apiKey);
+  apiUrl.searchParams.set("serviceKey", apiKey);
+  apiUrl.searchParams.set("business", business);
+  apiUrl.searchParams.set("keyword", keyword);
+  apiUrl.searchParams.set("pageNo", String(pageNo));
+  apiUrl.searchParams.set("numOfRows", String(numOfRows));
+  apiUrl.searchParams.set("callApiId", "국내재해사례 게시판 조회");
+
+  const res = await fetch(apiUrl.toString(), {
+    headers: { "Accept": "application/json, text/plain, */*" }
+  });
+  const text = await res.text();
+
+  if (!res.ok) {
+    return jsonResponse(request, {
+      ok: false,
+      message: `KOSHA API HTTP ${res.status}`,
+      raw: text.slice(0, 1000),
+      rows: [],
+      brand: BRAND
+    }, 502);
+  }
+
+  const parsed = parseKoshaMaybeJson(text);
+  const items = extractKoshaItems(parsed);
+  const rows = [];
+
+  for (const item of items.slice(0, numOfRows)) {
+    const row = normalizeKoshaAccident(item);
+    if (row.boardNo) {
+      row.attachments = await fetchKoshaAttachments(apiKey, row.boardNo);
+    } else {
+      row.attachments = [];
+    }
+    rows.push(row);
+  }
+
+  const result = {
+    ok: true,
+    brand: BRAND,
+    meta: {
+      source: "KOSHA 국내재해사례 게시판 정보 조회서비스",
+      cached: false,
+      generatedAt: new Date().toISOString(),
+      business,
+      keyword,
+      pageNo,
+      numOfRows,
+      rawItemCount: items.length
+    },
+    rows
+  };
+
+  await cache.put(cacheKey, new Response(JSON.stringify(result), {
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      "Cache-Control": "public, max-age=300"
+    }
+  }));
+
+  return jsonResponse(request, result, 200, 300);
+}
+
+function parseKoshaMaybeJson(text) {
+  try {
+    return JSON.parse(text);
+  } catch (e) {
+    return { rawText: text };
+  }
+}
+
+function extractKoshaItems(parsed) {
+  if (!parsed) return [];
+
+  const candidates = [
+    parsed?.response?.body?.items?.item,
+    parsed?.response?.body?.items,
+    parsed?.body?.items?.item,
+    parsed?.body?.items,
+    parsed?.items?.item,
+    parsed?.items,
+    parsed?.item,
+    parsed?.data,
+    parsed?.list
+  ];
+
+  for (const c of candidates) {
+    if (Array.isArray(c)) return c;
+    if (c && typeof c === "object") return [c];
+  }
+
+  // XML/text fallback: API may return XML in some cases.
+  if (parsed.rawText) {
+    const blocks = [...String(parsed.rawText).matchAll(/<item>([\s\S]*?)<\/item>/g)].map(m => m[1]);
+    return blocks.map(block => {
+      const obj = {};
+      [...block.matchAll(/<([^\/][^>]*)>([\s\S]*?)<\/\1>/g)].forEach(m => {
+        obj[m[1]] = stripKoshaHtml(m[2]);
+      });
+      return obj;
+    });
+  }
+
+  return [];
+}
+
+function pickKosha(obj, keys) {
+  for (const k of keys) {
+    if (obj && obj[k] !== undefined && obj[k] !== null && String(obj[k]).trim() !== "") {
+      return String(obj[k]).trim();
+    }
+  }
+  return "";
+}
+
+function normalizeKoshaAccident(item) {
+  const title = pickKosha(item, ["title", "ttl", "subject", "sj", "bbsSj", "nttSj", "boardTitle"]);
+  const content = stripKoshaHtml(pickKosha(item, ["content", "contents", "cn", "bbsCn", "nttCn", "summary", "detail"]));
+  const boardNo = pickKosha(item, ["boardno", "boardNo", "bbsNo", "nttId", "nttNo", "seq", "id", "no"]);
+  const publishedAt = normalizeKoshaDate(pickKosha(item, ["regDate", "regDt", "rgsde", "writngDe", "createDate", "createdAt", "date"]));
+  const fullText = `${title}\n${content}`;
+
+  const occurredAt = extractKoshaOccurredAt(fullText) || "";
+  const region = extractKoshaRegion(fullText) || "공식 원문 확인";
+  const accidentType = inferKoshaAccidentType(fullText);
+  const trade = inferKoshaTrade(fullText);
+  const cause = extractKoshaCause(fullText) || "공식 원문 확인";
+
+  return {
+    boardNo,
+    title: title || "국내재해사례",
+    occurredAt: occurredAt || "공식 원문 확인",
+    publishedAt: publishedAt || "공식 원문 확인",
+    region,
+    trade,
+    accidentType,
+    cause,
+    checks: buildKoshaAccidentChecks(accidentType),
+    sourceUrl: "https://portal.kosha.or.kr/archive/disaster-case/accident-case/acccase-industry/construc-industry",
+    raw: item
+  };
+}
+
+async function fetchKoshaAttachments(apiKey, boardNo) {
+  try {
+    const url = new URL("https://apis.data.go.kr/B552468/disaster_api02");
+    url.searchParams.set("ServiceKey", apiKey);
+    url.searchParams.set("serviceKey", apiKey);
+    url.searchParams.set("boardno", boardNo);
+    url.searchParams.set("boardNo", boardNo);
+    url.searchParams.set("pageNo", "1");
+    url.searchParams.set("numOfRows", "10");
+    url.searchParams.set("callApiId", "국내재해사례 게시판 첨부파일 조회");
+
+    const res = await fetch(url.toString(), {
+      headers: { "Accept": "application/json, text/plain, */*" }
+    });
+    const text = await res.text();
+    if (!res.ok) return [];
+
+    const parsed = parseKoshaMaybeJson(text);
+    const items = extractKoshaItems(parsed);
+    return items.map((x) => ({
+      boardNo: pickKosha(x, ["boardno", "boardNo"]) || boardNo,
+      fileName: pickKosha(x, ["filenm", "fileNm", "filename", "fileName", "atchFileNm"]),
+      filePath: pickKosha(x, ["filepath", "filePath", "path", "url", "atchFileUrl", "downloadUrl"])
+    })).filter(x => x.fileName || x.filePath);
+  } catch (e) {
+    return [];
+  }
+}
+
+function stripKoshaHtml(text) {
+  return String(text || "")
+    .replace(/<!\[CDATA\[/g, "")
+    .replace(/\]\]>/g, "")
+    .replace(/<[^>]*>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function normalizeKoshaDate(text) {
+  const s = String(text || "").trim();
+  if (!s) return "";
+  const m = s.match(/(20\d{2})[.\-/년\s]*(\d{1,2})[.\-/월\s]*(\d{1,2})(?:[일\s]*(\d{1,2})[:시](\d{1,2})?)?/);
+  if (!m) return s;
+  const y = m[1];
+  const mo = String(m[2]).padStart(2, "0");
+  const d = String(m[3]).padStart(2, "0");
+  const h = m[4] ? String(m[4]).padStart(2, "0") : "";
+  const mi = m[5] ? String(m[5]).padStart(2, "0") : "";
+  return h ? `${y}-${mo}-${d} ${h}:${mi || "00"}` : `${y}-${mo}-${d}`;
+}
+
+function extractKoshaOccurredAt(text) {
+  const s = String(text || "");
+  const patterns = [
+    /(?:발생일시|재해발생일시|사고일시|재해일시|발생일|사고일)\s*[:：]?\s*(20\d{2}[.\-/년\s]*\d{1,2}[.\-/월\s]*\d{1,2}(?:[일\s]*(?:\d{1,2})[:시](?:\d{1,2})?)?)/,
+    /(20\d{2}[.\-/년\s]*\d{1,2}[.\-/월\s]*\d{1,2}[일\s]*(?:\d{1,2})[:시](?:\d{1,2})?)/
+  ];
+  for (const p of patterns) {
+    const m = s.match(p);
+    if (m) return normalizeKoshaDate(m[1]);
+  }
+  return "";
+}
+
+function extractKoshaRegion(text) {
+  const s = String(text || "");
+  const regions = ["서울", "부산", "대구", "인천", "광주", "대전", "울산", "세종", "경기", "강원", "충북", "충남", "전북", "전남", "경북", "경남", "제주"];
+  for (const r of regions) {
+    const m = s.match(new RegExp(`${r}[가-힣\\s]{0,12}(?:시|군|구)?`));
+    if (m) return m[0].trim();
+  }
+  return "";
+}
+
+function inferKoshaAccidentType(text) {
+  const s = String(text || "");
+  const rules = [
+    ["추락", /추락|떨어|개구부|비계|지붕|고소/],
+    ["끼임·협착", /끼임|협착|깔림|장비|후진|지게차|굴착기/],
+    ["붕괴", /붕괴|무너|굴착면|흙막이|동바리/],
+    ["낙하·맞음", /낙하|맞음|인양물|자재.*떨어|비래/],
+    ["전도·전복", /전도|전복|크레인|고소작업대/],
+    ["감전", /감전|전기|누전/],
+    ["화재·폭발", /화재|폭발|용접|불티/],
+    ["질식·중독", /질식|중독|밀폐|유기용제/],
+    ["분진·비산", /분진|면갈이|견출|절단/]
+  ];
+  const found = rules.find(([_, re]) => re.test(s));
+  return found ? found[0] : "공식 원문 확인";
+}
+
+function inferKoshaTrade(text) {
+  const s = String(text || "");
+  const rules = [
+    ["철근공사", /철근/],
+    ["거푸집·동바리", /거푸집|동바리/],
+    ["콘크리트 타설", /콘크리트|타설|레미콘/],
+    ["굴착·토공", /굴착|토공|흙막이/],
+    ["크레인·양중", /크레인|양중|인양/],
+    ["지게차하역", /지게차|하역|팔레트/],
+    ["비계·가설", /비계|가설|작업발판/],
+    ["철골공사", /철골|H형강/],
+    ["방수·도장", /방수|도장|유기용제/],
+    ["견출·면갈이", /견출|면갈이|분진/]
+  ];
+  const found = rules.find(([_, re]) => re.test(s));
+  return found ? found[0] : "건설업";
+}
+
+function extractKoshaCause(text) {
+  const s = String(text || "");
+  const m = s.match(/(?:원인|주요 원인|발생 원인)\s*[:：]?\s*([^。.\n]{8,80})/);
+  return m ? m[1].trim() : "";
+}
+
+function buildKoshaAccidentChecks(type) {
+  const base = {
+    "추락": ["개구부·단부 난간 확인", "안전대 체결 확인", "작업발판 고정상태 확인", "상하동시작업 통제", "추락위험 TBM 실시"],
+    "끼임·협착": ["장비 작업반경 출입통제", "신호수 배치", "후진동선 분리", "회전체 방호덮개 확인", "협착위험 구간 접근금지"],
+    "붕괴": ["굴착면·동바리 변형 확인", "우수 유입 차단", "해체·설치 순서 준수", "작업 전 지반상태 확인", "이상징후 즉시 작업중지"],
+    "낙하·맞음": ["인양물 하부 출입금지", "낙하물 방지조치 확인", "자재 적재상태 확인", "줄걸이·샤클 점검", "작업반경 통제"],
+    "전도·전복": ["아웃트리거·받침판 확인", "지반 지지력 확인", "풍속 기준 확인", "과적 금지", "장비 전도위험 TBM"],
+    "감전": ["누전차단기 확인", "임시전선 피복상태 확인", "접지 확인", "우천 시 전기공구 사용 제한", "분전반 잠금관리"],
+    "화재·폭발": ["화기작업 허가", "소화기 배치", "가연물 제거", "불티 비산방지포 설치", "작업 후 잔불 확인"],
+    "질식·중독": ["환기 실시", "가스농도 측정", "보호구 착용", "감시인 배치", "밀폐공간 출입허가 확인"],
+    "분진·비산": ["집진기·습식작업 적용", "방진마스크 착용", "보안경 착용", "작업구역 격리", "작업 후 청소"]
+  };
+  return base[type] || ["공식 원문 확인", "작업 전 위험성평가", "TBM 실시", "관리감독자 확인", "유사사고 예방대책 공유"];
+}
+
+
+/* =========================================================
+   GUI's Arc v6.3 AI Field Assistant API
+   ========================================================= */
+async function handleAiAssistant(request, env) {
+  const url = new URL(request.url);
+  const trades = (url.searchParams.get("trades") || "").split(",").map(x => x.trim()).filter(Boolean);
+  const weatherRisk = url.searchParams.get("weatherRisk") || "normal";
+
+  const accidentTop5 = buildAiAccidentTop5(trades, weatherRisk);
+  const qualityTop3 = buildAiQualityTop3(trades);
+  const inspectionTop3 = buildAiInspectionTop3(trades);
+
+  return jsonResponse(request, {
+    ok: true,
+    brand: BRAND,
+    meta: { generatedAt: new Date().toISOString(), trades, weatherRisk },
+    assistant: {
+      summary: trades.length ? `선택 공종(${trades.join(", ")}) 기준으로 사고위험, 품질문제, 감리지적 가능성을 확인하세요.` : "공종을 선택하면 AI 현장비서 판단이 표시됩니다.",
+      accidentTop5,
+      qualityTop3,
+      inspectionTop3,
+      tbm: buildAiTbm(accidentTop5, qualityTop3, inspectionTop3)
+    }
+  });
+}
+
+function buildAiAccidentTop5(trades, weatherRisk) {
+  const text = trades.join(" ");
+  const list = [];
+  if (/철근|거푸집|비계|철골/.test(text)) list.push("추락: 작업발판·개구부·안전대 체결 확인");
+  if (/크레인|양중|철골|자재/.test(text)) list.push("낙하·맞음: 인양물 하부 출입금지와 줄걸이 점검");
+  if (/굴착|토공|흙막이/.test(text)) list.push("붕괴: 굴착면·흙막이·우수 유입 확인");
+  if (/지게차|하역|덤프|굴착기/.test(text)) list.push("끼임·협착: 장비 작업반경 출입통제와 신호수 배치");
+  if (/방수|도장|용접/.test(text)) list.push("화재·중독: 환기, MSDS, 화기작업 허가 확인");
+  if (weatherRisk !== "normal") list.push("기상위험: 강수·강풍·폭염 시간대 작업 조정");
+  return [...new Set(list.length ? list : ["공통: 작업 전 위험성평가와 TBM 실시"])].slice(0, 5);
+}
+
+function buildAiQualityTop3(trades) {
+  const text = trades.join(" ");
+  const list = [];
+  if (/콘크리트|타설|레미콘/.test(text)) list.push("콘크리트 품질: 슬럼프·공기량·공시체·강우 보양 확인");
+  if (/철근/.test(text)) list.push("철근 품질: 피복두께·정착길이·이음길이·간격 확인");
+  if (/방수/.test(text)) list.push("방수 품질: 바탕면 건조·습도·로트·두께 확인");
+  if (/도장/.test(text)) list.push("도장 품질: 습도·표면처리·도막두께 확인");
+  if (/철골/.test(text)) list.push("철골 품질: 부재번호·볼트·용접부·도장손상 확인");
+  return [...new Set(list.length ? list : ["선택 공종의 시방서·검측·사진기록 확인"])].slice(0, 3);
+}
+
+function buildAiInspectionTop3(trades) {
+  const text = trades.join(" ");
+  const list = ["검측 전 후속공정 진행 금지", "시공 전·중·후 사진 누락 방지"];
+  if (/콘크리트|타설/.test(text)) list.push("강우 시 감리 승인·보양계획·추가 공시체 기록");
+  if (/철근/.test(text)) list.push("철근 배근 검측 전 타설 금지");
+  if (/방수/.test(text)) list.push("방수 바탕면 건조 확인 및 담수시험 기록");
+  return [...new Set(list)].slice(0, 3);
+}
+
+function buildAiTbm(accidentTop5, qualityTop3, inspectionTop3) {
+  return [
+    "📋 AI 현장비서 TBM", "",
+    "사고위험 TOP", ...accidentTop5.map(x => `□ ${x}`), "",
+    "품질 중점관리", ...qualityTop3.map(x => `□ ${x}`), "",
+    "감리지적 예방", ...inspectionTop3.map(x => `□ ${x}`)
+  ].join("\n");
+}

@@ -42,3 +42,14 @@ async function fetchAccidentsFromWorker({ business = "건설업", keyword = "", 
   if (!json.ok) throw new Error(json.message || "사고사례 응답 오류");
   return json;
 }
+
+
+async function fetchAiAssistantFromWorker({ trades = [], weatherRisk = "normal" } = {}) {
+  const tradeParam = Array.isArray(trades) ? trades.join(",") : String(trades || "");
+  const url = `${WORKER_BASE_URL}/ai-assistant?trades=${encodeURIComponent(tradeParam)}&weatherRisk=${encodeURIComponent(weatherRisk)}`;
+  const response = await fetch(url, { cache: "no-store" });
+  if (!response.ok) throw new Error(`AI 현장비서 조회 실패: ${response.status} ${await response.text()}`);
+  const json = await response.json();
+  if (!json.ok) throw new Error(json.message || "AI 현장비서 응답 오류");
+  return json;
+}

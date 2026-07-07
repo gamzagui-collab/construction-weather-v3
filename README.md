@@ -31,3 +31,20 @@
 - 첨부파일 정보 조회서비스 연동
 - 건설사고 브리핑 카드에 발생일시/지역/공종/사고유형/원인 표시
 - API 실패 시 시드 DB로 자동 fallback
+
+## v6.3 Worker Modular & AI Assistant
+- Worker 모듈화 기준 구조 추가
+- `/accidents` KOSHA 사고사례 API 유지
+- `/ai-assistant` AI 현장비서 API 추가
+- KCS/산업안전보건기준/품질/감리지적 연결용 기준 라이브러리 초안 추가
+
+## v6.3.1 KOSHA Stable
+- KOSHA API HTTP 500 시 화면 깨짐 방지
+- http/https 및 callApiId 조합 순차 시도
+- 실패 시 시드 DB fallback
+
+## v6.4 Enterprise Foundation
+- 건설현장 운영 플랫폼 구조 기반 추가
+- Standards Library seed DB 추가
+- AI 현장비서 클라이언트 기반 추가
+- Enterprise Worker skeleton 추가

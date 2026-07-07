@@ -1104,3 +1104,17 @@ body.dark #tbmText {
   text-decoration-thickness: 2px;
   text-underline-offset: 3px;
 }
+
+
+/* v6.4 Enterprise Foundation */
+.enterprise-status-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.ai-briefing-card {
+  border-left: 6px solid #7c3aed;
+}
+@media (max-width: 900px) {
+  .enterprise-status-grid { grid-template-columns: 1fr; }
+}

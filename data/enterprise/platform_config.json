@@ -1,0 +1,71 @@
+{
+  "version": "6.4-enterprise-foundation",
+  "name": "GUI's Arc Enterprise",
+  "workHours": {
+    "start": 7,
+    "end": 17
+  },
+  "engines": [
+    {
+      "id": "weather",
+      "name": "Weather Engine",
+      "routes": [
+        "/forecast",
+        "/geocode",
+        "/reverse"
+      ]
+    },
+    {
+      "id": "safety",
+      "name": "Safety Engine",
+      "routes": [
+        "/health",
+        "/ai-assistant"
+      ]
+    },
+    {
+      "id": "kosha",
+      "name": "KOSHA Engine",
+      "routes": [
+        "/accidents",
+        "/kosha/status",
+        "/debug/kosha"
+      ]
+    },
+    {
+      "id": "schedule",
+      "name": "Schedule Engine",
+      "storage": "localStorage + future DB"
+    },
+    {
+      "id": "standards",
+      "name": "Standards Library",
+      "data": [
+        "KCS",
+        "산업안전보건기준",
+        "관련 법령"
+      ]
+    },
+    {
+      "id": "ai",
+      "name": "AI Field Assistant",
+      "outputs": [
+        "사고위험 TOP5",
+        "품질문제 TOP3",
+        "감리지적 TOP3",
+        "TBM"
+      ]
+    }
+  ],
+  "dailyPipeline": [
+    "weather",
+    "schedule",
+    "selectedTrades",
+    "koshaAccidents",
+    "standards",
+    "aiAssistant",
+    "safetyGuide",
+    "fieldGuide",
+    "tbm"
+  ]
+}

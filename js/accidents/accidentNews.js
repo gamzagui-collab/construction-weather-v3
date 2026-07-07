@@ -85,7 +85,7 @@ export async function renderAccidentNews(rootId="accidentNewsRoot"){
   root.innerHTML = `
     <div class="ga-section-title">🚨 건설사고 브리핑</div>
     <div class="accident-news-card">
-      <p>산업안전보건공단 국내재해사례 API를 조회하고 있습니다...</p>
+      <p>산업안전보건공단 국내재해사례 API를 조회하고 있습니다. 실패 시 시드 DB로 대체 표시됩니다.</p>
     </div>
   `;
 
